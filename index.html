@@ -433,8 +433,9 @@ function render(D) {
 
   document.getElementById('legend-partial').textContent = period.partial_month + ' (partial)';
 
-  // ── Channel doughnut ──
+  // ── Channel doughnut — apenas canais reais (sem descontos) ──
   document.getElementById('channel-chart-title').textContent = 'Revenue by channel — ' + period.display_month;
+  // Total = apenas os 3 canais de receita (descontos são dedução, não canal)
   var chTotal = ch.physical + ch.b2b + ch.ecommerce;
   var chPctPhys = Math.round(ch.physical / chTotal * 100);
   var chPctB2B = Math.round(ch.b2b / chTotal * 100);
@@ -449,10 +450,10 @@ function render(D) {
   charts.channel = new Chart(document.getElementById('channelChart'), {
     type: 'doughnut',
     data: {
-      labels: ['Physical store', 'B2B', 'E-commerce', 'Discounts'],
+      labels: ['Physical store', 'B2B', 'E-commerce'],
       datasets: [{
-        data: [ch.physical, ch.b2b, ch.ecommerce, ch.discounts],
-        backgroundColor: ['#3d6635', '#c8942a', '#3a7ab8', '#ccc'],
+        data: [ch.physical, ch.b2b, ch.ecommerce],
+        backgroundColor: ['#3d6635', '#c8942a', '#3a7ab8'],
         borderWidth: 0, hoverOffset: 6
       }]
     },
