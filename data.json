@@ -1,0 +1,78 @@
+{
+  "generated_at": "2026-03-15T06:00:00Z",
+  "period": {
+    "display_month": "Feb 2026",
+    "month": "2026-02",
+    "partial_month": "Mar 2026"
+  },
+  "overview": {
+    "revenue": {
+      "current": 312869,
+      "prev": 264172,
+      "mom_pct": 18.4
+    },
+    "ebitda": {
+      "current": 70510,
+      "margin_pct": 22.5
+    },
+    "cogs_pct": {
+      "current": 23.8,
+      "prev": 27.8
+    },
+    "personnel_pct": {
+      "current": 41.2,
+      "prev": 51.1
+    },
+    "revenue_partial": 144926
+  },
+  "pl": {
+    "jan": {
+      "physical": 234465,
+      "b2b": 27550,
+      "ecommerce": 6198,
+      "discounts": -4041,
+      "revenue": 264172,
+      "cogs": -73546,
+      "gross_profit": 190626,
+      "personnel": -135005,
+      "opex": -27432,
+      "ebitda": 28189,
+      "financial": -2188,
+      "ebt": 26001
+    },
+    "feb": {
+      "physical": 286814,
+      "b2b": 28286,
+      "ecommerce": 2573,
+      "discounts": -4805,
+      "revenue": 312869,
+      "cogs": -74479,
+      "gross_profit": 238390,
+      "personnel": -129018,
+      "opex": -38862,
+      "ebitda": 70510,
+      "financial": -2241,
+      "ebt": 68269
+    }
+  },
+  "stores": {
+    "jan": {
+      "mila": 96732,
+      "stpau": 130396,
+      "santjoan": 36949
+    },
+    "feb": {
+      "mila": 99243,
+      "stpau": 130322,
+      "santjoan": 83304
+    }
+  },
+  "channel": {
+    "physical": 286814,
+    "b2b": 28286,
+    "ecommerce": 2573,
+    "discounts": 4805
+  },
+  "productivity": null,
+  "debt": null
+}
