@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-03-15T06:00:00Z",
+  "generated_at": "2026-03-15T19:21:45:00Z",
   "period": {
     "display_month": "Feb 2026",
     "month": "2026-02",
@@ -7,52 +7,58 @@
   },
   "overview": {
     "revenue": {
-      "current": 312869,
-      "prev": 264172,
+      "current": 312868.71,
+      "prev": 264172.17,
       "mom_pct": 18.4
     },
     "ebitda": {
-      "current": 70510,
-      "margin_pct": 22.5
+      "current": 69047,
+      "margin_pct": 22.1
     },
     "cogs_pct": {
       "current": 23.8,
-      "prev": 27.8
+      "prev": 28.4
     },
     "personnel_pct": {
-      "current": 41.2,
-      "prev": 51.1
+      "current": 41.7,
+      "prev": 52.1
     },
-    "revenue_partial": 144926
+    "revenue_partial": 144925.84
   },
   "pl": {
     "jan": {
-      "physical": 234465,
-      "b2b": 27550,
-      "ecommerce": 6198,
-      "discounts": -4041,
-      "revenue": 264172,
-      "cogs": -73546,
-      "gross_profit": 190626,
-      "personnel": -135005,
-      "opex": -27432,
-      "ebitda": 28189,
-      "financial": -2188,
-      "ebt": 26001
+      "physical": 234464.82,
+      "b2b": 27549.71,
+      "ecommerce": 6198.27,
+      "discounts": -4040.63,
+      "revenue": 264172.17,
+      "cogs": -75033.21,
+      "gross_profit": 189138.96,
+      "personnel": -137610.03,
+      "opex": -27431.87,
+      "ebitda": 24097.06,
+      "financial": -2187.94,
+      "ebt": 21909.12,
+      "store_mila": null,
+      "store_stpau": null,
+      "store_santjoan": null
     },
     "feb": {
-      "physical": 286814,
-      "b2b": 28286,
-      "ecommerce": 2573,
-      "discounts": -4805,
-      "revenue": 312869,
-      "cogs": -74479,
-      "gross_profit": 238390,
-      "personnel": -129018,
-      "opex": -38862,
-      "ebitda": 70510,
-      "financial": -2241,
-      "ebt": 68269
+      "physical": 286814.13,
+      "b2b": 28286.49,
+      "ecommerce": 2573.27,
+      "discounts": -4805.18,
+      "revenue": 312868.71,
+      "cogs": -74478.81,
+      "gross_profit": 238389.9,
+      "personnel": -130481.25,
+      "opex": -38861.65,
+      "ebitda": 69047,
+      "financial": -2284.76,
+      "ebt": 66762.24,
+      "store_mila": null,
+      "store_stpau": null,
+      "store_santjoan": null
     }
   },
   "stores": {
@@ -68,10 +74,10 @@
     }
   },
   "channel": {
-    "physical": 286814,
-    "b2b": 28286,
-    "ecommerce": 2573,
-    "discounts": 4805
+    "physical": 286814.13,
+    "b2b": 28286.49,
+    "ecommerce": 2573.27,
+    "discounts": 4805.18
   },
   "productivity": null,
   "debt": null
