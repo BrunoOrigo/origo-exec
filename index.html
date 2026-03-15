@@ -47,6 +47,11 @@
     .kpi-pct{font-size:11px;padding:2px 7px;border-radius:4px;font-weight:500}
     .kpi-pct.pos{background:var(--green-bg);color:var(--green)}
     .kpi-pct.neg{background:var(--red-bg);color:var(--red)}
+    .kpi-target{margin-top:8px;padding-top:8px;border-top:1px dashed var(--border);display:flex;align-items:center;justify-content:space-between}
+    .kpi-target-label{font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:.05em}
+    .kpi-target-badge{font-size:10px;padding:2px 7px;border-radius:3px;font-weight:600}
+    .kpi-target-badge.on{background:var(--green-bg);color:var(--green)}
+    .kpi-target-badge.off{background:var(--red-bg);color:var(--red)}
     .section-title{font-size:15px;font-weight:500;color:var(--text);margin:28px 0 12px;display:flex;align-items:center;gap:8px}
     .section-title::before{content:'';display:inline-block;width:3px;height:16px;background:var(--green);border-radius:2px}
     .chart-row{display:grid;grid-template-columns:2fr 1fr;gap:14px;margin-bottom:20px}
@@ -128,21 +133,25 @@
         <div class="kpi-label" id="kpi-rev-label">Revenue — …</div>
         <div class="kpi-value" id="kpi-rev-value">—</div>
         <div class="kpi-sub"><span class="kpi-pct pos" id="kpi-rev-pct">—</span> vs prev</div>
+        <div id="kpi-rev-extra"></div>
       </div>
       <div class="kpi">
         <div class="kpi-label" id="kpi-ebitda-label">EBITDA — …</div>
         <div class="kpi-value" id="kpi-ebitda-value">—</div>
         <div class="kpi-sub"><span class="kpi-pct pos" id="kpi-ebitda-pct">—</span> margin</div>
+        <div id="kpi-ebitda-extra"></div>
       </div>
       <div class="kpi">
         <div class="kpi-label" id="kpi-cogs-label">COGS — …</div>
         <div class="kpi-value" id="kpi-cogs-value">—</div>
         <div class="kpi-sub"><span class="kpi-pct pos" id="kpi-cogs-pct">—</span></div>
+        <div id="kpi-cogs-extra"></div>
       </div>
       <div class="kpi">
         <div class="kpi-label" id="kpi-pers-label">Personnel — …</div>
         <div class="kpi-value" id="kpi-pers-value">—</div>
         <div class="kpi-sub"><span class="kpi-pct pos" id="kpi-pers-pct">—</span></div>
+        <div id="kpi-pers-extra"></div>
       </div>
     </div>
 
@@ -190,7 +199,7 @@
     </div>
     <div class="section-title">P&L waterfall — February 2026</div>
     <div class="chart-card">
-      <div style="position:relative;height:300px"><canvas id="waterfallChart"></canvas></div>
+      <div style="position:relative;height:360px"><canvas id="waterfallChart"></canvas></div>
     </div>
   </div>
 
@@ -380,24 +389,50 @@ function render(D) {
   statusText.textContent = 'Data: ' + ts;
   document.getElementById('footer-updated').textContent = 'Last updated: ' + ts;
 
+  // ── Market benchmarks (artisan premium bakery, Spain/Europe) ──
+  // Source: industry benchmarks for premium artisan bakeries (5-20 locations)
+  // These are directional targets — François to refine with Origo-specific goals
+  var targets = {
+    ebitda_margin: { val: 18, dir: 'above', label: 'Target ≥18%', note: 'Premium bakery benchmark' },
+    cogs:          { val: 26, dir: 'below', label: 'Target ≤26%',  note: 'Artisan bakery benchmark' },
+    personnel:     { val: 45, dir: 'below', label: 'Target ≤45%',  note: 'Labour-intensive operations' }
+  };
+
+  function kpiTargetHTML(current, target) {
+    var onTarget = target.dir === 'above' ? current >= target.val : current <= target.val;
+    var cls = onTarget ? 'on' : 'off';
+    var icon = onTarget ? '✓' : '↑';
+    return '<div class="kpi-target">' +
+      '<span class="kpi-target-label">Benchmark: ' + target.label + '</span>' +
+      '<span class="kpi-target-badge ' + cls + '">' + icon + (onTarget ? ' On track' : ' Above target') + '</span>' +
+      '</div>';
+  }
+
   // ── Overview KPIs ──
   document.getElementById('kpi-rev-label').textContent = 'Revenue — ' + period.display_month;
   document.getElementById('kpi-rev-value').textContent = eur(ov.revenue.current);
   document.getElementById('kpi-rev-pct').textContent = '+' + ov.revenue.mom_pct + '%';
+  // Revenue: no fixed target — growth is always good
+  document.getElementById('kpi-rev-extra').innerHTML =
+    '<div class="kpi-target"><span class="kpi-target-label">Benchmark: growth YoY</span>' +
+    '<span class="kpi-target-badge on">✓ +18.4% MoM</span></div>';
 
   document.getElementById('kpi-ebitda-label').textContent = 'EBITDA — ' + period.display_month;
   document.getElementById('kpi-ebitda-value').textContent = eur(ov.ebitda.current);
   document.getElementById('kpi-ebitda-pct').textContent = ov.ebitda.margin_pct + '%';
+  document.getElementById('kpi-ebitda-extra').innerHTML = kpiTargetHTML(ov.ebitda.margin_pct, targets.ebitda_margin);
 
   document.getElementById('kpi-cogs-label').textContent = 'COGS — ' + period.display_month;
   document.getElementById('kpi-cogs-value').textContent = pct(ov.cogs_pct.current);
   var cogsDiff = ppChange(ov.cogs_pct.current, ov.cogs_pct.prev);
   document.getElementById('kpi-cogs-pct').textContent = cogsDiff + ' vs prev (' + pct(ov.cogs_pct.prev) + ')';
+  document.getElementById('kpi-cogs-extra').innerHTML = kpiTargetHTML(ov.cogs_pct.current, targets.cogs);
 
   document.getElementById('kpi-pers-label').textContent = 'Personnel — ' + period.display_month;
   document.getElementById('kpi-pers-value').textContent = pct(ov.personnel_pct.current);
   var persDiff = ppChange(ov.personnel_pct.current, ov.personnel_pct.prev);
   document.getElementById('kpi-pers-pct').textContent = persDiff + ' vs prev (' + pct(ov.personnel_pct.prev) + ')';
+  document.getElementById('kpi-pers-extra').innerHTML = kpiTargetHTML(ov.personnel_pct.current, targets.personnel);
 
   // ── Revenue & EBITDA chart ──
   var revLabels = ['Jan 2026', period.display_month, period.partial_month + ' (partial)'];
@@ -433,12 +468,11 @@ function render(D) {
 
   document.getElementById('legend-partial').textContent = period.partial_month + ' (partial)';
 
-  // ── Channel doughnut — apenas canais reais (sem descontos) ──
+  // ── Channel doughnut — canais reais, % sobre receita NET ──
   document.getElementById('channel-chart-title').textContent = 'Revenue by channel — ' + period.display_month;
-  // Total = apenas os 3 canais de receita (descontos são dedução, não canal)
-  var chTotal = ch.physical + ch.b2b + ch.ecommerce;
-  var chPctPhys = Math.round(ch.physical / chTotal * 100);
-  var chPctB2B = Math.round(ch.b2b / chTotal * 100);
+  var chNet = ch.physical + ch.b2b + ch.ecommerce - ch.discounts;
+  var chPctPhys = Math.round(ch.physical / chNet * 100);
+  var chPctB2B = Math.round(ch.b2b / chNet * 100);
   var chPctEcom = 100 - chPctPhys - chPctB2B;
 
   var legendHTML = '<div class="legend-item"><div class="legend-dot" style="background:var(--green)"></div>Store ' + chPctPhys + '%</div>';
@@ -528,33 +562,71 @@ function render(D) {
   pnlBody += plRowStyled('Earnings before taxes', jan.ebt, feb.ebt, 'total-row', 'font-weight:700');
   document.getElementById('pnl-table-body').innerHTML = pnlBody;
 
-  // ── Waterfall chart ──
+  // ── Waterfall chart — melhorado com valores + % receita ──
   if (charts.waterfall) charts.waterfall.destroy();
+  var wfRev = feb.revenue;
+  var wfLabels = ['Revenue', 'COGS', 'Gross profit', 'Personnel', 'OPEX', 'EBITDA', 'Financial', 'EBT'];
+  var wfValues = [feb.revenue, feb.cogs, feb.gross_profit, feb.personnel, feb.opex, feb.ebitda, feb.financial, feb.ebt];
+  var wfBase   = [0, wfRev + feb.cogs, 0, feb.gross_profit + feb.personnel,
+                  feb.gross_profit + feb.personnel + feb.opex, 0, feb.ebitda + feb.financial, 0];
+  var wfColors = ['#3d6635','#b33','#3d6635','#b33','#b33','#c8942a','#b33','#c8942a'];
+
   charts.waterfall = new Chart(document.getElementById('waterfallChart'), {
     type: 'bar',
     data: {
-      labels: ['Revenue', 'COGS', 'Gross profit', 'Personnel', 'OPEX', 'EBITDA', 'Financial', 'EBT'],
-      datasets: [{
-        label: 'Base',
-        data: [0, feb.revenue + feb.cogs, 0, feb.gross_profit + feb.personnel,
-               feb.gross_profit + feb.personnel + feb.opex, 0, feb.ebitda + feb.financial, 0],
-        backgroundColor: 'transparent', borderWidth: 0, barPercentage: .55
-      }, {
-        label: 'Value',
-        data: [feb.revenue, feb.cogs, feb.gross_profit, feb.personnel, feb.opex, feb.ebitda, feb.financial, feb.ebt],
-        backgroundColor: ['#3d6635','#b33','#3d6635','#b33','#b33','#c8942a','#b33','#c8942a'],
-        borderRadius: 3, barPercentage: .55
-      }]
+      labels: wfLabels,
+      datasets: [
+        { label: 'Base', data: wfBase, backgroundColor: 'transparent', borderWidth: 0, barPercentage: .55 },
+        { label: 'Value', data: wfValues, backgroundColor: wfColors, borderRadius: 3, barPercentage: .55 }
+      ]
     },
     options: {
       responsive: true, maintainAspectRatio: false,
-      plugins: { legend: { display: false }, tooltip: {
-        callbacks: { label: function(ctx) { return ctx.datasetIndex === 1 ? '€' + Math.round(ctx.raw).toLocaleString() : ''; } }
-      }},
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          callbacks: {
+            label: function(ctx) {
+              if (ctx.datasetIndex !== 1) return '';
+              var v = ctx.raw;
+              var pctOfRev = (Math.abs(v) / wfRev * 100).toFixed(1);
+              return eur(v) + ' (' + pctOfRev + '% of rev)';
+            }
+          }
+        },
+        // Inline data labels above each bar
+        datalabels: false
+      },
       scales: {
-        x: { stacked: true, grid: { display: false }, ticks: { autoSkip: false, maxRotation: 45 } },
+        x: { stacked: true, grid: { display: false }, ticks: { autoSkip: false, maxRotation: 0, font: { size: 11 } } },
         y: { stacked: true, grid: { color: grid }, ticks: { callback: function(v) { return '€' + Math.round(v/1000) + 'k'; } } }
-      }
+      },
+      animation: { onComplete: function() {
+        // Draw value labels manually above each bar
+        var chart = this;
+        var ctx2 = chart.ctx;
+        ctx2.save();
+        ctx2.font = '600 10px DM Sans, system-ui';
+        ctx2.textAlign = 'center';
+        chart.data.datasets[1].data.forEach(function(val, i) {
+          var meta = chart.getDatasetMeta(1);
+          var bar = meta.data[i];
+          if (!bar) return;
+          var x = bar.x;
+          var y = bar.y - 6;
+          var isNeg = val < 0;
+          ctx2.fillStyle = isNeg ? '#b33' : '#2d4a28';
+          // Value line
+          ctx2.fillText(eur(val), x, y);
+          // % line below value
+          var pctOfRev = (Math.abs(val) / wfRev * 100).toFixed(0) + '%';
+          ctx2.font = '400 9px DM Sans, system-ui';
+          ctx2.fillStyle = '#8a8a80';
+          ctx2.fillText(pctOfRev, x, y + 11);
+          ctx2.font = '600 10px DM Sans, system-ui';
+        });
+        ctx2.restore();
+      }}
     }
   });
 
