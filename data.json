@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-03-15T19:21:45:00Z",
+  "generated_at": "2026-03-15T19:42:37:00Z",
   "period": {
     "display_month": "Feb 2026",
     "month": "2026-02",
@@ -39,9 +39,9 @@
       "ebitda": 24097.06,
       "financial": -2187.94,
       "ebt": 21909.12,
-      "store_mila": null,
-      "store_stpau": null,
-      "store_santjoan": null
+      "store_mila": 94408.64,
+      "store_stpau": 126521.08,
+      "store_santjoan": 36949.4
     },
     "feb": {
       "physical": 286814.13,
@@ -56,21 +56,21 @@
       "ebitda": 69047,
       "financial": -2284.76,
       "ebt": 66762.24,
-      "store_mila": null,
-      "store_stpau": null,
-      "store_santjoan": null
+      "store_mila": 99031.11,
+      "store_stpau": 127960.61,
+      "store_santjoan": 83303.72
     }
   },
   "stores": {
     "jan": {
-      "mila": 96732,
-      "stpau": 130396,
-      "santjoan": 36949
+      "mila": 94408.64,
+      "stpau": 126521.08,
+      "santjoan": 36949.4
     },
     "feb": {
-      "mila": 99243,
-      "stpau": 130322,
-      "santjoan": 83304
+      "mila": 99031.11,
+      "stpau": 127960.61,
+      "santjoan": 83303.72
     }
   },
   "channel": {
