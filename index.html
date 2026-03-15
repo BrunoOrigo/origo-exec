@@ -1,110 +1,104 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>origo — executive dashboard</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap" rel="stylesheet">
-<style>
-*{margin:0;padding:0;box-sizing:border-box}
-:root{
-  --bg:#faf9f6;--bg2:#ffffff;--bg3:#f3f2ee;
-  --text:#1a1a18;--text2:#4a4a44;--text3:#8a8a80;
-  --green-dark:#2d4a28;--green:#3d6635;--green-light:#5a8f4e;--green-bg:#e8f0e5;
-  --amber:#9e7520;--amber-light:#c8942a;--amber-bg:#fdf4e0;
-  --brown:#8b6c42;--brown-bg:#f5efe5;
-  --red:#b33;--red-bg:#fce8e8;
-  --blue:#3a7ab8;
-  --border:#e0dfd8;--border2:#d0cfc5;
-  --header-bg:#2d4a28;--header-text:#ffffff;
-  --radius:6px;--radius-lg:10px;
-}
-html{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:var(--text);font-size:14px;line-height:1.5}
-body{max-width:1200px;margin:0 auto;padding:0 0 60px}
-
-header{background:var(--header-bg);color:var(--header-text);padding:16px 24px;display:flex;align-items:center;justify-content:space-between;border-radius:0 0 var(--radius-lg) var(--radius-lg)}
-header h1{font-size:17px;font-weight:500;letter-spacing:-.01em}
-header h1 span{font-weight:300;opacity:.7}
-.header-right{display:flex;align-items:center;gap:14px}
-.store-select{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);color:#fff;padding:6px 12px;border-radius:var(--radius);font-family:inherit;font-size:13px;cursor:pointer;-webkit-appearance:none;appearance:none;padding-right:28px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' fill='white'%3E%3Cpath d='M0 0l5 6 5-6z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center}
-.store-select option{color:#1a1a18;background:#fff}
-.status-dot{width:7px;height:7px;border-radius:50%;background:#5a8f4e;display:inline-block;animation:pulse 2s infinite}
-@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
-.status-text{font-size:11px;color:rgba(255,255,255,.7);display:flex;align-items:center;gap:5px}
-
-.main{padding:0 24px}
-
-.tabs{display:flex;gap:0;margin:20px 0 0;border-bottom:2px solid var(--border)}
-.tab{padding:10px 20px;font-size:13px;color:var(--text3);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-2px;transition:all .15s}
-.tab:hover{color:var(--text2)}
-.tab.active{color:var(--green);border-bottom-color:var(--green);font-weight:500}
-
-.kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:20px 0}
-.kpi{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-lg);padding:16px 18px}
-.kpi-label{font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px}
-.kpi-value{font-size:26px;font-weight:600;letter-spacing:-.03em;line-height:1.2;color:var(--text)}
-.kpi-sub{font-size:12px;margin-top:5px;display:flex;align-items:center;gap:4px;color:var(--text3)}
-.kpi-pct{font-size:11px;padding:2px 7px;border-radius:4px;font-weight:500}
-.kpi-pct.pos{background:var(--green-bg);color:var(--green)}
-.kpi-pct.neg{background:var(--red-bg);color:var(--red)}
-
-.section-title{font-size:15px;font-weight:500;color:var(--text);margin:28px 0 12px;display:flex;align-items:center;gap:8px}
-.section-title::before{content:'';display:inline-block;width:3px;height:16px;background:var(--green);border-radius:2px}
-
-.chart-row{display:grid;grid-template-columns:2fr 1fr;gap:14px;margin-bottom:20px}
-.chart-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-lg);padding:16px 18px}
-.chart-card h3{font-size:12px;font-weight:500;color:var(--text2);margin-bottom:12px;text-transform:uppercase;letter-spacing:.04em}
-
-table{width:100%;border-collapse:collapse}
-table thead{background:var(--green-dark)}
-table th{text-align:left;font-size:11px;color:#fff;text-transform:uppercase;letter-spacing:.05em;padding:10px 14px;font-weight:500}
-table th.num{text-align:right}
-table td{padding:10px 14px;font-size:13px;border-bottom:1px solid var(--border)}
-table tr:last-child td{border-bottom:none}
-table tr:nth-child(even){background:var(--bg3)}
-table .name{font-weight:500}
-table .num{text-align:right;font-variant-numeric:tabular-nums}
-table .pct{color:var(--text3);font-size:12px}
-table .up{color:var(--green)}
-table .down{color:var(--red)}
-
-.pnl-table .section-row td{font-weight:600;padding-top:14px;font-size:13px;background:var(--green-bg)}
-.pnl-table .sub-row td{color:var(--text2);font-size:12px;padding:7px 14px 7px 28px}
-.pnl-table .total-row td{font-weight:600;border-top:2px solid var(--green);padding-top:12px;background:var(--amber-bg)}
-.pnl-table .neg{color:var(--red)}
-
-.legend{display:flex;gap:14px;margin:8px 0 0;flex-wrap:wrap}
-.legend-item{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--text3)}
-.legend-dot{width:8px;height:8px;border-radius:2px}
-
-.note-box{background:var(--amber-bg);border:1px solid #e8d9a8;border-radius:var(--radius);padding:10px 14px;font-size:12px;color:var(--amber);margin:12px 0}
-
-.placeholder-card{background:var(--bg2);border:1px dashed var(--border2);border-radius:var(--radius-lg);padding:32px 24px;text-align:center}
-.placeholder-card .icon{font-size:28px;margin-bottom:8px;opacity:.5}
-.placeholder-card .title{font-size:14px;font-weight:500;color:var(--text2);margin-bottom:4px}
-.placeholder-card .desc{font-size:12px;color:var(--text3)}
-
-.debt-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:20px 0}
-.debt-slot{background:var(--bg2);border:1px dashed var(--border2);border-radius:var(--radius-lg);padding:18px;text-align:center}
-.debt-slot .slot-label{font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px}
-.debt-slot .slot-name{font-size:14px;font-weight:500;color:var(--text);margin-bottom:4px}
-.debt-slot .slot-placeholder{font-size:22px;color:var(--border2);font-weight:300}
-
-footer{margin:40px 24px 0;padding:16px 0;border-top:1px solid var(--border);display:flex;justify-content:space-between;font-size:11px;color:var(--text3)}
-
-@media(max-width:768px){
-  .kpi-grid,.debt-grid{grid-template-columns:repeat(2,1fr)}
-  .chart-row{grid-template-columns:1fr}
-}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>origo — executive dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap" rel="stylesheet">
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    :root{
+      --bg:#faf9f6;--bg2:#ffffff;--bg3:#f3f2ee;
+      --text:#1a1a18;--text2:#4a4a44;--text3:#8a8a80;
+      --green-dark:#2d4a28;--green:#3d6635;--green-light:#5a8f4e;--green-bg:#e8f0e5;
+      --amber:#9e7520;--amber-light:#c8942a;--amber-bg:#fdf4e0;
+      --brown:#8b6c42;--brown-bg:#f5efe5;
+      --red:#b33;--red-bg:#fce8e8;
+      --blue:#3a7ab8;
+      --border:#e0dfd8;--border2:#d0cfc5;
+      --header-bg:#2d4a28;--header-text:#ffffff;
+      --radius:6px;--radius-lg:10px;
+    }
+    html{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:var(--text);font-size:14px;line-height:1.5}
+    body{max-width:1200px;margin:0 auto;padding:0 0 60px}
+    header{background:var(--header-bg);color:var(--header-text);padding:16px 24px;display:flex;align-items:center;justify-content:space-between;border-radius:0 0 var(--radius-lg) var(--radius-lg)}
+    header h1{font-size:17px;font-weight:500;letter-spacing:-.01em}
+    header h1 span{font-weight:300;opacity:.7}
+    .header-right{display:flex;align-items:center;gap:14px}
+    .store-select{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);color:#fff;padding:6px 12px;border-radius:var(--radius);font-family:inherit;font-size:13px;cursor:pointer;-webkit-appearance:none;appearance:none;padding-right:28px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' fill='white'%3E%3Cpath d='M0 0l5 6 5-6z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center}
+    .store-select option{color:#1a1a18;background:#fff}
+    .data-status{font-size:11px;color:rgba(255,255,255,.7);display:flex;align-items:center;gap:5px}
+    .data-status .dot{width:7px;height:7px;border-radius:50%;display:inline-block}
+    .data-status .dot.live{background:#5a8f4e;animation:pulse 2s infinite}
+    .data-status .dot.stale{background:#c8942a}
+    .data-status .dot.error{background:#b33}
+    @keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+    .main{padding:0 24px}
+    .tabs{display:flex;gap:0;margin:20px 0 0;border-bottom:2px solid var(--border)}
+    .tab{padding:10px 20px;font-size:13px;color:var(--text3);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-2px;transition:all .15s}
+    .tab:hover{color:var(--text2)}
+    .tab.active{color:var(--green);border-bottom-color:var(--green);font-weight:500}
+    .kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:20px 0}
+    .kpi{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-lg);padding:16px 18px}
+    .kpi-label{font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px}
+    .kpi-value{font-size:26px;font-weight:600;letter-spacing:-.03em;line-height:1.2;color:var(--text)}
+    .kpi-sub{font-size:12px;margin-top:5px;display:flex;align-items:center;gap:4px;color:var(--text3)}
+    .kpi-pct{font-size:11px;padding:2px 7px;border-radius:4px;font-weight:500}
+    .kpi-pct.pos{background:var(--green-bg);color:var(--green)}
+    .kpi-pct.neg{background:var(--red-bg);color:var(--red)}
+    .section-title{font-size:15px;font-weight:500;color:var(--text);margin:28px 0 12px;display:flex;align-items:center;gap:8px}
+    .section-title::before{content:'';display:inline-block;width:3px;height:16px;background:var(--green);border-radius:2px}
+    .chart-row{display:grid;grid-template-columns:2fr 1fr;gap:14px;margin-bottom:20px}
+    .chart-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-lg);padding:16px 18px}
+    .chart-card h3{font-size:12px;font-weight:500;color:var(--text2);margin-bottom:12px;text-transform:uppercase;letter-spacing:.04em}
+    table{width:100%;border-collapse:collapse}
+    table thead{background:var(--green-dark)}
+    table th{text-align:left;font-size:11px;color:#fff;text-transform:uppercase;letter-spacing:.05em;padding:10px 14px;font-weight:500}
+    table th.num{text-align:right}
+    table td{padding:10px 14px;font-size:13px;border-bottom:1px solid var(--border)}
+    table tr:last-child td{border-bottom:none}
+    table tr:nth-child(even){background:var(--bg3)}
+    table .name{font-weight:500}
+    table .num{text-align:right;font-variant-numeric:tabular-nums}
+    table .pct{color:var(--text3);font-size:12px}
+    table .up{color:var(--green)}
+    table .down{color:var(--red)}
+    .pnl-table .section-row td{font-weight:600;padding-top:14px;font-size:13px;background:var(--green-bg)}
+    .pnl-table .sub-row td{color:var(--text2);font-size:12px;padding:7px 14px 7px 28px}
+    .pnl-table .total-row td{font-weight:600;border-top:2px solid var(--green);padding-top:12px;background:var(--amber-bg)}
+    .pnl-table .neg{color:var(--red)}
+    .legend{display:flex;gap:14px;margin:8px 0 0;flex-wrap:wrap}
+    .legend-item{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--text3)}
+    .legend-dot{width:8px;height:8px;border-radius:2px}
+    .note-box{background:var(--amber-bg);border:1px solid #e8d9a8;border-radius:var(--radius);padding:10px 14px;font-size:12px;color:var(--amber);margin:12px 0}
+    .placeholder-card{background:var(--bg2);border:1px dashed var(--border2);border-radius:var(--radius-lg);padding:32px 24px;text-align:center}
+    .placeholder-card .icon{font-size:28px;margin-bottom:8px;opacity:.5}
+    .placeholder-card .title{font-size:14px;font-weight:500;color:var(--text2);margin-bottom:4px}
+    .placeholder-card .desc{font-size:12px;color:var(--text3)}
+    .debt-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:20px 0}
+    .debt-slot{background:var(--bg2);border:1px dashed var(--border2);border-radius:var(--radius-lg);padding:18px;text-align:center}
+    .debt-slot .slot-label{font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px}
+    .debt-slot .slot-name{font-size:14px;font-weight:500;color:var(--text);margin-bottom:4px}
+    .debt-slot .slot-placeholder{font-size:22px;color:var(--border2);font-weight:300}
+    .stale-banner{background:var(--amber-bg);border:1px solid #e8d9a8;color:var(--amber);padding:10px 24px;font-size:12px;text-align:center;display:none}
+    footer{margin:40px 24px 0;padding:16px 0;border-top:1px solid var(--border);display:flex;justify-content:space-between;font-size:11px;color:var(--text3)}
+    @media(max-width:768px){
+      .kpi-grid,.debt-grid{grid-template-columns:repeat(2,1fr)}
+      .chart-row{grid-template-columns:1fr}
+    }
+  </style>
 </head>
 <body>
 
 <header>
   <h1>origo <span>— executive dashboard</span></h1>
   <div class="header-right">
-    <span class="status-text"><span class="status-dot"></span> Data connected</span>
+    <!-- Dynamic data status: shows real timestamp from data.json -->
+    <span class="data-status" id="dataStatus">
+      <span class="dot" id="statusDot"></span>
+      <span id="statusText">Loading…</span>
+    </span>
     <select class="store-select" id="storeFilter">
       <option value="all">Consolidated</option>
       <option value="mila">Milà</option>
@@ -114,6 +108,9 @@ footer{margin:40px 24px 0;padding:16px 0;border-top:1px solid var(--border);disp
     </select>
   </div>
 </header>
+
+<!-- Banner shown when data.json fetch fails and fallback cache is used -->
+<div class="stale-banner" id="staleBanner"></div>
 
 <div class="main">
   <div class="tabs">
@@ -128,24 +125,24 @@ footer{margin:40px 24px 0;padding:16px 0;border-top:1px solid var(--border);disp
   <div id="tab-overview">
     <div class="kpi-grid">
       <div class="kpi">
-        <div class="kpi-label">Revenue — Feb 2026</div>
-        <div class="kpi-value">€312,869</div>
-        <div class="kpi-sub"><span class="kpi-pct pos">+18.4%</span> vs Jan</div>
+        <div class="kpi-label" id="kpi-rev-label">Revenue — …</div>
+        <div class="kpi-value" id="kpi-rev-value">—</div>
+        <div class="kpi-sub"><span class="kpi-pct pos" id="kpi-rev-pct">—</span> vs prev</div>
       </div>
       <div class="kpi">
-        <div class="kpi-label">EBITDA — Feb 2026</div>
-        <div class="kpi-value">€70,510</div>
-        <div class="kpi-sub"><span class="kpi-pct pos">22.5%</span> margin</div>
+        <div class="kpi-label" id="kpi-ebitda-label">EBITDA — …</div>
+        <div class="kpi-value" id="kpi-ebitda-value">—</div>
+        <div class="kpi-sub"><span class="kpi-pct pos" id="kpi-ebitda-pct">—</span> margin</div>
       </div>
       <div class="kpi">
-        <div class="kpi-label">COGS — Feb 2026</div>
-        <div class="kpi-value">23.8%</div>
-        <div class="kpi-sub"><span class="kpi-pct pos">-4.0pp</span> vs Jan (27.8%)</div>
+        <div class="kpi-label" id="kpi-cogs-label">COGS — …</div>
+        <div class="kpi-value" id="kpi-cogs-value">—</div>
+        <div class="kpi-sub"><span class="kpi-pct pos" id="kpi-cogs-pct">—</span></div>
       </div>
       <div class="kpi">
-        <div class="kpi-label">Personnel — Feb 2026</div>
-        <div class="kpi-value">41.2%</div>
-        <div class="kpi-sub"><span class="kpi-pct pos">-9.9pp</span> vs Jan (51.1%)</div>
+        <div class="kpi-label" id="kpi-pers-label">Personnel — …</div>
+        <div class="kpi-value" id="kpi-pers-value">—</div>
+        <div class="kpi-sub"><span class="kpi-pct pos" id="kpi-pers-pct">—</span></div>
       </div>
     </div>
 
@@ -156,62 +153,27 @@ footer{margin:40px 24px 0;padding:16px 0;border-top:1px solid var(--border);disp
         <div class="legend">
           <div class="legend-item"><div class="legend-dot" style="background:var(--green)"></div>Revenue</div>
           <div class="legend-item"><div class="legend-dot" style="background:var(--amber-light)"></div>EBITDA</div>
-          <div class="legend-item"><div class="legend-dot" style="background:rgba(61,102,53,.25)"></div>Mar (partial)</div>
+          <div class="legend-item"><div class="legend-dot" style="background:rgba(61,102,53,.25)"></div><span id="legend-partial">Mar (partial)</span></div>
         </div>
       </div>
       <div class="chart-card">
-        <h3>Revenue by channel — Feb</h3>
+        <h3 id="channel-chart-title">Revenue by channel — …</h3>
         <div style="position:relative;height:260px"><canvas id="channelChart"></canvas></div>
-        <div class="legend">
-          <div class="legend-item"><div class="legend-dot" style="background:var(--green)"></div>Store 91%</div>
-          <div class="legend-item"><div class="legend-dot" style="background:var(--amber-light)"></div>B2B 9%</div>
-          <div class="legend-item"><div class="legend-dot" style="background:var(--blue)"></div>E-com 1%</div>
-        </div>
+        <div class="legend" id="channel-legend"></div>
       </div>
     </div>
 
-    <div class="section-title">Revenue by store — Jan vs Feb 2026</div>
+    <div class="section-title" id="store-table-title">Revenue by store — …</div>
     <div class="chart-card" style="margin-bottom:20px;padding:0;overflow:hidden">
       <table>
         <thead>
           <tr><th>Store</th><th class="num">Jan 2026</th><th class="num">Feb 2026</th><th class="num">MoM %</th><th class="num">Share</th></tr>
         </thead>
-        <tbody>
-          <tr>
-            <td class="name">Milà</td>
-            <td class="num">€96,732</td>
-            <td class="num">€99,243</td>
-            <td class="num up">+2.6%</td>
-            <td class="num pct">31.7%</td>
-          </tr>
-          <tr>
-            <td class="name">Sant Pau</td>
-            <td class="num">€130,396</td>
-            <td class="num">€130,322</td>
-            <td class="num pct">-0.1%</td>
-            <td class="num pct">41.7%</td>
-          </tr>
-          <tr>
-            <td class="name">Sant Joan</td>
-            <td class="num">€36,949</td>
-            <td class="num">€83,304</td>
-            <td class="num up">+125.5%</td>
-            <td class="num pct">26.6%</td>
-          </tr>
-          <tr style="font-weight:600;background:var(--green-bg)">
-            <td>Total</td>
-            <td class="num">€264,172</td>
-            <td class="num">€312,869</td>
-            <td class="num up">+18.4%</td>
-            <td class="num">100%</td>
-          </tr>
-        </tbody>
+        <tbody id="store-table-body"></tbody>
       </table>
     </div>
 
-    <div class="note-box">
-      March 2026 data is partial (through ~Mar 15). March personnel expenses not yet available in Holded.
-    </div>
+    <div class="note-box" id="overview-note"></div>
   </div>
 
   <!-- ===== P&L ===== -->
@@ -223,30 +185,9 @@ footer{margin:40px 24px 0;padding:16px 0;border-top:1px solid var(--border);disp
         <thead>
           <tr><th></th><th class="num">Jan 2026</th><th class="num">% Rev</th><th class="num">Feb 2026</th><th class="num">% Rev</th></tr>
         </thead>
-        <tbody>
-          <tr class="section-row"><td>Operating revenue</td><td class="num">€264,172</td><td class="num">100.0%</td><td class="num">€312,869</td><td class="num">100.0%</td></tr>
-          <tr class="sub-row"><td>Physical store sales</td><td class="num">€234,465</td><td class="num pct">88.8%</td><td class="num">€286,814</td><td class="num pct">91.7%</td></tr>
-          <tr class="sub-row"><td>B2B sales</td><td class="num">€27,550</td><td class="num pct">10.4%</td><td class="num">€28,286</td><td class="num pct">9.0%</td></tr>
-          <tr class="sub-row"><td>E-commerce sales</td><td class="num">€6,198</td><td class="num pct">2.3%</td><td class="num">€2,573</td><td class="num pct">0.8%</td></tr>
-          <tr class="sub-row"><td>Discounts</td><td class="num neg">-€4,041</td><td class="num pct">-1.5%</td><td class="num neg">-€4,805</td><td class="num pct">-1.5%</td></tr>
-
-          <tr class="section-row"><td>Cost of goods sold</td><td class="num neg">-€73,546</td><td class="num">-27.8%</td><td class="num neg">-€74,479</td><td class="num">-23.8%</td></tr>
-
-          <tr class="section-row"><td style="color:var(--green)">Gross profit</td><td class="num" style="color:var(--green)">€190,626</td><td class="num" style="color:var(--green)">72.2%</td><td class="num" style="color:var(--green)">€238,390</td><td class="num" style="color:var(--green)">76.2%</td></tr>
-
-          <tr class="section-row"><td>Personnel expenses</td><td class="num neg">-€135,005</td><td class="num">-51.1%</td><td class="num neg">-€129,018</td><td class="num">-41.2%</td></tr>
-
-          <tr class="section-row"><td>Operating expenses</td><td class="num neg">-€27,432</td><td class="num">-10.4%</td><td class="num neg">-€38,862</td><td class="num">-12.4%</td></tr>
-
-          <tr class="total-row"><td style="color:var(--amber)">EBITDA</td><td class="num" style="color:var(--amber)">€28,189</td><td class="num" style="color:var(--amber)">10.7%</td><td class="num" style="color:var(--amber)">€70,510</td><td class="num" style="color:var(--amber)">22.5%</td></tr>
-
-          <tr class="section-row"><td>Financial results</td><td class="num neg">-€2,188</td><td class="num">-0.8%</td><td class="num neg">-€2,241</td><td class="num">-0.7%</td></tr>
-
-          <tr class="total-row"><td style="font-weight:700">Earnings before taxes</td><td class="num" style="font-weight:700">€26,001</td><td class="num" style="font-weight:700">9.8%</td><td class="num" style="font-weight:700">€68,269</td><td class="num" style="font-weight:700">21.8%</td></tr>
-        </tbody>
+        <tbody id="pnl-table-body"></tbody>
       </table>
     </div>
-
     <div class="section-title">P&L waterfall — February 2026</div>
     <div class="chart-card">
       <div style="position:relative;height:300px"><canvas id="waterfallChart"></canvas></div>
@@ -259,29 +200,7 @@ footer{margin:40px 24px 0;padding:16px 0;border-top:1px solid var(--border);disp
     <div class="chart-card" style="margin-bottom:20px">
       <div style="position:relative;height:280px"><canvas id="storeChart"></canvas></div>
     </div>
-
-    <div class="kpi-grid" style="grid-template-columns:repeat(4,1fr)">
-      <div class="kpi" style="border-left:3px solid var(--green)">
-        <div class="kpi-label">Milà — Feb</div>
-        <div class="kpi-value">€99,243</div>
-        <div class="kpi-sub">31.7% of total · <span class="kpi-pct pos">+2.6%</span></div>
-      </div>
-      <div class="kpi" style="border-left:3px solid var(--amber-light)">
-        <div class="kpi-label">Sant Pau — Feb</div>
-        <div class="kpi-value">€130,322</div>
-        <div class="kpi-sub">41.7% of total · <span class="pct">-0.1%</span></div>
-      </div>
-      <div class="kpi" style="border-left:3px solid var(--blue)">
-        <div class="kpi-label">Sant Joan — Feb</div>
-        <div class="kpi-value">€83,304</div>
-        <div class="kpi-sub">26.6% of total · <span class="kpi-pct pos">+125.5%</span></div>
-      </div>
-      <div class="kpi" style="border-left:3px solid var(--text3)">
-        <div class="kpi-label">HQ (Admin) — Feb</div>
-        <div class="kpi-value" style="color:var(--text3)">—</div>
-        <div class="kpi-sub">Cost center only</div>
-      </div>
-    </div>
+    <div class="kpi-grid" id="store-kpi-grid" style="grid-template-columns:repeat(4,1fr)"></div>
 
     <div class="section-title">P&L by store — February 2026</div>
     <div class="chart-card" style="padding:0;overflow:hidden">
@@ -289,48 +208,7 @@ footer{margin:40px 24px 0;padding:16px 0;border-top:1px solid var(--border);disp
         <thead>
           <tr><th></th><th class="num">Milà</th><th class="num">Sant Pau</th><th class="num">Sant Joan</th><th class="num">HQ</th><th class="num">Total</th></tr>
         </thead>
-        <tbody>
-          <tr class="section-row">
-            <td>Revenue</td>
-            <td class="num">€99,243</td>
-            <td class="num">€130,322</td>
-            <td class="num">€83,304</td>
-            <td class="num pct">—</td>
-            <td class="num" style="font-weight:700">€312,869</td>
-          </tr>
-          <tr class="sub-row">
-            <td>COGS</td>
-            <td class="num neg">TBD</td>
-            <td class="num neg">TBD</td>
-            <td class="num neg">TBD</td>
-            <td class="num pct">—</td>
-            <td class="num neg">-€74,479</td>
-          </tr>
-          <tr class="sub-row">
-            <td>Personnel</td>
-            <td class="num neg">TBD</td>
-            <td class="num neg">TBD</td>
-            <td class="num neg">TBD</td>
-            <td class="num neg">TBD</td>
-            <td class="num neg">-€129,018</td>
-          </tr>
-          <tr class="sub-row">
-            <td>OPEX</td>
-            <td class="num neg">TBD</td>
-            <td class="num neg">TBD</td>
-            <td class="num neg">TBD</td>
-            <td class="num neg">TBD</td>
-            <td class="num neg">-€38,862</td>
-          </tr>
-          <tr class="total-row">
-            <td style="color:var(--amber)">EBITDA</td>
-            <td class="num" style="color:var(--amber)">TBD</td>
-            <td class="num" style="color:var(--amber)">TBD</td>
-            <td class="num" style="color:var(--amber)">TBD</td>
-            <td class="num" style="color:var(--amber)">TBD</td>
-            <td class="num" style="color:var(--amber);font-weight:700">€70,510</td>
-          </tr>
-        </tbody>
+        <tbody id="store-pnl-body"></tbody>
       </table>
     </div>
     <div class="note-box">Per-store P&L breakdown will be populated once BigQuery tag_group mapping is validated for all cost categories.</div>
@@ -339,7 +217,6 @@ footer{margin:40px 24px 0;padding:16px 0;border-top:1px solid var(--border);disp
   <!-- ===== PRODUCTIVITY ===== -->
   <div id="tab-productivity" style="display:none">
     <div class="section-title">Workforce productivity</div>
-
     <div class="kpi-grid" style="grid-template-columns:repeat(4,1fr)">
       <div class="kpi">
         <div class="kpi-label">Headcount (approx.)</div>
@@ -357,31 +234,23 @@ footer{margin:40px 24px 0;padding:16px 0;border-top:1px solid var(--border);disp
         <div class="kpi-sub">Pending Skello data</div>
       </div>
       <div class="kpi">
-        <div class="kpi-label">Personnel as % Rev</div>
-        <div class="kpi-value">41.2%</div>
-        <div class="kpi-sub"><span class="kpi-pct pos">-9.9pp</span> vs Jan</div>
+        <div class="kpi-label" id="prod-pers-label">Personnel as % Rev</div>
+        <div class="kpi-value" id="prod-pers-value">—</div>
+        <div class="kpi-sub"><span class="kpi-pct pos" id="prod-pers-pct">—</span></div>
       </div>
     </div>
-
     <div class="placeholder-card" style="margin:20px 0">
       <div class="icon">📊</div>
       <div class="title">Productivity dashboard — coming soon</div>
       <div class="desc">This section will display hours worked vs revenue by store, planned vs actual shifts, and €/hour metrics once the Skello → BigQuery pipeline (P6) is fully operational.</div>
     </div>
-
     <div class="section-title">Planned layout</div>
     <div class="chart-card" style="padding:0;overflow:hidden">
       <table>
         <thead>
           <tr><th>Store</th><th class="num">Headcount</th><th class="num">Hours worked</th><th class="num">Revenue</th><th class="num">€ / hour</th><th class="num">Personnel cost</th></tr>
         </thead>
-        <tbody>
-          <tr><td class="name">Milà</td><td class="num pct">—</td><td class="num pct">—</td><td class="num">€99,243</td><td class="num pct">—</td><td class="num pct">—</td></tr>
-          <tr><td class="name">Sant Pau</td><td class="num pct">—</td><td class="num pct">—</td><td class="num">€130,322</td><td class="num pct">—</td><td class="num pct">—</td></tr>
-          <tr><td class="name">Sant Joan</td><td class="num pct">—</td><td class="num pct">—</td><td class="num">€83,304</td><td class="num pct">—</td><td class="num pct">—</td></tr>
-          <tr><td class="name">HQ (Admin)</td><td class="num pct">—</td><td class="num pct">—</td><td class="num pct">—</td><td class="num pct">—</td><td class="num pct">—</td></tr>
-          <tr style="font-weight:600;background:var(--green-bg)"><td>Total</td><td class="num pct">~60</td><td class="num pct">—</td><td class="num">€312,869</td><td class="num pct">—</td><td class="num">-€129,018</td></tr>
-        </tbody>
+        <tbody id="prod-table-body"></tbody>
       </table>
     </div>
   </div>
@@ -389,30 +258,12 @@ footer{margin:40px 24px 0;padding:16px 0;border-top:1px solid var(--border);disp
   <!-- ===== DEBT ===== -->
   <div id="tab-debt" style="display:none">
     <div class="section-title">Debt overview</div>
-
     <div class="debt-grid">
-      <div class="debt-slot">
-        <div class="slot-label">Total debt</div>
-        <div class="slot-placeholder">—</div>
-        <div class="desc" style="font-size:11px;color:var(--text3);margin-top:4px">Pending data</div>
-      </div>
-      <div class="debt-slot">
-        <div class="slot-label">Leasings</div>
-        <div class="slot-placeholder">—</div>
-        <div class="desc" style="font-size:11px;color:var(--text3);margin-top:4px">Monthly installments</div>
-      </div>
-      <div class="debt-slot">
-        <div class="slot-label">Bank loans</div>
-        <div class="slot-placeholder">—</div>
-        <div class="desc" style="font-size:11px;color:var(--text3);margin-top:4px">Long-term</div>
-      </div>
-      <div class="debt-slot">
-        <div class="slot-label">Shareholder loans</div>
-        <div class="slot-placeholder">—</div>
-        <div class="desc" style="font-size:11px;color:var(--text3);margin-top:4px">Intercompany</div>
-      </div>
+      <div class="debt-slot"><div class="slot-label">Total debt</div><div class="slot-placeholder">—</div><div class="desc" style="font-size:11px;color:var(--text3);margin-top:4px">Pending data</div></div>
+      <div class="debt-slot"><div class="slot-label">Leasings</div><div class="slot-placeholder">—</div><div class="desc" style="font-size:11px;color:var(--text3);margin-top:4px">Monthly installments</div></div>
+      <div class="debt-slot"><div class="slot-label">Bank loans</div><div class="slot-placeholder">—</div><div class="desc" style="font-size:11px;color:var(--text3);margin-top:4px">Long-term</div></div>
+      <div class="debt-slot"><div class="slot-label">Shareholder loans</div><div class="slot-placeholder">—</div><div class="desc" style="font-size:11px;color:var(--text3);margin-top:4px">Intercompany</div></div>
     </div>
-
     <div class="section-title">Debt by store</div>
     <div class="chart-card" style="padding:0;overflow:hidden">
       <table>
@@ -433,124 +284,413 @@ footer{margin:40px 24px 0;padding:16px 0;border-top:1px solid var(--border);disp
     </div>
     <div class="note-box">Debt data will be manually entered or pulled from Holded once the debt schedule is formalized. Each store has its own leasing and loan structure.</div>
   </div>
-
 </div>
 
 <footer>
-  <span>Origo Bakery SL — Executive Dashboard v1.2</span>
-  <span>Source: Holded → BigQuery → P&L 2026</span>
-  <span>Last updated: Mar 15, 2026</span>
+  <span>Origo Bakery SL — Executive Dashboard v2.0</span>
+  <span>Source: data.json ← n8n ← BigQuery</span>
+  <span id="footer-updated">Last updated: —</span>
 </footer>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <script>
-document.querySelectorAll('.tab').forEach(tab => {
-  tab.addEventListener('click', () => {
-    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-    tab.classList.add('active');
-    document.querySelectorAll('[id^="tab-"]').forEach(p => p.style.display = 'none');
-    document.getElementById('tab-' + tab.dataset.tab).style.display = 'block';
-  });
-});
+/* ============================================================
+   ORIGO EXECUTIVE DASHBOARD — Dynamic data loader
+   Architecture: data.json (generated by n8n daily) → fetch → render
+   ============================================================ */
 
-const grid = 'rgba(0,0,0,.06)';
-const tick = '#8a8a80';
+// ── Formatting helpers ──────────────────────────────────────
+
+/** Format number as €XXX,XXX */
+function eur(n) {
+  if (n == null) return '—';
+  const abs = Math.abs(Math.round(n));
+  const formatted = '€' + abs.toLocaleString('en-IE');
+  return n < 0 ? '-' + formatted : formatted;
+}
+
+/** Format as percentage with % sign */
+function pct(n, decimals) {
+  if (n == null) return '—';
+  decimals = decimals !== undefined ? decimals : 1;
+  return n.toFixed(decimals) + '%';
+}
+
+/** Format pp change: e.g. "-4.0pp" */
+function ppChange(current, prev) {
+  var diff = current - prev;
+  var sign = diff > 0 ? '+' : '';
+  return sign + diff.toFixed(1) + 'pp';
+}
+
+/** Format MoM %: e.g. "+18.4%" */
+function momPct(current, prev) {
+  if (!prev) return '—';
+  var change = ((current - prev) / prev) * 100;
+  var sign = change > 0 ? '+' : '';
+  return sign + change.toFixed(1) + '%';
+}
+
+/** Parse ISO date to display string: "15 Mar 2026 06:00" */
+function formatTimestamp(iso) {
+  var d = new Date(iso);
+  var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  var day = d.getUTCDate();
+  var mon = months[d.getUTCMonth()];
+  var year = d.getUTCFullYear();
+  var hh = String(d.getUTCHours()).padStart(2, '0');
+  var mm = String(d.getUTCMinutes()).padStart(2, '0');
+  return day + ' ' + mon + ' ' + year + ' ' + hh + ':' + mm;
+}
+
+// ── Chart instances (for cleanup on re-render) ─────────────
+var charts = {};
+
+// ── Chart.js defaults ───────────────────────────────────────
+var grid = 'rgba(0,0,0,.06)';
+var tick = '#8a8a80';
 Chart.defaults.color = tick;
 Chart.defaults.font.family = "'DM Sans', system-ui";
 Chart.defaults.font.size = 11;
 
-new Chart(document.getElementById('revenueChart'), {
-  type: 'bar',
-  data: {
-    labels: ['Jan 2026', 'Feb 2026', 'Mar 2026 (partial)'],
-    datasets: [{
-      label: 'Revenue',
-      data: [264172, 312869, 144926],
-      backgroundColor: ['#3d6635', '#3d6635', 'rgba(61,102,53,.25)'],
-      borderRadius: 4, barPercentage: .5
-    }, {
-      label: 'EBITDA',
-      data: [28189, 70510, null],
-      backgroundColor: ['#c8942a', '#c8942a', 'rgba(200,148,42,.25)'],
-      borderRadius: 4, barPercentage: .5
-    }]
-  },
-  options: {
-    responsive: true, maintainAspectRatio: false,
-    plugins: { legend: { display: false } },
-    scales: {
-      x: { grid: { display: false }, ticks: { autoSkip: false } },
-      y: { grid: { color: grid }, ticks: { callback: v => '€' + Math.round(v/1000) + 'k' } }
-    }
-  }
+// ── Tab switching ───────────────────────────────────────────
+document.querySelectorAll('.tab').forEach(function(tab) {
+  tab.addEventListener('click', function() {
+    document.querySelectorAll('.tab').forEach(function(t) { t.classList.remove('active'); });
+    tab.classList.add('active');
+    document.querySelectorAll('[id^="tab-"]').forEach(function(p) { p.style.display = 'none'; });
+    document.getElementById('tab-' + tab.dataset.tab).style.display = 'block';
+  });
 });
 
-new Chart(document.getElementById('channelChart'), {
-  type: 'doughnut',
-  data: {
-    labels: ['Physical store', 'B2B', 'E-commerce', 'Discounts'],
-    datasets: [{
-      data: [286814, 28286, 2573, 4805],
-      backgroundColor: ['#3d6635', '#c8942a', '#3a7ab8', '#ccc'],
-      borderWidth: 0, hoverOffset: 6
-    }]
-  },
-  options: {
-    responsive: true, maintainAspectRatio: false, cutout: '65%',
-    plugins: { legend: { display: false } }
-  }
-});
+// ── Main render function ────────────────────────────────────
 
-new Chart(document.getElementById('waterfallChart'), {
-  type: 'bar',
-  data: {
-    labels: ['Revenue', 'COGS', 'Gross profit', 'Personnel', 'OPEX', 'EBITDA', 'Financial', 'EBT'],
-    datasets: [{
-      label: 'Base',
-      data: [0, 312869-74479, 0, 238390-129018, 238390-129018-38862, 0, 70510-2241, 0],
-      backgroundColor: 'transparent', borderWidth: 0, barPercentage: .55
-    }, {
-      label: 'Value',
-      data: [312869, -74479, 238390, -129018, -38862, 70510, -2241, 68269],
-      backgroundColor: ['#3d6635','#b33','#3d6635','#b33','#b33','#c8942a','#b33','#c8942a'],
-      borderRadius: 3, barPercentage: .55
-    }]
-  },
-  options: {
-    responsive: true, maintainAspectRatio: false,
-    plugins: { legend: { display: false }, tooltip: {
-      callbacks: { label: ctx => ctx.datasetIndex === 1 ? '€' + Math.round(ctx.raw).toLocaleString() : '' }
-    }},
-    scales: {
-      x: { stacked: true, grid: { display: false }, ticks: { autoSkip: false, maxRotation: 45 } },
-      y: { stacked: true, grid: { color: grid }, ticks: { callback: v => '€' + Math.round(v/1000) + 'k' } }
-    }
-  }
-});
+function render(D) {
+  var period = D.period;
+  var ov = D.overview;
+  var pl = D.pl;
+  var st = D.stores;
+  var ch = D.channel;
 
-new Chart(document.getElementById('storeChart'), {
-  type: 'bar',
-  data: {
-    labels: ['Milà', 'Sant Pau', 'Sant Joan'],
-    datasets: [{
-      label: 'Jan 2026',
-      data: [96732, 130396, 36949],
-      backgroundColor: 'rgba(61,102,53,.3)', borderRadius: 4, barPercentage: .35
-    }, {
-      label: 'Feb 2026',
-      data: [99243, 130322, 83304],
-      backgroundColor: '#3d6635', borderRadius: 4, barPercentage: .35
-    }]
-  },
-  options: {
-    responsive: true, maintainAspectRatio: false,
-    plugins: { legend: { display: true, position: 'top', labels: { boxWidth: 10, padding: 14, font: { size: 11 } } } },
-    scales: {
-      x: { grid: { display: false } },
-      y: { grid: { color: grid }, ticks: { callback: v => '€' + Math.round(v/1000) + 'k' } }
+  // ── Header status ──
+  var dot = document.getElementById('statusDot');
+  var statusText = document.getElementById('statusText');
+  var ts = formatTimestamp(D.generated_at);
+  dot.className = 'dot live';
+  statusText.textContent = 'Data: ' + ts;
+  document.getElementById('footer-updated').textContent = 'Last updated: ' + ts;
+
+  // ── Overview KPIs ──
+  document.getElementById('kpi-rev-label').textContent = 'Revenue — ' + period.display_month;
+  document.getElementById('kpi-rev-value').textContent = eur(ov.revenue.current);
+  document.getElementById('kpi-rev-pct').textContent = '+' + ov.revenue.mom_pct + '%';
+
+  document.getElementById('kpi-ebitda-label').textContent = 'EBITDA — ' + period.display_month;
+  document.getElementById('kpi-ebitda-value').textContent = eur(ov.ebitda.current);
+  document.getElementById('kpi-ebitda-pct').textContent = ov.ebitda.margin_pct + '%';
+
+  document.getElementById('kpi-cogs-label').textContent = 'COGS — ' + period.display_month;
+  document.getElementById('kpi-cogs-value').textContent = pct(ov.cogs_pct.current);
+  var cogsDiff = ppChange(ov.cogs_pct.current, ov.cogs_pct.prev);
+  document.getElementById('kpi-cogs-pct').textContent = cogsDiff + ' vs prev (' + pct(ov.cogs_pct.prev) + ')';
+
+  document.getElementById('kpi-pers-label').textContent = 'Personnel — ' + period.display_month;
+  document.getElementById('kpi-pers-value').textContent = pct(ov.personnel_pct.current);
+  var persDiff = ppChange(ov.personnel_pct.current, ov.personnel_pct.prev);
+  document.getElementById('kpi-pers-pct').textContent = persDiff + ' vs prev (' + pct(ov.personnel_pct.prev) + ')';
+
+  // ── Revenue & EBITDA chart ──
+  var revLabels = ['Jan 2026', period.display_month, period.partial_month + ' (partial)'];
+  var revData = [ov.revenue.prev, ov.revenue.current, ov.revenue_partial];
+  var ebitdaData = [pl.jan.ebitda, pl.feb.ebitda, null];
+
+  if (charts.revenue) charts.revenue.destroy();
+  charts.revenue = new Chart(document.getElementById('revenueChart'), {
+    type: 'bar',
+    data: {
+      labels: revLabels,
+      datasets: [{
+        label: 'Revenue',
+        data: revData,
+        backgroundColor: ['#3d6635', '#3d6635', 'rgba(61,102,53,.25)'],
+        borderRadius: 4, barPercentage: .5
+      }, {
+        label: 'EBITDA',
+        data: ebitdaData,
+        backgroundColor: ['#c8942a', '#c8942a', 'rgba(200,148,42,.25)'],
+        borderRadius: 4, barPercentage: .5
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display: false } },
+      scales: {
+        x: { grid: { display: false }, ticks: { autoSkip: false } },
+        y: { grid: { color: grid }, ticks: { callback: function(v) { return '€' + Math.round(v/1000) + 'k'; } } }
+      }
     }
+  });
+
+  document.getElementById('legend-partial').textContent = period.partial_month + ' (partial)';
+
+  // ── Channel doughnut ──
+  document.getElementById('channel-chart-title').textContent = 'Revenue by channel — ' + period.display_month;
+  var chTotal = ch.physical + ch.b2b + ch.ecommerce;
+  var chPctPhys = Math.round(ch.physical / chTotal * 100);
+  var chPctB2B = Math.round(ch.b2b / chTotal * 100);
+  var chPctEcom = 100 - chPctPhys - chPctB2B;
+
+  var legendHTML = '<div class="legend-item"><div class="legend-dot" style="background:var(--green)"></div>Store ' + chPctPhys + '%</div>';
+  legendHTML += '<div class="legend-item"><div class="legend-dot" style="background:var(--amber-light)"></div>B2B ' + chPctB2B + '%</div>';
+  legendHTML += '<div class="legend-item"><div class="legend-dot" style="background:var(--blue)"></div>E-com ' + chPctEcom + '%</div>';
+  document.getElementById('channel-legend').innerHTML = legendHTML;
+
+  if (charts.channel) charts.channel.destroy();
+  charts.channel = new Chart(document.getElementById('channelChart'), {
+    type: 'doughnut',
+    data: {
+      labels: ['Physical store', 'B2B', 'E-commerce', 'Discounts'],
+      datasets: [{
+        data: [ch.physical, ch.b2b, ch.ecommerce, ch.discounts],
+        backgroundColor: ['#3d6635', '#c8942a', '#3a7ab8', '#ccc'],
+        borderWidth: 0, hoverOffset: 6
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false, cutout: '65%',
+      plugins: { legend: { display: false } }
+    }
+  });
+
+  // ── Store table (overview) ──
+  document.getElementById('store-table-title').textContent = 'Revenue by store — Jan vs ' + period.display_month;
+  var storeNames = { mila: 'Milà', stpau: 'Sant Pau', santjoan: 'Sant Joan' };
+  var storeKeys = ['mila', 'stpau', 'santjoan'];
+  var totalJan = 0, totalFeb = 0;
+  storeKeys.forEach(function(k) { totalJan += st.jan[k]; totalFeb += st.feb[k]; });
+
+  var stBody = '';
+  storeKeys.forEach(function(k) {
+    var jan = st.jan[k], feb = st.feb[k];
+    var mom = momPct(feb, jan);
+    var share = (feb / totalFeb * 100).toFixed(1) + '%';
+    var cls = feb > jan ? 'up' : (feb < jan ? 'down' : 'pct');
+    stBody += '<tr><td class="name">' + storeNames[k] + '</td>';
+    stBody += '<td class="num">' + eur(jan) + '</td>';
+    stBody += '<td class="num">' + eur(feb) + '</td>';
+    stBody += '<td class="num ' + cls + '">' + mom + '</td>';
+    stBody += '<td class="num pct">' + share + '</td></tr>';
+  });
+  // Total row
+  stBody += '<tr style="font-weight:600;background:var(--green-bg)">';
+  stBody += '<td>Total</td>';
+  stBody += '<td class="num">' + eur(totalJan) + '</td>';
+  stBody += '<td class="num">' + eur(totalFeb) + '</td>';
+  stBody += '<td class="num up">' + momPct(totalFeb, totalJan) + '</td>';
+  stBody += '<td class="num">100%</td></tr>';
+  document.getElementById('store-table-body').innerHTML = stBody;
+
+  // ── Overview note ──
+  document.getElementById('overview-note').textContent =
+    period.partial_month + ' data is partial (through ~' + formatTimestamp(D.generated_at).split(' ').slice(0,3).join(' ') + '). March personnel expenses not yet available in Holded.';
+
+  // ── P&L table ──
+  var jan = pl.jan, feb = pl.feb;
+  function plRow(label, jVal, fVal, cssClass) {
+    var jPct = pct(jVal / jan.revenue * 100);
+    var fPct = pct(fVal / feb.revenue * 100);
+    var neg = (jVal < 0 || fVal < 0) ? ' neg' : '';
+    return '<tr class="' + cssClass + '"><td>' + label + '</td>' +
+      '<td class="num' + neg + '">' + eur(jVal) + '</td><td class="num pct">' + jPct + '</td>' +
+      '<td class="num' + neg + '">' + eur(fVal) + '</td><td class="num pct">' + fPct + '</td></tr>';
   }
-});
+  function plRowStyled(label, jVal, fVal, cssClass, style) {
+    var jPct = pct(jVal / jan.revenue * 100);
+    var fPct = pct(fVal / feb.revenue * 100);
+    return '<tr class="' + cssClass + '"><td style="' + style + '">' + label + '</td>' +
+      '<td class="num" style="' + style + '">' + eur(jVal) + '</td><td class="num" style="' + style + '">' + jPct + '</td>' +
+      '<td class="num" style="' + style + '">' + eur(fVal) + '</td><td class="num" style="' + style + '">' + fPct + '</td></tr>';
+  }
+
+  var pnlBody = '';
+  pnlBody += plRow('Operating revenue', jan.revenue, feb.revenue, 'section-row');
+  pnlBody += plRow('Physical store sales', jan.physical, feb.physical, 'sub-row');
+  pnlBody += plRow('B2B sales', jan.b2b, feb.b2b, 'sub-row');
+  pnlBody += plRow('E-commerce sales', jan.ecommerce, feb.ecommerce, 'sub-row');
+  pnlBody += plRow('Discounts', jan.discounts, feb.discounts, 'sub-row');
+  pnlBody += plRow('Cost of goods sold', jan.cogs, feb.cogs, 'section-row');
+  pnlBody += plRowStyled('Gross profit', jan.gross_profit, feb.gross_profit, 'section-row', 'color:var(--green)');
+  pnlBody += plRow('Personnel expenses', jan.personnel, feb.personnel, 'section-row');
+  pnlBody += plRow('Operating expenses', jan.opex, feb.opex, 'section-row');
+  pnlBody += plRowStyled('EBITDA', jan.ebitda, feb.ebitda, 'total-row', 'color:var(--amber)');
+  pnlBody += plRow('Financial results', jan.financial, feb.financial, 'section-row');
+  pnlBody += plRowStyled('Earnings before taxes', jan.ebt, feb.ebt, 'total-row', 'font-weight:700');
+  document.getElementById('pnl-table-body').innerHTML = pnlBody;
+
+  // ── Waterfall chart ──
+  if (charts.waterfall) charts.waterfall.destroy();
+  charts.waterfall = new Chart(document.getElementById('waterfallChart'), {
+    type: 'bar',
+    data: {
+      labels: ['Revenue', 'COGS', 'Gross profit', 'Personnel', 'OPEX', 'EBITDA', 'Financial', 'EBT'],
+      datasets: [{
+        label: 'Base',
+        data: [0, feb.revenue + feb.cogs, 0, feb.gross_profit + feb.personnel,
+               feb.gross_profit + feb.personnel + feb.opex, 0, feb.ebitda + feb.financial, 0],
+        backgroundColor: 'transparent', borderWidth: 0, barPercentage: .55
+      }, {
+        label: 'Value',
+        data: [feb.revenue, feb.cogs, feb.gross_profit, feb.personnel, feb.opex, feb.ebitda, feb.financial, feb.ebt],
+        backgroundColor: ['#3d6635','#b33','#3d6635','#b33','#b33','#c8942a','#b33','#c8942a'],
+        borderRadius: 3, barPercentage: .55
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display: false }, tooltip: {
+        callbacks: { label: function(ctx) { return ctx.datasetIndex === 1 ? '€' + Math.round(ctx.raw).toLocaleString() : ''; } }
+      }},
+      scales: {
+        x: { stacked: true, grid: { display: false }, ticks: { autoSkip: false, maxRotation: 45 } },
+        y: { stacked: true, grid: { color: grid }, ticks: { callback: function(v) { return '€' + Math.round(v/1000) + 'k'; } } }
+      }
+    }
+  });
+
+  // ── Store comparison chart & KPIs ──
+  if (charts.store) charts.store.destroy();
+  charts.store = new Chart(document.getElementById('storeChart'), {
+    type: 'bar',
+    data: {
+      labels: ['Milà', 'Sant Pau', 'Sant Joan'],
+      datasets: [{
+        label: 'Jan 2026',
+        data: [st.jan.mila, st.jan.stpau, st.jan.santjoan],
+        backgroundColor: 'rgba(61,102,53,.3)', borderRadius: 4, barPercentage: .35
+      }, {
+        label: period.display_month,
+        data: [st.feb.mila, st.feb.stpau, st.feb.santjoan],
+        backgroundColor: '#3d6635', borderRadius: 4, barPercentage: .35
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display: true, position: 'top', labels: { boxWidth: 10, padding: 14, font: { size: 11 } } } },
+      scales: {
+        x: { grid: { display: false } },
+        y: { grid: { color: grid }, ticks: { callback: function(v) { return '€' + Math.round(v/1000) + 'k'; } } }
+      }
+    }
+  });
+
+  // Store KPI cards
+  var colors = { mila: 'var(--green)', stpau: 'var(--amber-light)', santjoan: 'var(--blue)' };
+  var stKpiHTML = '';
+  storeKeys.forEach(function(k) {
+    var feb_val = st.feb[k], jan_val = st.jan[k];
+    var share = (feb_val / totalFeb * 100).toFixed(1);
+    var mom = momPct(feb_val, jan_val);
+    var pctCls = feb_val >= jan_val ? 'pos' : 'neg';
+    stKpiHTML += '<div class="kpi" style="border-left:3px solid ' + colors[k] + '">';
+    stKpiHTML += '<div class="kpi-label">' + storeNames[k] + ' — ' + period.display_month + '</div>';
+    stKpiHTML += '<div class="kpi-value">' + eur(feb_val) + '</div>';
+    stKpiHTML += '<div class="kpi-sub">' + share + '% of total · <span class="kpi-pct ' + pctCls + '">' + mom + '</span></div></div>';
+  });
+  // HQ card
+  stKpiHTML += '<div class="kpi" style="border-left:3px solid var(--text3)">';
+  stKpiHTML += '<div class="kpi-label">HQ (Admin) — ' + period.display_month + '</div>';
+  stKpiHTML += '<div class="kpi-value" style="color:var(--text3)">—</div>';
+  stKpiHTML += '<div class="kpi-sub">Cost center only</div></div>';
+  document.getElementById('store-kpi-grid').innerHTML = stKpiHTML;
+
+  // Store P&L by store
+  var spBody = '';
+  spBody += '<tr class="section-row"><td>Revenue</td>';
+  storeKeys.forEach(function(k) { spBody += '<td class="num">' + eur(st.feb[k]) + '</td>'; });
+  spBody += '<td class="num pct">—</td><td class="num" style="font-weight:700">' + eur(feb.revenue) + '</td></tr>';
+
+  ['COGS', 'Personnel', 'OPEX'].forEach(function(label) {
+    spBody += '<tr class="sub-row"><td>' + label + '</td>';
+    storeKeys.forEach(function() { spBody += '<td class="num neg">TBD</td>'; });
+    var totalVal = label === 'COGS' ? feb.cogs : (label === 'Personnel' ? feb.personnel : feb.opex);
+    spBody += '<td class="num neg">TBD</td><td class="num neg">' + eur(totalVal) + '</td></tr>';
+  });
+
+  spBody += '<tr class="total-row"><td style="color:var(--amber)">EBITDA</td>';
+  storeKeys.forEach(function() { spBody += '<td class="num" style="color:var(--amber)">TBD</td>'; });
+  spBody += '<td class="num" style="color:var(--amber)">TBD</td>';
+  spBody += '<td class="num" style="color:var(--amber);font-weight:700">' + eur(feb.ebitda) + '</td></tr>';
+  document.getElementById('store-pnl-body').innerHTML = spBody;
+
+  // ── Productivity tab (partial: personnel % only) ──
+  document.getElementById('prod-pers-value').textContent = pct(ov.personnel_pct.current);
+  document.getElementById('prod-pers-pct').textContent = ppChange(ov.personnel_pct.current, ov.personnel_pct.prev) + ' vs prev';
+
+  var prodBody = '';
+  storeKeys.forEach(function(k) {
+    prodBody += '<tr><td class="name">' + storeNames[k] + '</td>';
+    prodBody += '<td class="num pct">—</td><td class="num pct">—</td>';
+    prodBody += '<td class="num">' + eur(st.feb[k]) + '</td>';
+    prodBody += '<td class="num pct">—</td><td class="num pct">—</td></tr>';
+  });
+  prodBody += '<tr><td class="name">HQ (Admin)</td><td class="num pct">—</td><td class="num pct">—</td><td class="num pct">—</td><td class="num pct">—</td><td class="num pct">—</td></tr>';
+  prodBody += '<tr style="font-weight:600;background:var(--green-bg)"><td>Total</td><td class="num pct">~60</td><td class="num pct">—</td>';
+  prodBody += '<td class="num">' + eur(feb.revenue) + '</td><td class="num pct">—</td>';
+  prodBody += '<td class="num">' + eur(feb.personnel) + '</td></tr>';
+  document.getElementById('prod-table-body').innerHTML = prodBody;
+}
+
+// ── Data loading with fallback ──────────────────────────────
+
+fetch('./data.json')
+  .then(function(res) {
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    return res.json();
+  })
+  .then(function(data) {
+    render(data);
+  })
+  .catch(function(err) {
+    console.warn('data.json fetch failed:', err);
+    // Show stale banner
+    var banner = document.getElementById('staleBanner');
+    banner.style.display = 'block';
+    banner.textContent = '⚠ Could not load live data (' + err.message + '). Showing last cached snapshot.';
+    // Update status indicator
+    var dot = document.getElementById('statusDot');
+    dot.className = 'dot stale';
+    document.getElementById('statusText').textContent = 'Data unavailable — using cache';
+    // Fallback: hardcoded data matching the last known good state
+    var fallback = {
+      "generated_at": "2026-03-15T06:00:00Z",
+      "period": { "display_month": "Feb 2026", "month": "2026-02", "partial_month": "Mar 2026" },
+      "overview": {
+        "revenue": { "current": 312869, "prev": 264172, "mom_pct": 18.4 },
+        "ebitda": { "current": 70510, "margin_pct": 22.5 },
+        "cogs_pct": { "current": 23.8, "prev": 27.8 },
+        "personnel_pct": { "current": 41.2, "prev": 51.1 },
+        "revenue_partial": 144926
+      },
+      "pl": {
+        "jan": { "physical": 234465, "b2b": 27550, "ecommerce": 6198, "discounts": -4041,
+                 "revenue": 264172, "cogs": -73546, "gross_profit": 190626,
+                 "personnel": -135005, "opex": -27432, "ebitda": 28189,
+                 "financial": -2188, "ebt": 26001 },
+        "feb": { "physical": 286814, "b2b": 28286, "ecommerce": 2573, "discounts": -4805,
+                 "revenue": 312869, "cogs": -74479, "gross_profit": 238390,
+                 "personnel": -129018, "opex": -38862, "ebitda": 70510,
+                 "financial": -2241, "ebt": 68269 }
+      },
+      "stores": {
+        "jan": { "mila": 96732, "stpau": 130396, "santjoan": 36949 },
+        "feb": { "mila": 99243, "stpau": 130322, "santjoan": 83304 }
+      },
+      "channel": { "physical": 286814, "b2b": 28286, "ecommerce": 2573, "discounts": 4805 },
+      "productivity": null,
+      "debt": null
+    };
+    render(fallback);
+  });
 </script>
 </body>
 </html>
