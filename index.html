@@ -87,6 +87,18 @@
     .debt-slot .slot-name{font-size:14px;font-weight:500;color:var(--text);margin-bottom:4px}
     .debt-slot .slot-placeholder{font-size:22px;color:var(--border2);font-weight:300}
     .stale-banner{background:var(--amber-bg);border:1px solid #e8d9a8;color:var(--amber);padding:10px 24px;font-size:12px;text-align:center;display:none}
+    /* Audit tab */
+    .audit-summary{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:20px 0}
+    .audit-kpi{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-lg);padding:14px 16px}
+    .audit-kpi.alert{border-color:#e8d9a8;background:var(--amber-bg)}
+    .audit-kpi .ak-label{font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px}
+    .audit-kpi .ak-value{font-size:22px;font-weight:600;color:var(--text)}
+    .audit-kpi.alert .ak-value{color:var(--amber)}
+    .audit-kpi .ak-sub{font-size:11px;color:var(--text3);margin-top:3px}
+    .audit-badge{display:inline-block;font-size:10px;padding:2px 7px;border-radius:3px;font-weight:600;vertical-align:middle}
+    .audit-badge.ok{background:var(--green-bg);color:var(--green)}
+    .audit-badge.warn{background:var(--amber-bg);color:var(--amber)}
+    .audit-badge.new{background:var(--red-bg);color:var(--red)}
     footer{margin:40px 24px 0;padding:16px 0;border-top:1px solid var(--border);display:flex;justify-content:space-between;font-size:11px;color:var(--text3)}
     @media(max-width:768px){
       .kpi-grid,.debt-grid{grid-template-columns:repeat(2,1fr)}
@@ -124,6 +136,7 @@
     <div class="tab" data-tab="stores">By store</div>
     <div class="tab" data-tab="productivity">Productivity</div>
     <div class="tab" data-tab="debt">Debt</div>
+    <div class="tab" data-tab="audit">Account Audit</div>
   </div>
 
   <!-- ===== OVERVIEW ===== -->
@@ -293,10 +306,72 @@
     </div>
     <div class="note-box">Debt data will be manually entered or pulled from Holded once the debt schedule is formalized. Each store has its own leasing and loan structure.</div>
   </div>
+
+  <!-- ===== ACCOUNT AUDIT ===== -->
+  <div id="tab-audit" style="display:none">
+    <div class="section-title">Accounts outside the P&L</div>
+    <div class="note-box" id="audit-note">
+      Accounts with activity in Holded in 2026 that are <strong>not mapped in pl_mapping</strong> — they do not appear in the P&L.
+      When an account is corrected in Holded or added to pl_mapping, it disappears from this list automatically on the next run (06:00).
+    </div>
+
+    <!-- Summary KPIs -->
+    <div class="audit-summary" id="audit-summary">
+      <div class="audit-kpi alert">
+        <div class="ak-label">Unmapped accounts</div>
+        <div class="ak-value" id="audit-count">—</div>
+        <div class="ak-sub">with activity in 2026</div>
+      </div>
+      <div class="audit-kpi">
+        <div class="ak-label">Total value (YTD)</div>
+        <div class="ak-value" id="audit-total">—</div>
+        <div class="ak-sub">absolute sum across all months</div>
+      </div>
+      <div class="audit-kpi">
+        <div class="ak-label">Last checked</div>
+        <div class="ak-value" style="font-size:15px" id="audit-ts">—</div>
+        <div class="ak-sub">via n8n daily at 06:00</div>
+      </div>
+    </div>
+
+    <!-- Main audit table -->
+    <div class="chart-card" style="padding:0;overflow:hidden;margin-bottom:16px">
+      <table id="audit-table">
+        <thead>
+          <tr>
+            <th>Account</th>
+            <th>Name (Holded)</th>
+            <th class="num">Jan 2026</th>
+            <th class="num">Feb 2026</th>
+            <th class="num">Mar 2026</th>
+            <th class="num">Total YTD</th>
+            <th class="num">Status</th>
+          </tr>
+        </thead>
+        <tbody id="audit-table-body">
+          <tr>
+            <td colspan="7" style="text-align:center;padding:32px;color:var(--text3)">
+              <div style="font-size:20px;margin-bottom:8px">⏳</div>
+              <div style="font-weight:500;margin-bottom:4px">Waiting for audit node data</div>
+              <div style="font-size:12px">The <code>unmapped_accounts</code> field does not yet exist in data.json.<br>
+              It will be populated once the audit node is added to the n8n workflow.</div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="note-box" style="background:var(--bg3);border-color:var(--border)">
+      <strong>How to resolve:</strong> For each account listed here, check in Holded whether it is (1) a posting error → correct the account,
+      (2) a legitimate unmapped account → add it to pl_mapping in BigQuery,
+      (3) a structural error account → keep outside and monitor.
+    </div>
+  </div>
+
 </div>
 
 <footer>
-  <span>Origo Bakery SL — Executive Dashboard v2.0</span>
+  <span>Origo Bakery SL — Executive Dashboard v2.1</span>
   <span>Source: data.json ← n8n ← BigQuery</span>
   <span id="footer-updated">Last updated: —</span>
 </footer>
@@ -711,6 +786,50 @@ function render(D) {
   prodBody += '<td class="num">' + eur(feb.revenue) + '</td><td class="num pct">—</td>';
   prodBody += '<td class="num">' + eur(feb.personnel) + '</td></tr>';
   document.getElementById('prod-table-body').innerHTML = prodBody;
+  // ── Audit tab ──
+  document.getElementById('audit-ts').textContent = ts;
+  var unmapped = D.unmapped_accounts;
+  if (unmapped && unmapped.length > 0) {
+    document.getElementById('audit-count').textContent = unmapped.length;
+    var totalAbs = 0;
+    unmapped.forEach(function(r) {
+      var ytd = (r.jan || 0) + (r.feb || 0) + (r.mar || 0);
+      totalAbs += Math.abs(ytd);
+    });
+    document.getElementById('audit-total').textContent = eur(totalAbs);
+
+    var months = Object.keys(D.pl).sort(); // e.g. ['jan','feb','mar']
+    var auditBody = '';
+    unmapped.forEach(function(r) {
+      var jan = r.jan || 0, feb = r.feb || 0, mar = r.mar || 0;
+      var ytd = jan + feb + mar;
+      // Badge logic: if value is growing month over month → warn, else ok
+      var trend = (feb > jan * 1.1) ? 'warn' : 'ok';
+      var badge = trend === 'warn'
+        ? '<span class="audit-badge warn">↑ Growing</span>'
+        : '<span class="audit-badge ok">Stable</span>';
+      auditBody += '<tr>';
+      auditBody += '<td style="font-family:monospace;font-size:12px">' + r.account + '</td>';
+      auditBody += '<td class="name">' + (r.name || '—') + '</td>';
+      auditBody += '<td class="num">' + (jan ? eur(jan) : '<span class="pct">—</span>') + '</td>';
+      auditBody += '<td class="num">' + (feb ? eur(feb) : '<span class="pct">—</span>') + '</td>';
+      auditBody += '<td class="num">' + (mar ? eur(mar) : '<span class="pct">—</span>') + '</td>';
+      auditBody += '<td class="num" style="font-weight:600">' + eur(ytd) + '</td>';
+      auditBody += '<td class="num">' + badge + '</td>';
+      auditBody += '</tr>';
+    });
+    document.getElementById('audit-table-body').innerHTML = auditBody;
+  } else if (unmapped && unmapped.length === 0) {
+    document.getElementById('audit-count').textContent = '0';
+    document.getElementById('audit-total').textContent = eur(0);
+    document.getElementById('audit-table-body').innerHTML =
+      '<tr><td colspan="7" style="text-align:center;padding:32px;color:var(--green)">' +
+      '<div style="font-size:20px;margin-bottom:8px">✓</div>' +
+      '<div style="font-weight:500">All accounts are mapped in the P&L</div>' +
+      '<div style="font-size:12px;color:var(--text3);margin-top:4px">No accounts with activity outside pl_mapping</div>' +
+      '</td></tr>';
+  }
+  // If unmapped_accounts doesn't exist yet → placeholder stays (already in HTML)
 }
 
 // ── Data loading with fallback ──────────────────────────────
