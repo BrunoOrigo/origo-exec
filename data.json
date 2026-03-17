@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-03-17T16:48:29:00Z",
+  "generated_at": "2026-03-17T19:09:11:00Z",
   "period": {
     "display_month": "Feb 2026",
     "month": "2026-02",
@@ -47,7 +47,41 @@
       "sik_total": 1009.56,
       "store_mila": 94408.64,
       "store_stpau": 126521.08,
-      "store_santjoan": 36949.4
+      "store_santjoan": 36949.4,
+      "by_store": {
+        "mila": {
+          "revenue": 94408.64,
+          "cogs": -23335.29,
+          "gross_profit": 71073.35,
+          "personnel": -47325.02,
+          "opex": -4796.61,
+          "ebitda": 18951.72
+        },
+        "stpau": {
+          "revenue": 126521.08,
+          "cogs": -39040.41,
+          "gross_profit": 87480.67,
+          "personnel": -60769.29,
+          "opex": -13552.44,
+          "ebitda": 13158.94
+        },
+        "santjoan": {
+          "revenue": 36949.4,
+          "cogs": -13954.69,
+          "gross_profit": 22994.71,
+          "personnel": -7940.64,
+          "opex": -4633.94,
+          "ebitda": 10420.13
+        },
+        "hq": {
+          "revenue": 0,
+          "cogs": 0,
+          "gross_profit": 0,
+          "personnel": -17776.9,
+          "opex": -5662.15,
+          "ebitda": -23439.05
+        }
+      }
     },
     "feb": {
       "physical": 286814.13,
@@ -70,7 +104,41 @@
       "sik_total": 1019.49,
       "store_mila": 99031.11,
       "store_stpau": 127960.61,
-      "store_santjoan": 83376.1
+      "store_santjoan": 83376.1,
+      "by_store": {
+        "mila": {
+          "revenue": 99031.11,
+          "cogs": -26327.99,
+          "gross_profit": 72703.12,
+          "personnel": -42277.04,
+          "opex": -9119.86,
+          "ebitda": 21306.22
+        },
+        "stpau": {
+          "revenue": 127960.61,
+          "cogs": -38104.58,
+          "gross_profit": 89856.03,
+          "personnel": -62149.3,
+          "opex": -19566.3,
+          "ebitda": 8140.43
+        },
+        "santjoan": {
+          "revenue": 83376.1,
+          "cogs": -10070.36,
+          "gross_profit": 73305.74,
+          "personnel": -5462.57,
+          "opex": -9359.37,
+          "ebitda": 58483.8
+        },
+        "hq": {
+          "revenue": 0,
+          "cogs": 0,
+          "gross_profit": 0,
+          "personnel": -16373.66,
+          "opex": -1199.5,
+          "ebitda": -17573.16
+        }
+      }
     },
     "mar": {
       "physical": 171387.17,
@@ -93,7 +161,41 @@
       "sik_total": 0,
       "store_mila": 53515.54,
       "store_stpau": 57038.9,
-      "store_santjoan": 48836.4
+      "store_santjoan": 48836.4,
+      "by_store": {
+        "mila": {
+          "revenue": 53515.54,
+          "cogs": -5603.8,
+          "gross_profit": 47911.74,
+          "personnel": 0,
+          "opex": -2414.92,
+          "ebitda": 45496.82
+        },
+        "stpau": {
+          "revenue": 57038.9,
+          "cogs": -16460.27,
+          "gross_profit": 40578.63,
+          "personnel": 0,
+          "opex": -10554.88,
+          "ebitda": 30023.75
+        },
+        "santjoan": {
+          "revenue": 48836.4,
+          "cogs": -3556.77,
+          "gross_profit": 45279.63,
+          "personnel": 0,
+          "opex": -5506.18,
+          "ebitda": 39773.45
+        },
+        "hq": {
+          "revenue": 0,
+          "cogs": -50,
+          "gross_profit": -50,
+          "personnel": 0,
+          "opex": -568.68,
+          "ebitda": -618.68
+        }
+      }
     }
   },
   "stores": {
