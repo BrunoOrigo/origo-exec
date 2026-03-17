@@ -87,18 +87,6 @@
     .debt-slot .slot-name{font-size:14px;font-weight:500;color:var(--text);margin-bottom:4px}
     .debt-slot .slot-placeholder{font-size:22px;color:var(--border2);font-weight:300}
     .stale-banner{background:var(--amber-bg);border:1px solid #e8d9a8;color:var(--amber);padding:10px 24px;font-size:12px;text-align:center;display:none}
-    /* Audit tab */
-    .audit-summary{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:20px 0}
-    .audit-kpi{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-lg);padding:14px 16px}
-    .audit-kpi.alert{border-color:#e8d9a8;background:var(--amber-bg)}
-    .audit-kpi .ak-label{font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px}
-    .audit-kpi .ak-value{font-size:22px;font-weight:600;color:var(--text)}
-    .audit-kpi.alert .ak-value{color:var(--amber)}
-    .audit-kpi .ak-sub{font-size:11px;color:var(--text3);margin-top:3px}
-    .audit-badge{display:inline-block;font-size:10px;padding:2px 7px;border-radius:3px;font-weight:600;vertical-align:middle}
-    .audit-badge.ok{background:var(--green-bg);color:var(--green)}
-    .audit-badge.warn{background:var(--amber-bg);color:var(--amber)}
-    .audit-badge.new{background:var(--red-bg);color:var(--red)}
     footer{margin:40px 24px 0;padding:16px 0;border-top:1px solid var(--border);display:flex;justify-content:space-between;font-size:11px;color:var(--text3)}
     @media(max-width:768px){
       .kpi-grid,.debt-grid{grid-template-columns:repeat(2,1fr)}
@@ -133,7 +121,6 @@
   <div class="tabs">
     <div class="tab active" data-tab="overview">Overview</div>
     <div class="tab" data-tab="pnl">P&L</div>
-    <div class="tab" data-tab="stores">By store</div>
     <div class="tab" data-tab="productivity">Productivity</div>
     <div class="tab" data-tab="debt">Debt</div>
     <div class="tab" data-tab="audit">Account Audit</div>
@@ -186,14 +173,41 @@
     </div>
 
     <div class="section-title" id="store-table-title">Revenue by store — …</div>
-    <div class="chart-card" style="margin-bottom:20px;padding:0;overflow:hidden">
+    <div class="chart-row" style="grid-template-columns:1fr 1fr;margin-bottom:0">
+      <div class="chart-card" style="padding:0;overflow:hidden">
+        <table>
+          <thead>
+            <tr><th>Store</th><th class="num">Jan 2026</th><th class="num" id="store-col-feb">Feb 2026</th><th class="num">MoM %</th><th class="num">Share</th></tr>
+          </thead>
+          <tbody id="store-table-body"></tbody>
+        </table>
+      </div>
+      <div class="chart-card">
+        <h3 id="store-chart-title">Revenue by store — Jan vs Feb 2026</h3>
+        <div style="position:relative;height:180px"><canvas id="storeBarChart"></canvas></div>
+      </div>
+    </div>
+
+    <div class="section-title" id="store-perf-title">Store performance — …</div>
+    <div class="chart-card" style="padding:0;overflow:hidden;margin-bottom:20px">
       <table>
         <thead>
-          <tr><th>Store</th><th class="num">Jan 2026</th><th class="num">Feb 2026</th><th class="num">MoM %</th><th class="num">Share</th></tr>
+          <tr>
+            <th>Store</th>
+            <th class="num">Revenue</th>
+            <th class="num">COGS</th>
+            <th class="num">COGS %</th>
+            <th class="num">Personnel</th>
+            <th class="num">Personnel %</th>
+            <th class="num">OPEX</th>
+            <th class="num">EBITDA</th>
+            <th class="num">EBITDA %</th>
+          </tr>
         </thead>
-        <tbody id="store-table-body"></tbody>
+        <tbody id="store-perf-body"></tbody>
       </table>
     </div>
+    <div class="note-box" id="store-note" style="margin-bottom:12px"></div>
 
     <div class="note-box" id="overview-note"></div>
   </div>
@@ -214,26 +228,6 @@
     <div class="chart-card">
       <div style="position:relative;height:360px"><canvas id="waterfallChart"></canvas></div>
     </div>
-  </div>
-
-  <!-- ===== BY STORE ===== -->
-  <div id="tab-stores" style="display:none">
-    <div class="section-title">Store comparison — Jan vs Feb 2026</div>
-    <div class="chart-card" style="margin-bottom:20px">
-      <div style="position:relative;height:280px"><canvas id="storeChart"></canvas></div>
-    </div>
-    <div class="kpi-grid" id="store-kpi-grid" style="grid-template-columns:repeat(4,1fr)"></div>
-
-    <div class="section-title">P&L by store — February 2026</div>
-    <div class="chart-card" style="padding:0;overflow:hidden">
-      <table>
-        <thead>
-          <tr><th></th><th class="num">Milà</th><th class="num">Sant Pau</th><th class="num">Sant Joan</th><th class="num">HQ</th><th class="num">Total</th></tr>
-        </thead>
-        <tbody id="store-pnl-body"></tbody>
-      </table>
-    </div>
-    <div class="note-box">Per-store P&L breakdown will be populated once BigQuery tag_group mapping is validated for all cost categories.</div>
   </div>
 
   <!-- ===== PRODUCTIVITY ===== -->
@@ -309,69 +303,31 @@
 
   <!-- ===== ACCOUNT AUDIT ===== -->
   <div id="tab-audit" style="display:none">
-    <div class="section-title">Accounts outside the P&L</div>
-    <div class="note-box" id="audit-note">
-      Accounts with activity in Holded in 2026 that are <strong>not mapped in pl_mapping</strong> — they do not appear in the P&L.
-      When an account is corrected in Holded or added to pl_mapping, it disappears from this list automatically on the next run (06:00).
-    </div>
-
-    <!-- Summary KPIs -->
-    <div class="audit-summary" id="audit-summary">
-      <div class="audit-kpi alert">
-        <div class="ak-label">Unmapped accounts</div>
-        <div class="ak-value" id="audit-count">—</div>
-        <div class="ak-sub">with activity in 2026</div>
-      </div>
-      <div class="audit-kpi">
-        <div class="ak-label">Total value (YTD)</div>
-        <div class="ak-value" id="audit-total">—</div>
-        <div class="ak-sub">absolute sum across all months</div>
-      </div>
-      <div class="audit-kpi">
-        <div class="ak-label">Last checked</div>
-        <div class="ak-value" style="font-size:15px" id="audit-ts">—</div>
-        <div class="ak-sub">via n8n daily at 06:00</div>
-      </div>
-    </div>
-
-    <!-- Main audit table -->
-    <div class="chart-card" style="padding:0;overflow:hidden;margin-bottom:16px">
-      <table id="audit-table">
+    <div class="section-title">Account Audit — Unmapped accounts (6x/7x)</div>
+    <div class="note-box">These accounts belong to the P&amp;L chart of accounts (6x expenses / 7x revenue) but are not yet mapped in <code>pl_mapping</code>. Review and map them to avoid missing costs or revenue in the consolidated P&amp;L.</div>
+    <div class="chart-card" style="padding:0;overflow:hidden;margin-top:16px">
+      <table>
         <thead>
           <tr>
             <th>Account</th>
             <th>Name (Holded)</th>
-            <th class="num">Jan 2026</th>
-            <th class="num">Feb 2026</th>
-            <th class="num">Mar 2026</th>
+            <th class="num">Jan</th>
+            <th class="num">Feb</th>
+            <th class="num">Mar</th>
             <th class="num">Total YTD</th>
             <th class="num">Status</th>
           </tr>
         </thead>
         <tbody id="audit-table-body">
-          <tr>
-            <td colspan="7" style="text-align:center;padding:32px;color:var(--text3)">
-              <div style="font-size:20px;margin-bottom:8px">⏳</div>
-              <div style="font-weight:500;margin-bottom:4px">Waiting for audit node data</div>
-              <div style="font-size:12px">The <code>unmapped_accounts</code> field does not yet exist in data.json.<br>
-              It will be populated once the audit node is added to the n8n workflow.</div>
-            </td>
-          </tr>
+          <tr><td colspan="7" style="text-align:center;color:var(--text3);padding:24px">Loading…</td></tr>
         </tbody>
       </table>
     </div>
-
-    <div class="note-box" style="background:var(--bg3);border-color:var(--border)">
-      <strong>How to resolve:</strong> For each account listed here, check in Holded whether it is (1) a posting error → correct the account,
-      (2) a legitimate unmapped account → add it to pl_mapping in BigQuery,
-      (3) a structural error account → keep outside and monitor.
-    </div>
   </div>
-
 </div>
 
 <footer>
-  <span>Origo Bakery SL — Executive Dashboard v2.1</span>
+  <span>Origo Bakery SL — Executive Dashboard v3.0</span>
   <span>Source: data.json ← n8n ← BigQuery</span>
   <span id="footer-updated">Last updated: —</span>
 </footer>
@@ -574,6 +530,8 @@ function render(D) {
 
   // ── Store table (overview) ──
   document.getElementById('store-table-title').textContent = 'Revenue by store — Jan vs ' + period.display_month;
+  document.getElementById('store-col-feb').textContent = period.display_month;
+  document.getElementById('store-chart-title').textContent = 'Revenue by store — Jan vs ' + period.display_month;
   var storeNames = { mila: 'Milà', stpau: 'Sant Pau', santjoan: 'Sant Joan' };
   var storeKeys = ['mila', 'stpau', 'santjoan'];
   var totalJan = 0, totalFeb = 0;
@@ -591,7 +549,6 @@ function render(D) {
     stBody += '<td class="num ' + cls + '">' + mom + '</td>';
     stBody += '<td class="num pct">' + share + '</td></tr>';
   });
-  // Total row
   stBody += '<tr style="font-weight:600;background:var(--green-bg)">';
   stBody += '<td>Total</td>';
   stBody += '<td class="num">' + eur(totalJan) + '</td>';
@@ -599,6 +556,92 @@ function render(D) {
   stBody += '<td class="num up">' + momPct(totalFeb, totalJan) + '</td>';
   stBody += '<td class="num">100%</td></tr>';
   document.getElementById('store-table-body').innerHTML = stBody;
+
+  // ── Store bar chart ──
+  if (charts.storeBar) charts.storeBar.destroy();
+  charts.storeBar = new Chart(document.getElementById('storeBarChart'), {
+    type: 'bar',
+    data: {
+      labels: ['Milà', 'Sant Pau', 'Sant Joan'],
+      datasets: [{
+        label: 'Jan 2026',
+        data: [st.jan.mila, st.jan.stpau, st.jan.santjoan],
+        backgroundColor: 'rgba(61,102,53,.3)', borderRadius: 4, barPercentage: .4
+      }, {
+        label: period.display_month,
+        data: [st.feb.mila, st.feb.stpau, st.feb.santjoan],
+        backgroundColor: '#3d6635', borderRadius: 4, barPercentage: .4
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display: true, position: 'top', labels: { boxWidth: 10, padding: 12, font: { size: 11 } } } },
+      scales: {
+        x: { grid: { display: false } },
+        y: { grid: { color: grid }, ticks: { callback: function(v) { return '€' + Math.round(v/1000) + 'k'; } } }
+      }
+    }
+  });
+
+  // ── Store performance table (by_store P&L) ──
+  document.getElementById('store-perf-title').textContent = 'Store performance — ' + period.display_month;
+  var byStore = (pl.feb || pl[Object.keys(pl).sort().slice(-2,-1)[0]] || {}).by_store || null;
+  var storePerfBody = '';
+  var storeColors = { mila: 'var(--green)', stpau: 'var(--amber-light)', santjoan: 'var(--blue)' };
+
+  if (byStore) {
+    storeKeys.forEach(function(k) {
+      var s = byStore[k];
+      if (!s) return;
+      var cogsAbs = Math.abs(s.cogs);
+      var cogsPct = s.revenue > 0 ? (cogsAbs / s.revenue * 100).toFixed(1) + '%' : '—';
+      var persAbs = Math.abs(s.personnel);
+      var persPct = s.revenue > 0 ? (persAbs / s.revenue * 100).toFixed(1) + '%' : '—';
+      var opexAbs = Math.abs(s.opex);
+      var ebitdaPct = s.revenue > 0 ? (s.ebitda / s.revenue * 100).toFixed(1) + '%' : '—';
+      var ebitdaColor = s.ebitda >= 0 ? 'color:var(--green)' : 'color:var(--red)';
+      storePerfBody += '<tr>';
+      storePerfBody += '<td class="name" style="border-left:3px solid ' + storeColors[k] + ';padding-left:11px">' + storeNames[k] + '</td>';
+      storePerfBody += '<td class="num">' + eur(s.revenue) + '</td>';
+      storePerfBody += '<td class="num neg">-' + eur(cogsAbs) + '</td>';
+      storePerfBody += '<td class="num pct">' + cogsPct + '</td>';
+      storePerfBody += '<td class="num neg">-' + eur(persAbs) + '</td>';
+      storePerfBody += '<td class="num pct">' + persPct + '</td>';
+      storePerfBody += '<td class="num neg">-' + eur(opexAbs) + '</td>';
+      storePerfBody += '<td class="num" style="' + ebitdaColor + ';font-weight:600">' + eur(s.ebitda) + '</td>';
+      storePerfBody += '<td class="num pct" style="' + ebitdaColor + '">' + ebitdaPct + '</td>';
+      storePerfBody += '</tr>';
+    });
+    // HQ row (cost center)
+    var hq = byStore.hq || {};
+    storePerfBody += '<tr style="color:var(--text3)">';
+    storePerfBody += '<td class="name" style="border-left:3px solid var(--border2);padding-left:11px">HQ (Admin)</td>';
+    storePerfBody += '<td class="num">—</td>';
+    storePerfBody += '<td class="num">' + eur(hq.cogs ? Math.abs(hq.cogs) : 0) + '</td>';
+    storePerfBody += '<td class="num pct">—</td>';
+    storePerfBody += '<td class="num">' + eur(hq.personnel ? Math.abs(hq.personnel) : 0) + '</td>';
+    storePerfBody += '<td class="num pct">—</td>';
+    storePerfBody += '<td class="num">' + eur(hq.opex ? Math.abs(hq.opex) : 0) + '</td>';
+    storePerfBody += '<td class="num" style="color:var(--text3)">—</td>';
+    storePerfBody += '<td class="num pct">—</td>';
+    storePerfBody += '</tr>';
+    // Total row
+    storePerfBody += '<tr style="font-weight:600;background:var(--green-bg)">';
+    storePerfBody += '<td>Total</td>';
+    storePerfBody += '<td class="num">' + eur(feb.revenue) + '</td>';
+    storePerfBody += '<td class="num neg">' + eur(feb.cogs) + '</td>';
+    storePerfBody += '<td class="num pct">' + pct(ov.cogs_pct.current) + '</td>';
+    storePerfBody += '<td class="num neg">' + eur(feb.personnel) + '</td>';
+    storePerfBody += '<td class="num pct">' + pct(ov.personnel_pct.current) + '</td>';
+    storePerfBody += '<td class="num neg">' + eur(feb.opex) + '</td>';
+    storePerfBody += '<td class="num" style="color:var(--amber);font-weight:700">' + eur(feb.ebitda) + '</td>';
+    storePerfBody += '<td class="num pct" style="color:var(--amber)">' + pct(ov.ebitda.margin_pct) + '</td>';
+    storePerfBody += '</tr>';
+    document.getElementById('store-note').textContent = '⚠ Per-store COGS and Personnel are based on Holded tag allocation. Entries without store tags are consolidated in HQ. Use consolidated totals as primary reference.';
+  } else {
+    storePerfBody = '<tr><td colspan="9" style="text-align:center;color:var(--text3);padding:20px">Per-store P&L data not available — update n8n workflow to include by_store output.</td></tr>';
+  }
+  document.getElementById('store-perf-body').innerHTML = storePerfBody;
 
   // ── Overview note ──
   document.getElementById('overview-note').textContent =
@@ -705,70 +748,42 @@ function render(D) {
     }
   });
 
-  // ── Store comparison chart & KPIs ──
-  if (charts.store) charts.store.destroy();
-  charts.store = new Chart(document.getElementById('storeChart'), {
-    type: 'bar',
-    data: {
-      labels: ['Milà', 'Sant Pau', 'Sant Joan'],
-      datasets: [{
-        label: 'Jan 2026',
-        data: [st.jan.mila, st.jan.stpau, st.jan.santjoan],
-        backgroundColor: 'rgba(61,102,53,.3)', borderRadius: 4, barPercentage: .35
-      }, {
-        label: period.display_month,
-        data: [st.feb.mila, st.feb.stpau, st.feb.santjoan],
-        backgroundColor: '#3d6635', borderRadius: 4, barPercentage: .35
-      }]
-    },
-    options: {
-      responsive: true, maintainAspectRatio: false,
-      plugins: { legend: { display: true, position: 'top', labels: { boxWidth: 10, padding: 14, font: { size: 11 } } } },
-      scales: {
-        x: { grid: { display: false } },
-        y: { grid: { color: grid }, ticks: { callback: function(v) { return '€' + Math.round(v/1000) + 'k'; } } }
-      }
-    }
-  });
-
-  // Store KPI cards
-  var colors = { mila: 'var(--green)', stpau: 'var(--amber-light)', santjoan: 'var(--blue)' };
-  var stKpiHTML = '';
-  storeKeys.forEach(function(k) {
-    var feb_val = st.feb[k], jan_val = st.jan[k];
-    var share = (feb_val / totalFeb * 100).toFixed(1);
-    var mom = momPct(feb_val, jan_val);
-    var pctCls = feb_val >= jan_val ? 'pos' : 'neg';
-    stKpiHTML += '<div class="kpi" style="border-left:3px solid ' + colors[k] + '">';
-    stKpiHTML += '<div class="kpi-label">' + storeNames[k] + ' — ' + period.display_month + '</div>';
-    stKpiHTML += '<div class="kpi-value">' + eur(feb_val) + '</div>';
-    stKpiHTML += '<div class="kpi-sub">' + share + '% of total · <span class="kpi-pct ' + pctCls + '">' + mom + '</span></div></div>';
-  });
-  // HQ card
-  stKpiHTML += '<div class="kpi" style="border-left:3px solid var(--text3)">';
-  stKpiHTML += '<div class="kpi-label">HQ (Admin) — ' + period.display_month + '</div>';
-  stKpiHTML += '<div class="kpi-value" style="color:var(--text3)">—</div>';
-  stKpiHTML += '<div class="kpi-sub">Cost center only</div></div>';
-  document.getElementById('store-kpi-grid').innerHTML = stKpiHTML;
-
-  // Store P&L by store
-  var spBody = '';
-  spBody += '<tr class="section-row"><td>Revenue</td>';
-  storeKeys.forEach(function(k) { spBody += '<td class="num">' + eur(st.feb[k]) + '</td>'; });
-  spBody += '<td class="num pct">—</td><td class="num" style="font-weight:700">' + eur(feb.revenue) + '</td></tr>';
-
-  ['COGS', 'Personnel', 'OPEX'].forEach(function(label) {
-    spBody += '<tr class="sub-row"><td>' + label + '</td>';
-    storeKeys.forEach(function() { spBody += '<td class="num neg">TBD</td>'; });
-    var totalVal = label === 'COGS' ? feb.cogs : (label === 'Personnel' ? feb.personnel : feb.opex);
-    spBody += '<td class="num neg">TBD</td><td class="num neg">' + eur(totalVal) + '</td></tr>';
-  });
-
-  spBody += '<tr class="total-row"><td style="color:var(--amber)">EBITDA</td>';
-  storeKeys.forEach(function() { spBody += '<td class="num" style="color:var(--amber)">TBD</td>'; });
-  spBody += '<td class="num" style="color:var(--amber)">TBD</td>';
-  spBody += '<td class="num" style="color:var(--amber);font-weight:700">' + eur(feb.ebitda) + '</td></tr>';
-  document.getElementById('store-pnl-body').innerHTML = spBody;
+  // ── Account Audit tab ──
+  var auditBody = '';
+  var accounts = D.unmapped_accounts;
+  if (accounts && accounts.length > 0) {
+    // dedup by account
+    var seen = {};
+    var unique = accounts.filter(function(r) {
+      if (seen[r.account]) return false;
+      seen[r.account] = true;
+      return true;
+    });
+    var totalYTD = unique.reduce(function(s, r) { return s + (r.total_ytd || 0); }, 0);
+    unique.forEach(function(r) {
+      var ytd = r.total_ytd || 0;
+      var isGrowing = (r.mar > 0 && r.mar >= r.feb) || (r.feb > 0 && r.feb >= r.jan && r.jan > 0);
+      var badge = isGrowing
+        ? '<span style="font-size:10px;padding:2px 7px;border-radius:3px;background:var(--red-bg);color:var(--red);font-weight:600">Growing</span>'
+        : '<span style="font-size:10px;padding:2px 7px;border-radius:3px;background:var(--green-bg);color:var(--green);font-weight:600">Stable</span>';
+      auditBody += '<tr>';
+      auditBody += '<td style="font-family:monospace;font-size:12px">' + r.account + '</td>';
+      auditBody += '<td style="max-width:220px;font-size:12px">' + (r.name || '—') + '</td>';
+      auditBody += '<td class="num">' + (r.jan ? eur(r.jan) : '—') + '</td>';
+      auditBody += '<td class="num">' + (r.feb ? eur(r.feb) : '—') + '</td>';
+      auditBody += '<td class="num">' + (r.mar ? eur(r.mar) : '—') + '</td>';
+      auditBody += '<td class="num" style="font-weight:600">' + eur(ytd) + '</td>';
+      auditBody += '<td class="num">' + badge + '</td>';
+      auditBody += '</tr>';
+    });
+    auditBody += '<tr style="font-weight:600;background:var(--amber-bg)">';
+    auditBody += '<td colspan="5" style="color:var(--amber)">Total unmapped exposure</td>';
+    auditBody += '<td class="num" style="color:var(--amber)">' + eur(totalYTD) + '</td>';
+    auditBody += '<td></td></tr>';
+  } else {
+    auditBody = '<tr><td colspan="7" style="text-align:center;color:var(--green);padding:24px;font-weight:500">✓ All 6x/7x accounts are mapped in pl_mapping</td></tr>';
+  }
+  document.getElementById('audit-table-body').innerHTML = auditBody;
 
   // ── Productivity tab (partial: personnel % only) ──
   document.getElementById('prod-pers-value').textContent = pct(ov.personnel_pct.current);
@@ -786,50 +801,6 @@ function render(D) {
   prodBody += '<td class="num">' + eur(feb.revenue) + '</td><td class="num pct">—</td>';
   prodBody += '<td class="num">' + eur(feb.personnel) + '</td></tr>';
   document.getElementById('prod-table-body').innerHTML = prodBody;
-  // ── Audit tab ──
-  document.getElementById('audit-ts').textContent = ts;
-  var unmapped = D.unmapped_accounts;
-  if (unmapped && unmapped.length > 0) {
-    document.getElementById('audit-count').textContent = unmapped.length;
-    var totalAbs = 0;
-    unmapped.forEach(function(r) {
-      var ytd = (r.jan || 0) + (r.feb || 0) + (r.mar || 0);
-      totalAbs += Math.abs(ytd);
-    });
-    document.getElementById('audit-total').textContent = eur(totalAbs);
-
-    var months = Object.keys(D.pl).sort(); // e.g. ['jan','feb','mar']
-    var auditBody = '';
-    unmapped.forEach(function(r) {
-      var jan = r.jan || 0, feb = r.feb || 0, mar = r.mar || 0;
-      var ytd = jan + feb + mar;
-      // Badge logic: if value is growing month over month → warn, else ok
-      var trend = (feb > jan * 1.1) ? 'warn' : 'ok';
-      var badge = trend === 'warn'
-        ? '<span class="audit-badge warn">↑ Growing</span>'
-        : '<span class="audit-badge ok">Stable</span>';
-      auditBody += '<tr>';
-      auditBody += '<td style="font-family:monospace;font-size:12px">' + r.account + '</td>';
-      auditBody += '<td class="name">' + (r.name || '—') + '</td>';
-      auditBody += '<td class="num">' + (jan ? eur(jan) : '<span class="pct">—</span>') + '</td>';
-      auditBody += '<td class="num">' + (feb ? eur(feb) : '<span class="pct">—</span>') + '</td>';
-      auditBody += '<td class="num">' + (mar ? eur(mar) : '<span class="pct">—</span>') + '</td>';
-      auditBody += '<td class="num" style="font-weight:600">' + eur(ytd) + '</td>';
-      auditBody += '<td class="num">' + badge + '</td>';
-      auditBody += '</tr>';
-    });
-    document.getElementById('audit-table-body').innerHTML = auditBody;
-  } else if (unmapped && unmapped.length === 0) {
-    document.getElementById('audit-count').textContent = '0';
-    document.getElementById('audit-total').textContent = eur(0);
-    document.getElementById('audit-table-body').innerHTML =
-      '<tr><td colspan="7" style="text-align:center;padding:32px;color:var(--green)">' +
-      '<div style="font-size:20px;margin-bottom:8px">✓</div>' +
-      '<div style="font-weight:500">All accounts are mapped in the P&L</div>' +
-      '<div style="font-size:12px;color:var(--text3);margin-top:4px">No accounts with activity outside pl_mapping</div>' +
-      '</td></tr>';
-  }
-  // If unmapped_accounts doesn't exist yet → placeholder stays (already in HTML)
 }
 
 // ── Data loading with fallback ──────────────────────────────
