@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-03-17T19:19:21:00Z",
+  "generated_at": "2026-03-18T05:00:22:00Z",
   "period": {
     "display_month": "Feb 2026",
     "month": "2026-02",
@@ -12,18 +12,18 @@
       "mom_pct": 20.3
     },
     "ebitda": {
-      "current": 78271.14,
-      "margin_pct": 24.5
+      "current": 77226.8,
+      "margin_pct": 24.1
     },
     "cogs_pct": {
-      "current": 23.3,
-      "prev": 28.7
+      "current": 23.6,
+      "prev": 29
     },
     "personnel_pct": {
       "current": 40,
       "prev": 50.3
     },
-    "revenue_partial": 174053.46
+    "revenue_partial": 182982.81
   },
   "pl": {
     "jan": {
@@ -32,13 +32,13 @@
       "ecommerce": 0,
       "discounts": 4040.63,
       "revenue": 266055.16,
-      "cogs": -76330.39,
-      "gross_profit": 189724.77,
+      "cogs": -77175.99,
+      "gross_profit": 188879.17,
       "personnel": -133811.85,
       "opex": -28645.14,
-      "ebitda": 27267.78,
+      "ebitda": 26422.18,
       "financial": -2187.94,
-      "ebt": 25079.84,
+      "ebt": 24234.24,
       "sik_mila": 372.21,
       "sik_stpau": 501.81,
       "sik_santjoan": 74.49,
@@ -51,11 +51,11 @@
       "by_store": {
         "mila": {
           "revenue": 94408.64,
-          "cogs": -23335.29,
-          "gross_profit": 71073.35,
+          "cogs": -23536.89,
+          "gross_profit": 70871.75,
           "personnel": -47325.02,
           "opex": -4796.61,
-          "ebitda": 18951.72
+          "ebitda": 18750.12
         },
         "stpau": {
           "revenue": 126521.08,
@@ -67,11 +67,11 @@
         },
         "santjoan": {
           "revenue": 36949.4,
-          "cogs": -13954.69,
-          "gross_profit": 22994.71,
+          "cogs": -14598.69,
+          "gross_profit": 22350.71,
           "personnel": -7940.64,
           "opex": -4633.94,
-          "ebitda": 10420.13
+          "ebitda": 9776.13
         },
         "hq": {
           "revenue": 0,
@@ -89,13 +89,13 @@
       "ecommerce": 0,
       "discounts": 4805.18,
       "revenue": 319978.18,
-      "cogs": -74502.93,
-      "gross_profit": 245475.25,
+      "cogs": -75386.04,
+      "gross_profit": 244592.14,
       "personnel": -127959.08,
-      "opex": -39245.03,
-      "ebitda": 78271.14,
+      "opex": -39406.26,
+      "ebitda": 77226.8,
       "financial": -2241.22,
-      "ebt": 76029.92,
+      "ebt": 74985.58,
       "sik_mila": 356.6,
       "sik_stpau": 525.84,
       "sik_santjoan": 59.16,
@@ -108,27 +108,27 @@
       "by_store": {
         "mila": {
           "revenue": 99031.11,
-          "cogs": -26327.99,
-          "gross_profit": 72703.12,
+          "cogs": -26526.19,
+          "gross_profit": 72504.92,
           "personnel": -42277.04,
-          "opex": -9119.86,
-          "ebitda": 21306.22
+          "opex": -9180.26,
+          "ebitda": 21047.62
         },
         "stpau": {
           "revenue": 127960.61,
-          "cogs": -38104.58,
-          "gross_profit": 89856.03,
+          "cogs": -38607.66,
+          "gross_profit": 89352.95,
           "personnel": -62149.3,
-          "opex": -19566.3,
-          "ebitda": 8140.43
+          "opex": -19623.23,
+          "ebitda": 7580.42
         },
         "santjoan": {
           "revenue": 83376.1,
-          "cogs": -10070.36,
-          "gross_profit": 73305.74,
+          "cogs": -10252.19,
+          "gross_profit": 73123.91,
           "personnel": -5462.57,
-          "opex": -9359.37,
-          "ebitda": 58483.8
+          "opex": -9403.27,
+          "ebitda": 58258.07
         },
         "hq": {
           "revenue": 0,
@@ -141,58 +141,58 @@
       }
     },
     "mar": {
-      "physical": 171387.17,
+      "physical": 180185.21,
       "b2b": 58.2,
       "ecommerce": 0,
-      "discounts": 2608.09,
-      "revenue": 174053.46,
-      "cogs": -25670.84,
-      "gross_profit": 148382.62,
+      "discounts": 2739.4,
+      "revenue": 182982.81,
+      "cogs": -27774.74,
+      "gross_profit": 155208.07,
       "personnel": 0,
-      "opex": -19044.66,
-      "ebitda": 129337.96,
-      "financial": -1737.36,
-      "ebt": 127600.6,
+      "opex": -19195.49,
+      "ebitda": 136012.58,
+      "financial": -1820.19,
+      "ebt": 134192.39,
       "sik_mila": 0,
       "sik_stpau": 0,
       "sik_santjoan": 0,
       "sik_hq": 0,
       "sik_untagged": 0,
       "sik_total": 0,
-      "store_mila": 53515.54,
-      "store_stpau": 57038.9,
-      "store_santjoan": 48836.4,
+      "store_mila": 56885.55,
+      "store_stpau": 60395.69,
+      "store_santjoan": 51556.04,
       "by_store": {
         "mila": {
-          "revenue": 53515.54,
-          "cogs": -5603.8,
-          "gross_profit": 47911.74,
+          "revenue": 56885.55,
+          "cogs": -6033.57,
+          "gross_profit": 50851.98,
           "personnel": 0,
           "opex": -2414.92,
-          "ebitda": 45496.82
+          "ebitda": 48437.06
         },
         "stpau": {
-          "revenue": 57038.9,
-          "cogs": -16460.27,
-          "gross_profit": 40578.63,
+          "revenue": 60395.69,
+          "cogs": -17683.17,
+          "gross_profit": 42712.52,
           "personnel": 0,
-          "opex": -10554.88,
-          "ebitda": 30023.75
+          "opex": -10611.81,
+          "ebitda": 32100.71
         },
         "santjoan": {
-          "revenue": 48836.4,
-          "cogs": -3556.77,
-          "gross_profit": 45279.63,
+          "revenue": 51556.04,
+          "cogs": -4058,
+          "gross_profit": 47498.04,
           "personnel": 0,
-          "opex": -5506.18,
-          "ebitda": 39773.45
+          "opex": -5550.08,
+          "ebitda": 41947.96
         },
         "hq": {
           "revenue": 0,
-          "cogs": -50,
-          "gross_profit": -50,
+          "cogs": 0,
+          "gross_profit": 0,
           "personnel": 0,
-          "opex": -568.68,
+          "opex": -618.68,
           "ebitda": -618.68
         }
       }
@@ -210,9 +210,9 @@
       "santjoan": 83376.1
     },
     "mar": {
-      "mila": 53515.54,
-      "stpau": 57038.9,
-      "santjoan": 48836.4
+      "mila": 56885.55,
+      "stpau": 60395.69,
+      "santjoan": 51556.04
     }
   },
   "channel": {
@@ -242,11 +242,11 @@
     },
     {
       "account": "60200000",
-      "name": "FOXWAY OU iPhone 11 128GB - Blanco - Libre",
+      "name": "AMAZON BUSINESS EU SARL SUCURSAL EN ESPANA",
       "jan": 455,
       "feb": 0,
-      "mar": 90.85,
-      "total_ytd": 545.85
+      "mar": 265.3,
+      "total_ytd": 720.3
     },
     {
       "account": "63100001",
@@ -314,11 +314,11 @@
     },
     {
       "account": "60200000",
-      "name": "FOXWAY OU iPhone 11 128GB - Blanco - Libre",
+      "name": "AMAZON BUSINESS EU SARL SUCURSAL EN ESPANA",
       "jan": 455,
       "feb": 0,
-      "mar": 90.85,
-      "total_ytd": 545.85
+      "mar": 265.3,
+      "total_ytd": 720.3
     },
     {
       "account": "63100001",
@@ -386,11 +386,11 @@
     },
     {
       "account": "60200000",
-      "name": "FOXWAY OU iPhone 11 128GB - Blanco - Libre",
+      "name": "AMAZON BUSINESS EU SARL SUCURSAL EN ESPANA",
       "jan": 455,
       "feb": 0,
-      "mar": 90.85,
-      "total_ytd": 545.85
+      "mar": 265.3,
+      "total_ytd": 720.3
     },
     {
       "account": "63100001",
@@ -458,11 +458,11 @@
     },
     {
       "account": "60200000",
-      "name": "FOXWAY OU iPhone 11 128GB - Blanco - Libre",
+      "name": "AMAZON BUSINESS EU SARL SUCURSAL EN ESPANA",
       "jan": 455,
       "feb": 0,
-      "mar": 90.85,
-      "total_ytd": 545.85
+      "mar": 265.3,
+      "total_ytd": 720.3
     },
     {
       "account": "63100001",
@@ -530,11 +530,11 @@
     },
     {
       "account": "60200000",
-      "name": "FOXWAY OU iPhone 11 128GB - Blanco - Libre",
+      "name": "AMAZON BUSINESS EU SARL SUCURSAL EN ESPANA",
       "jan": 455,
       "feb": 0,
-      "mar": 90.85,
-      "total_ytd": 545.85
+      "mar": 265.3,
+      "total_ytd": 720.3
     },
     {
       "account": "63100001",
@@ -602,11 +602,11 @@
     },
     {
       "account": "60200000",
-      "name": "FOXWAY OU iPhone 11 128GB - Blanco - Libre",
+      "name": "AMAZON BUSINESS EU SARL SUCURSAL EN ESPANA",
       "jan": 455,
       "feb": 0,
-      "mar": 90.85,
-      "total_ytd": 545.85
+      "mar": 265.3,
+      "total_ytd": 720.3
     },
     {
       "account": "63100001",
@@ -674,11 +674,11 @@
     },
     {
       "account": "60200000",
-      "name": "FOXWAY OU iPhone 11 128GB - Blanco - Libre",
+      "name": "AMAZON BUSINESS EU SARL SUCURSAL EN ESPANA",
       "jan": 455,
       "feb": 0,
-      "mar": 90.85,
-      "total_ytd": 545.85
+      "mar": 265.3,
+      "total_ytd": 720.3
     },
     {
       "account": "63100001",
@@ -746,11 +746,11 @@
     },
     {
       "account": "60200000",
-      "name": "FOXWAY OU iPhone 11 128GB - Blanco - Libre",
+      "name": "AMAZON BUSINESS EU SARL SUCURSAL EN ESPANA",
       "jan": 455,
       "feb": 0,
-      "mar": 90.85,
-      "total_ytd": 545.85
+      "mar": 265.3,
+      "total_ytd": 720.3
     },
     {
       "account": "63100001",
@@ -818,11 +818,11 @@
     },
     {
       "account": "60200000",
-      "name": "FOXWAY OU iPhone 11 128GB - Blanco - Libre",
+      "name": "AMAZON BUSINESS EU SARL SUCURSAL EN ESPANA",
       "jan": 455,
       "feb": 0,
-      "mar": 90.85,
-      "total_ytd": 545.85
+      "mar": 265.3,
+      "total_ytd": 720.3
     },
     {
       "account": "63100001",
