@@ -823,34 +823,53 @@ fetch('./data.json')
     var dot = document.getElementById('statusDot');
     dot.className = 'dot stale';
     document.getElementById('statusText').textContent = 'Data unavailable — using cache';
-    // Fallback: hardcoded data matching the last known good state
+    // Fallback: hardcoded data matching current schema
+    var byStoreFallback = {
+      mila:     { revenue: 99031,  cogs: -26328, gross_profit: 72703, personnel: -42634, opex: -9120,  ebitda: 20950 },
+      stpau:    { revenue: 127961, cogs: -38105, gross_profit: 89856, personnel: -62675, opex: -19566, ebitda: 7615  },
+      santjoan: { revenue: 83376,  cogs: -10070, gross_profit: 73306, personnel: -5522,  opex: -9359,  ebitda: 58425 },
+      hq:       { revenue: 0,      cogs: 0,      gross_profit: 0,     personnel: -16435, opex: -1200,  ebitda: 0     }
+    };
     var fallback = {
-      "generated_at": "2026-03-15T06:00:00Z",
+      "generated_at": "2026-03-17T06:00:00Z",
       "period": { "display_month": "Feb 2026", "month": "2026-02", "partial_month": "Mar 2026" },
       "overview": {
-        "revenue": { "current": 312869, "prev": 264172, "mom_pct": 18.4 },
-        "ebitda": { "current": 70510, "margin_pct": 22.5 },
-        "cogs_pct": { "current": 23.8, "prev": 27.8 },
-        "personnel_pct": { "current": 41.2, "prev": 51.1 },
-        "revenue_partial": 144926
+        "revenue": { "current": 319978, "prev": 266055, "mom_pct": 20.3 },
+        "ebitda": { "current": 78271, "margin_pct": 24.5 },
+        "cogs_pct": { "current": 23.3, "prev": 28.7 },
+        "personnel_pct": { "current": 40.0, "prev": 50.3 },
+        "revenue_partial": 174053
       },
       "pl": {
         "jan": { "physical": 234465, "b2b": 27550, "ecommerce": 6198, "discounts": -4041,
-                 "revenue": 264172, "cogs": -73546, "gross_profit": 190626,
-                 "personnel": -135005, "opex": -27432, "ebitda": 28189,
-                 "financial": -2188, "ebt": 26001 },
-        "feb": { "physical": 286814, "b2b": 28286, "ecommerce": 2573, "discounts": -4805,
-                 "revenue": 312869, "cogs": -74479, "gross_profit": 238390,
-                 "personnel": -129018, "opex": -38862, "ebitda": 70510,
-                 "financial": -2241, "ebt": 68269 }
+                 "revenue": 266055, "cogs": -76330, "gross_profit": 189725,
+                 "personnel": -133812, "opex": -28645, "ebitda": 27268,
+                 "financial": -2188, "ebt": 25080,
+                 "by_store": null },
+        "feb": { "physical": 286814, "b2b": 28359, "ecommerce": 2573, "discounts": -4805,
+                 "revenue": 319978, "cogs": -74503, "gross_profit": 245475,
+                 "personnel": -127959, "opex": -39245, "ebitda": 78271,
+                 "financial": -2241, "ebt": 76030,
+                 "by_store": byStoreFallback }
       },
       "stores": {
-        "jan": { "mila": 96732, "stpau": 130396, "santjoan": 36949 },
-        "feb": { "mila": 99243, "stpau": 130322, "santjoan": 83304 }
+        "jan": { "mila": 94409, "stpau": 126521, "santjoan": 36949 },
+        "feb": { "mila": 99031, "stpau": 127961, "santjoan": 83376 }
       },
-      "channel": { "physical": 286814, "b2b": 28286, "ecommerce": 2573, "discounts": 4805 },
+      "channel": { "physical": 286814, "b2b": 28359, "ecommerce": 2573, "discounts": 4805 },
       "productivity": null,
-      "debt": null
+      "debt": null,
+      "unmapped_accounts": [
+        { "account": "64000000", "name": "Salario", "jan": 0, "feb": 1202.5, "mar": 0, "total_ytd": 1202.5 },
+        { "account": "64200000", "name": "Gasto S.S. Empresa", "jan": 255.13, "feb": 905.05, "mar": 0, "total_ytd": 1160.18 },
+        { "account": "60200000", "name": "FOXWAY OU iPhone 11", "jan": 455, "feb": 0, "mar": 90.85, "total_ytd": 545.85 },
+        { "account": "63100001", "name": "Domiciliacion Impuesto IVA", "jan": 109.18, "feb": 130.04, "mar": 62.51, "total_ytd": 301.73 },
+        { "account": "62200001", "name": "Norma Montaño Conde", "jan": 29.9, "feb": 207.77, "mar": 0, "total_ytd": 237.67 },
+        { "account": "62200002", "name": "Control Cucarachas/Ratas", "jan": 0, "feb": 36, "mar": 195, "total_ytd": 231 },
+        { "account": "62900022", "name": "Valenflor SA", "jan": 108.8, "feb": 0, "mar": 0, "total_ytd": 108.8 },
+        { "account": "629000008", "name": "Lon Pre Seleccion SL", "jan": 0, "feb": 27.89, "mar": 0, "total_ytd": 27.89 },
+        { "account": "62900005", "name": "Cabify España SLU", "jan": 0, "feb": 0, "mar": 24.21, "total_ytd": 24.21 }
+      ]
     };
     render(fallback);
   });
