@@ -412,6 +412,16 @@ function render(D) {
   var st = D.stores;
   var ch = D.channel;
 
+  // Resolve jan/feb dynamically — keys are 'jan'/'feb' or month-key based
+  var plKeys = Object.keys(pl).sort();
+  var jan = pl.jan || pl[plKeys[0]] || {};
+  var feb = pl.feb || pl[plKeys[1]] || pl[plKeys[0]] || {};
+  // Ensure revenue exists — fallback to 0 to avoid crashes
+  jan = Object.assign({ revenue: 0, cogs: 0, gross_profit: 0, personnel: 0, opex: 0, ebitda: 0, financial: 0, ebt: 0,
+    physical: 0, b2b: 0, ecommerce: 0, discounts: 0, by_store: null }, jan);
+  feb = Object.assign({ revenue: 0, cogs: 0, gross_profit: 0, personnel: 0, opex: 0, ebitda: 0, financial: 0, ebt: 0,
+    physical: 0, b2b: 0, ecommerce: 0, discounts: 0, by_store: null }, feb);
+
   // ── Header status ──
   var dot = document.getElementById('statusDot');
   var statusText = document.getElementById('statusText');
@@ -468,7 +478,7 @@ function render(D) {
   // ── Revenue & EBITDA chart ──
   var revLabels = ['Jan 2026', period.display_month, period.partial_month + ' (partial)'];
   var revData = [ov.revenue.prev, ov.revenue.current, ov.revenue_partial];
-  var ebitdaData = [pl.jan.ebitda, pl.feb.ebitda, null];
+  var ebitdaData = [jan.ebitda, feb.ebitda, null];
 
   if (charts.revenue) charts.revenue.destroy();
   charts.revenue = new Chart(document.getElementById('revenueChart'), {
@@ -585,7 +595,7 @@ function render(D) {
 
   // ── Store performance table (by_store P&L) ──
   document.getElementById('store-perf-title').textContent = 'Store performance — ' + period.display_month;
-  var byStore = (pl.feb || pl[Object.keys(pl).sort().slice(-2,-1)[0]] || {}).by_store || null;
+  var byStore = feb.by_store || null;
   var storePerfBody = '';
   var storeColors = { mila: 'var(--green)', stpau: 'var(--amber-light)', santjoan: 'var(--blue)' };
 
@@ -648,7 +658,7 @@ function render(D) {
     period.partial_month + ' data is partial (through ~' + formatTimestamp(D.generated_at).split(' ').slice(0,3).join(' ') + '). March personnel expenses not yet available in Holded.';
 
   // ── P&L table ──
-  var jan = pl.jan, feb = pl.feb;
+  // (jan/feb already resolved at top of render)
   function plRow(label, jVal, fVal, cssClass) {
     var jPct = pct(jVal / jan.revenue * 100);
     var fPct = pct(fVal / feb.revenue * 100);
@@ -805,12 +815,16 @@ function render(D) {
 
 // ── Data loading with fallback ──────────────────────────────
 
-fetch('./data.json')
+fetch('./data.json?v=' + Date.now())
   .then(function(res) {
     if (!res.ok) throw new Error('HTTP ' + res.status);
     return res.json();
   })
   .then(function(data) {
+    // Validate schema — reject old data.json versions
+    if (!data.pl || !data.overview || !data.overview.revenue) {
+      throw new Error('Incompatible data.json schema — using fallback');
+    }
     render(data);
   })
   .catch(function(err) {
