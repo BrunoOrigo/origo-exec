@@ -73,6 +73,8 @@ table .down{color:var(--red)}
 .pnl-table .sub-row td{color:var(--text2);font-size:12px;padding:7px 14px 7px 28px}
 .pnl-table .total-row td{font-weight:600;border-top:2px solid var(--green);padding-top:12px;background:var(--amber-bg)}
 .pnl-table .gross-row td{font-weight:600;font-size:13px;background:var(--green-bg);color:var(--green)}
+.pnl-table .da-row td{font-size:12px;color:var(--text2);background:var(--bg3);padding:8px 14px}
+.pnl-table .op-profit-row td{font-weight:600;font-size:13px;background:var(--brown-bg);color:var(--brown);border-top:1px solid var(--border2)}
 .pnl-table .neg{color:var(--red)}
 .legend{display:flex;gap:14px;margin:8px 0 0;flex-wrap:wrap}
 .legend-item{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--text3)}
@@ -327,7 +329,7 @@ footer{margin:40px 24px 0;padding:16px 0;border-top:1px solid var(--border);disp
 </div>
 
 <footer>
-  <span>Origo Bakery SL — Executive Dashboard v3.2</span>
+  <span>Origo Bakery SL — Executive Dashboard v3.3</span>
   <span>Source: data.json ← n8n ← BigQuery</span>
   <span id="footer-updated">Last updated: —</span>
 </footer>
@@ -335,8 +337,8 @@ footer{margin:40px 24px 0;padding:16px 0;border-top:1px solid var(--border);disp
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <script>
 /* ============================================================
-   ORIGO EXECUTIVE DASHBOARD v3.2
-   Changes: Gross profit green styling
+   ORIGO EXECUTIVE DASHBOARD v3.3
+   Changes: D&A + Operating Profit lines in P&L
 ============================================================ */
 
 function eur(n) {
@@ -416,19 +418,19 @@ function render(D, storeKey) {
   var janBase = pl.jan || pl[plKeys[0]] || {};
   var febBase = pl.feb || pl[plKeys[1]] || pl[plKeys[0]] || {};
 
-  janBase = Object.assign({ revenue:0, cogs:0, gross_profit:0, personnel:0, opex:0, ebitda:0, financial:0, ebt:0, physical:0, b2b:0, ecommerce:0, discounts:0, by_store:null }, janBase);
-  febBase = Object.assign({ revenue:0, cogs:0, gross_profit:0, personnel:0, opex:0, ebitda:0, financial:0, ebt:0, physical:0, b2b:0, ecommerce:0, discounts:0, by_store:null }, febBase);
+  janBase = Object.assign({ revenue:0, cogs:0, gross_profit:0, personnel:0, opex:0, ebitda:0, da:0, operating_profit:0, financial:0, ebt:0, physical:0, b2b:0, ecommerce:0, discounts:0, by_store:null }, janBase);
+  febBase = Object.assign({ revenue:0, cogs:0, gross_profit:0, personnel:0, opex:0, ebitda:0, da:0, operating_profit:0, financial:0, ebt:0, physical:0, b2b:0, ecommerce:0, discounts:0, by_store:null }, febBase);
 
   var jan, feb;
   if (isStore) {
     var jbs = janBase.by_store && janBase.by_store[storeKey];
     jan = jbs
-      ? Object.assign({ revenue:0, cogs:0, gross_profit:0, personnel:0, opex:0, ebitda:0, financial:0, ebt:0 }, jbs)
-      : { revenue:null, cogs:null, gross_profit:null, personnel:null, opex:null, ebitda:null, financial:null, ebt:null };
+      ? Object.assign({ revenue:0, cogs:0, gross_profit:0, personnel:0, opex:0, ebitda:0, da:0, operating_profit:0, financial:0, ebt:0 }, jbs)
+      : { revenue:null, cogs:null, gross_profit:null, personnel:null, opex:null, ebitda:null, da:null, operating_profit:null, financial:null, ebt:null };
     var fbs = febBase.by_store && febBase.by_store[storeKey];
     feb = fbs
-      ? Object.assign({ revenue:0, cogs:0, gross_profit:0, personnel:0, opex:0, ebitda:0, financial:0, ebt:0 }, fbs)
-      : { revenue:null, cogs:null, gross_profit:null, personnel:null, opex:null, ebitda:null, financial:null, ebt:null };
+      ? Object.assign({ revenue:0, cogs:0, gross_profit:0, personnel:0, opex:0, ebitda:0, da:0, operating_profit:0, financial:0, ebt:0 }, fbs)
+      : { revenue:null, cogs:null, gross_profit:null, personnel:null, opex:null, ebitda:null, da:null, operating_profit:null, financial:null, ebt:null };
   } else {
     jan = janBase;
     feb = febBase;
@@ -596,12 +598,27 @@ function render(D, storeKey) {
       '<td class="num' + neg + '">' + eur(fVal) + '</td><td class="num pct">' + pct(fVal / fRevBase * 100) + '</td></tr>';
   }
 
-  // Gross profit: usa classe dedicada .gross-row (verde via CSS) + valores em verde via style
   function plGrossRow(label, jVal, fVal) {
-    var jD = jDisp(jVal);
-    var jP = jPctDisp(jVal, jRevBase);
     return '<tr class="gross-row"><td>' + label + '</td>' +
-      '<td class="num">' + jD + '</td><td class="num pct">' + jP + '</td>' +
+      '<td class="num">' + jDisp(jVal) + '</td><td class="num pct">' + jPctDisp(jVal, jRevBase) + '</td>' +
+      '<td class="num">' + eur(fVal) + '</td><td class="num pct">' + pct(fVal / fRevBase * 100) + '</td></tr>';
+  }
+
+  // D&A row — subtler styling (grey, smaller, indented)
+  function plDARow(jVal, fVal) {
+    var jD = jVal === null ? '—' : eur(jVal);
+    var jP = jVal === null ? '—' : pct(jVal / jRevBase * 100);
+    return '<tr class="da-row"><td style="padding-left:14px">Depreciation &amp; Amortization</td>' +
+      '<td class="num' + (jVal !== null && jVal < 0 ? ' neg' : '') + '">' + jD + '</td>' +
+      '<td class="num pct">' + jP + '</td>' +
+      '<td class="num' + (fVal < 0 ? ' neg' : '') + '">' + eur(fVal) + '</td>' +
+      '<td class="num pct">' + pct(fVal / fRevBase * 100) + '</td></tr>';
+  }
+
+  // Operating Profit row — brown/warm styling
+  function plOpProfitRow(jVal, fVal) {
+    return '<tr class="op-profit-row"><td>Operating profit</td>' +
+      '<td class="num">' + jDisp(jVal) + '</td><td class="num pct">' + jPctDisp(jVal, jRevBase) + '</td>' +
       '<td class="num">' + eur(fVal) + '</td><td class="num pct">' + pct(fVal / fRevBase * 100) + '</td></tr>';
   }
 
@@ -661,7 +678,14 @@ function render(D, storeKey) {
   pnlBody += plAccordionSection('PERSONNEL', 'Personnel expenses', jan.personnel, feb.personnel, 'section-row', '');
   pnlBody += plAccordionSection('OPEX', 'Operating expenses', jan.opex, feb.opex, 'section-row', '');
   pnlBody += plRowStyled('EBITDA', jan.ebitda, feb.ebitda, 'total-row', 'color:var(--amber)');
+  // ── D&A + Operating Profit (only in consolidated — DA is not split by store) ──
   if (!isStore) {
+    var jDA = janBase.da != null ? janBase.da : null;
+    var fDA = febBase.da || 0;
+    pnlBody += plDARow(jDA, fDA);
+    var jOP = janBase.operating_profit != null ? janBase.operating_profit : null;
+    var fOP = febBase.operating_profit || 0;
+    pnlBody += plOpProfitRow(jOP, fOP);
     pnlBody += plAccordionSection('FINANCIAL', 'Financial results', jan.financial, feb.financial, 'section-row', '');
   } else {
     pnlBody += plRow('Financial results', jan.financial, feb.financial || 0, 'section-row');
@@ -671,10 +695,13 @@ function render(D, storeKey) {
 
   if (charts.waterfall) charts.waterfall.destroy();
   var wfRev = febBase.revenue;
-  var wfLabels  = ['Revenue','COGS','Gross profit','Personnel','OPEX','EBITDA','Financial','EBT'];
-  var wfValues  = [febBase.revenue, febBase.cogs, febBase.gross_profit, febBase.personnel, febBase.opex, febBase.ebitda, febBase.financial, febBase.ebt];
-  var wfBase2   = [0, wfRev + febBase.cogs, 0, febBase.gross_profit + febBase.personnel, febBase.gross_profit + febBase.personnel + febBase.opex, 0, febBase.ebitda + febBase.financial, 0];
-  var wfColors  = ['#3d6635','#b33','#3d6635','#b33','#b33','#c8942a','#b33','#c8942a'];
+  // Waterfall: EBITDA → DA → Operating Profit → Financial → EBT
+  var wfLabels  = ['Revenue','COGS','Gross profit','Personnel','OPEX','EBITDA','D&A','Op. Profit','Financial','EBT'];
+  var wfDA      = febBase.da || 0;
+  var wfOP      = febBase.operating_profit || (febBase.ebitda + wfDA);
+  var wfValues  = [febBase.revenue, febBase.cogs, febBase.gross_profit, febBase.personnel, febBase.opex, febBase.ebitda, wfDA, wfOP, febBase.financial, febBase.ebt];
+  var wfBase2   = [0, wfRev + febBase.cogs, 0, febBase.gross_profit + febBase.personnel, febBase.gross_profit + febBase.personnel + febBase.opex, 0, febBase.ebitda + wfDA, 0, wfOP + febBase.financial, 0];
+  var wfColors  = ['#3d6635','#b33','#3d6635','#b33','#b33','#c8942a','#b33','#8b6c42','#b33','#8b6c42'];
   charts.waterfall = new Chart(document.getElementById('waterfallChart'), {
     type: 'bar',
     data: { labels: wfLabels, datasets: [
@@ -686,18 +713,18 @@ function render(D, storeKey) {
         if (ctx.datasetIndex !== 1) return '';
         return eur(ctx.raw) + ' (' + (Math.abs(ctx.raw) / wfRev * 100).toFixed(1) + '% of rev)';
       }}}},
-      scales: { x: { stacked: true, grid: { display: false }, ticks: { autoSkip: false, maxRotation: 15, font: { size: 10 } } },
+      scales: { x: { stacked: true, grid: { display: false }, ticks: { autoSkip: false, maxRotation: 20, font: { size: 10 } } },
                 y: { stacked: true, grid: { color: grid }, ticks: { callback: function(v) { return '€' + Math.round(v/1000) + 'k'; } } } },
       animation: { onComplete: function() {
         var chart = this; var ctx2 = chart.ctx; ctx2.save();
-        ctx2.font = '600 10px DM Sans, system-ui'; ctx2.textAlign = 'center';
+        ctx2.font = '600 9px DM Sans, system-ui'; ctx2.textAlign = 'center';
         chart.data.datasets[1].data.forEach(function(val, i) {
           var meta = chart.getDatasetMeta(1); var bar = meta.data[i]; if (!bar) return;
           ctx2.fillStyle = val < 0 ? '#b33' : '#2d4a28';
-          ctx2.fillText(eur(val), bar.x, bar.y - 6);
-          ctx2.font = '400 9px DM Sans, system-ui'; ctx2.fillStyle = '#8a8a80';
+          ctx2.fillText(eur(val), bar.x, bar.y - 5);
+          ctx2.font = '400 8px DM Sans, system-ui'; ctx2.fillStyle = '#8a8a80';
           ctx2.fillText((Math.abs(val) / wfRev * 100).toFixed(0) + '%', bar.x, bar.y + 5);
-          ctx2.font = '600 10px DM Sans, system-ui';
+          ctx2.font = '600 9px DM Sans, system-ui';
         });
         ctx2.restore();
       }}
@@ -766,17 +793,14 @@ fetch('./data.json?v=' + Date.now())
     var fallback = {
       "generated_at": "2026-03-19T06:00:00Z",
       "period": { "display_month": "Feb 2026", "month": "2026-02", "partial_month": "Mar 2026" },
-      "overview": { "revenue": { "current": 319978, "prev": 266055, "mom_pct": 20.3 }, "ebitda": { "current": 78271, "margin_pct": 24.5 }, "cogs_pct": { "current": 23.3, "prev": 28.7 }, "personnel_pct": { "current": 40.0, "prev": 50.3 }, "revenue_partial": 174053 },
+      "overview": { "revenue": { "current": 322551, "prev": 272253, "mom_pct": 18.5 }, "ebitda": { "current": 79458, "margin_pct": 24.6 }, "cogs_pct": { "current": 23.5, "prev": 28.5 }, "personnel_pct": { "current": 39.7, "prev": 49.1 }, "revenue_partial": 193956 },
       "pl": {
-        "jan": { "physical": 234465, "b2b": 27550, "ecommerce": 6198, "discounts": -4041, "revenue": 266055, "cogs": -76330, "gross_profit": 189725, "personnel": -133812, "opex": -28645, "ebitda": 27268, "financial": -2188, "ebt": 25080, "by_store": null },
-        "feb": { "physical": 286814, "b2b": 28359, "ecommerce": 2573, "discounts": -4805, "revenue": 319978, "cogs": -74503, "gross_profit": 245475, "personnel": -127959, "opex": -39245, "ebitda": 78271, "financial": -2241, "ebt": 76030, "by_store": byStoreFallback }
+        "jan": { "physical": 234465, "b2b": 27550, "ecommerce": 6198, "discounts": -4041, "revenue": 272253, "cogs": -77696, "gross_profit": 194557, "personnel": -133812, "opex": -28645, "ebitda": 32100, "da": -4698, "operating_profit": 27402, "financial": -2188, "ebt": 25214, "by_store": null },
+        "feb": { "physical": 286814, "b2b": 28359, "ecommerce": 2573, "discounts": -4805, "revenue": 322551, "cogs": -75701, "gross_profit": 246850, "personnel": -127959, "opex": -39434, "ebitda": 79458, "da": -5034, "operating_profit": 74424, "financial": -2241, "ebt": 72183, "by_store": byStoreFallback }
       },
       "stores": { "jan": { "mila": 94409, "stpau": 126521, "santjoan": 36949 }, "feb": { "mila": 99031, "stpau": 127961, "santjoan": 83376 } },
       "channel": { "physical": 286814, "b2b": 28359, "ecommerce": 2573, "discounts": 4805 },
-      "unmapped_accounts": [
-        { "account": "64000000", "name": "Salario", "jan": 0, "feb": 1202.5, "mar": 0, "total_ytd": 1202.5 },
-        { "account": "64200000", "name": "Gasto S.S. Empresa", "jan": 255.13, "feb": 905.05, "mar": 0, "total_ytd": 1160.18 }
-      ]
+      "unmapped_accounts": []
     };
     render(fallback, 'all');
   });
