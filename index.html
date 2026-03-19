@@ -225,7 +225,7 @@ footer{margin:40px 24px 0;padding:16px 0;border-top:1px solid var(--border);disp
         <tbody id="pnl-table-body"></tbody>
       </table>
     </div>
-    <div class="section-title">P&L waterfall — February 2026</div>
+    <div class="section-title" id="waterfall-title">P&L waterfall — February 2026</div>
     <div class="chart-card">
       <div style="position:relative;height:360px"><canvas id="waterfallChart"></canvas></div>
     </div>
@@ -328,7 +328,7 @@ footer{margin:40px 24px 0;padding:16px 0;border-top:1px solid var(--border);disp
 </div>
 
 <footer>
-  <span>Origo Bakery SL — Executive Dashboard v3.6</span>
+  <span>Origo Bakery SL — Executive Dashboard v3.7</span>
   <span>Source: data.json ← n8n ← BigQuery</span>
   <span id="footer-updated">Last updated: —</span>
 </footer>
@@ -336,13 +336,19 @@ footer{margin:40px 24px 0;padding:16px 0;border-top:1px solid var(--border);disp
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <script>
 /* ============================================================
-   ORIGO EXECUTIVE DASHBOARD v3.4
-   Changes:
+   ORIGO EXECUTIVE DASHBOARD v3.7
+   Changes v3.7 (2026-03-19):
+   - Bug #1: Store name badge added to Overview section titles
+   - Bug #2: Zero-value rows hidden in store P&L accordions
+   - Bug #3: Waterfall chart respects store dropdown (6 bars in store mode)
+   - Bug #4: Personnel accordion has visual sub-groups (Salaries / Social Security / Company Benefits)
+   - Bug #5: D&A sub-lines already hidden in store mode (confirmed correct)
+   Prior (v3.6):
    - D&A accordion with sub-lines (Holded monthly + override)
    - Store mode: clean P&L without D&A/Op.Profit (not allocatable)
    - Store mode: note explaining D&A is consolidated only
    - Financial accordion works in both modes
-============================================================ */
+=============================================================== */
 
 function eur(n) {
   if (n == null) return '—';
@@ -517,7 +523,9 @@ function render(D, storeKey) {
     options: { responsive: true, maintainAspectRatio: false, cutout: '65%', plugins: { legend: { display: false } } }
   });
 
-  document.getElementById('store-table-title').textContent = 'Revenue by store — Jan vs ' + period.display_month;
+  var storeNameLabels = { mila: 'Milà', stpau: 'Sant Pau', santjoan: 'Sant Joan', hq: 'HQ' };
+  var storeDisplaySuffix = isStore ? (' (' + (storeNameLabels[storeKey] || storeKey) + ')') : '';
+  document.getElementById('store-table-title').textContent = 'Revenue by store — Jan vs ' + period.display_month + storeDisplaySuffix;
   document.getElementById('store-col-feb').textContent = period.display_month;
   document.getElementById('store-chart-title').textContent = 'Revenue by store — Jan vs ' + period.display_month;
   var storeNames = { mila: 'Milà', stpau: 'Sant Pau', santjoan: 'Sant Joan' };
@@ -551,7 +559,7 @@ function render(D, storeKey) {
       scales: { x: { grid: { display: false } }, y: { grid: { color: grid }, ticks: { callback: function(v) { return '€' + Math.round(v/1000) + 'k'; } } } } }
   });
 
-  document.getElementById('store-perf-title').textContent = 'Store performance — ' + period.display_month;
+  document.getElementById('store-perf-title').textContent = 'Store performance — ' + period.display_month + storeDisplaySuffix;
   var byStore = febBase.by_store || null;
   var storeColors = { mila: 'var(--green)', stpau: 'var(--amber-light)', santjoan: 'var(--blue)' };
   var storePerfBody = '';
@@ -674,6 +682,14 @@ function render(D, storeKey) {
       '<td class="num">' + eur(fVal) + '</td><td class="num pct">' + fPctDisp(fVal) + '</td></tr>';
   }
 
+  // ── Personnel sub-group helper (Bug #4) ──
+  function getPersonnelGroupLabel(account) {
+    if (account.startsWith('64000')) return 'Salaries';
+    if (account.startsWith('64200')) return 'Social Security';
+    if (account.startsWith('649') || account.startsWith('755')) return 'Company Benefits';
+    return null;
+  }
+
   // ── Generic accordion for breakdown sections ──
   function plAccordionSection(sectionKey, parentLabel, jTotal, fTotal, parentCss, parentStyle) {
     var febItems = (febBase.breakdown && febBase.breakdown[sectionKey]) || [];
@@ -694,10 +710,22 @@ function render(D, storeKey) {
     html += '<td class="num pct">' + fPctDisp(fTotal) + '</td></tr>';
 
     if (febItems.length > 0) {
+      var lastGroup = null;
       febItems.forEach(function(item) {
         var fVal = parseFloat(item[valKey]) || 0;
         var jItem = janMap[item.account];
         var jVal = jItem ? (parseFloat(jItem[valKey]) || 0) : null;
+        // Bug #2: skip zero-value rows in store mode
+        if (isStore && fVal === 0 && (jVal === null || jVal === 0)) return;
+        // Bug #4: Personnel visual sub-groups
+        if (sectionKey === 'PERSONNEL') {
+          var group = getPersonnelGroupLabel(item.account);
+          if (group && group !== lastGroup) {
+            html += '<tr class="acc-child acc-child-PERSONNEL" style="display:none">' +
+              '<td colspan="5" style="padding:4px 14px 4px 28px;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--text3);background:var(--bg3)">' + group + '</td></tr>';
+            lastGroup = group;
+          }
+        }
         var jd = jVal === null ? '—' : eur(jVal);
         var jp = jPctDisp(jVal);
         html += '<tr class="sub-row acc-child acc-child-' + sectionKey + '" style="display:none">';
@@ -763,15 +791,26 @@ function render(D, storeKey) {
 
   document.getElementById('pnl-table-body').innerHTML = pnlBody;
 
-  // ── Waterfall ──
+  // ── Waterfall (Bug #3: respeita modo loja) ──
   if (charts.waterfall) charts.waterfall.destroy();
-  var wfRev = febBase.revenue;
-  var wfDA  = febBase.da || 0;
-  var wfOP  = febBase.operating_profit || (febBase.ebitda + wfDA);
-  var wfLabels = ['Revenue','COGS','Gross profit','Personnel','OPEX','EBITDA','D&A','Op. Profit','Financial','EBT'];
-  var wfValues = [febBase.revenue, febBase.cogs, febBase.gross_profit, febBase.personnel, febBase.opex, febBase.ebitda, wfDA, wfOP, febBase.financial, febBase.ebt];
-  var wfBase2  = [0, wfRev + febBase.cogs, 0, febBase.gross_profit + febBase.personnel, febBase.gross_profit + febBase.personnel + febBase.opex, 0, febBase.ebitda + wfDA, 0, wfOP + febBase.financial, 0];
-  var wfColors = ['#3d6635','#b33','#3d6635','#b33','#b33','#c8942a','#b33','#8b6c42','#b33','#8b6c42'];
+  var wfData = isStore ? feb : febBase;
+  var wfRev  = wfData.revenue || 0;
+  var wfLabels, wfValues, wfBase2, wfColors;
+  if (isStore) {
+    wfLabels = ['Revenue','COGS','Gross profit','Personnel','OPEX','EBITDA'];
+    wfValues = [wfData.revenue, wfData.cogs, wfData.gross_profit, wfData.personnel, wfData.opex, wfData.ebitda];
+    wfBase2  = [0, wfRev + (wfData.cogs||0), 0, (wfData.gross_profit||0) + (wfData.personnel||0), (wfData.gross_profit||0) + (wfData.personnel||0) + (wfData.opex||0), 0];
+    wfColors = ['#3d6635','#b33','#3d6635','#b33','#b33','#c8942a'];
+  } else {
+    var wfDA  = febBase.da || 0;
+    var wfOP  = febBase.operating_profit || (febBase.ebitda + wfDA);
+    wfLabels = ['Revenue','COGS','Gross profit','Personnel','OPEX','EBITDA','D&A','Op. Profit','Financial','EBT'];
+    wfValues = [febBase.revenue, febBase.cogs, febBase.gross_profit, febBase.personnel, febBase.opex, febBase.ebitda, wfDA, wfOP, febBase.financial, febBase.ebt];
+    wfBase2  = [0, wfRev + febBase.cogs, 0, febBase.gross_profit + febBase.personnel, febBase.gross_profit + febBase.personnel + febBase.opex, 0, febBase.ebitda + wfDA, 0, wfOP + febBase.financial, 0];
+    wfColors = ['#3d6635','#b33','#3d6635','#b33','#b33','#c8942a','#b33','#8b6c42','#b33','#8b6c42'];
+  }
+  var wtitleEl = document.getElementById('waterfall-title');
+  if (wtitleEl) wtitleEl.textContent = 'P&L waterfall — ' + period.display_month + storeDisplaySuffix;
   charts.waterfall = new Chart(document.getElementById('waterfallChart'), {
     type: 'bar',
     data: { labels: wfLabels, datasets: [
@@ -781,7 +820,8 @@ function render(D, storeKey) {
     options: { responsive: true, maintainAspectRatio: false,
       plugins: { legend: { display: false }, tooltip: { callbacks: { label: function(ctx) {
         if (ctx.datasetIndex !== 1) return '';
-        return eur(ctx.raw) + ' (' + (Math.abs(ctx.raw) / wfRev * 100).toFixed(1) + '% of rev)';
+        var pctStr = wfRev > 0 ? ' (' + (Math.abs(ctx.raw) / wfRev * 100).toFixed(1) + '% of rev)' : '';
+        return eur(ctx.raw) + pctStr;
       }}}},
       scales: { x: { stacked: true, grid: { display: false }, ticks: { autoSkip: false, maxRotation: 20, font: { size: 10 } } },
                 y: { stacked: true, grid: { color: grid }, ticks: { callback: function(v) { return '€' + Math.round(v/1000) + 'k'; } } } },
@@ -793,7 +833,7 @@ function render(D, storeKey) {
           ctx2.fillStyle = val < 0 ? '#b33' : '#2d4a28';
           ctx2.fillText(eur(val), bar.x, bar.y - 5);
           ctx2.font = '400 8px DM Sans, system-ui'; ctx2.fillStyle = '#8a8a80';
-          ctx2.fillText((Math.abs(val) / wfRev * 100).toFixed(0) + '%', bar.x, bar.y + 5);
+          if (wfRev > 0) ctx2.fillText((Math.abs(val) / wfRev * 100).toFixed(0) + '%', bar.x, bar.y + 5);
           ctx2.font = '600 9px DM Sans, system-ui';
         });
         ctx2.restore();
