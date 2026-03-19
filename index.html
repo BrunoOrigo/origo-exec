@@ -73,7 +73,6 @@ table .down{color:var(--red)}
 .pnl-table .sub-row td{color:var(--text2);font-size:12px;padding:7px 14px 7px 28px}
 .pnl-table .total-row td{font-weight:600;border-top:2px solid var(--green);padding-top:12px;background:var(--amber-bg)}
 .pnl-table .gross-row td{font-weight:600;font-size:13px;background:var(--green-bg);color:var(--green)}
-.pnl-table .da-row td{font-size:12px;color:var(--text2);background:var(--bg3);padding:8px 14px}
 .pnl-table .op-profit-row td{font-weight:600;font-size:13px;background:var(--brown-bg);color:var(--brown);border-top:1px solid var(--border2)}
 .pnl-table .neg{color:var(--red)}
 .legend{display:flex;gap:14px;margin:8px 0 0;flex-wrap:wrap}
@@ -238,7 +237,7 @@ footer{margin:40px 24px 0;padding:16px 0;border-top:1px solid var(--border);disp
     <div class="kpi-grid" style="grid-template-columns:repeat(4,1fr)">
       <div class="kpi">
         <div class="kpi-label">Headcount (approx.)</div>
-        <div class="kpi-value" style="color:var(--text3)">~60</div>
+        <div class="kpi-value" style="color:var(--text3)">~65</div>
         <div class="kpi-sub">Across all locations</div>
       </div>
       <div class="kpi">
@@ -329,7 +328,7 @@ footer{margin:40px 24px 0;padding:16px 0;border-top:1px solid var(--border);disp
 </div>
 
 <footer>
-  <span>Origo Bakery SL — Executive Dashboard v3.3</span>
+  <span>Origo Bakery SL — Executive Dashboard v3.4</span>
   <span>Source: data.json ← n8n ← BigQuery</span>
   <span id="footer-updated">Last updated: —</span>
 </footer>
@@ -337,8 +336,12 @@ footer{margin:40px 24px 0;padding:16px 0;border-top:1px solid var(--border);disp
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <script>
 /* ============================================================
-   ORIGO EXECUTIVE DASHBOARD v3.3
-   Changes: D&A + Operating Profit lines in P&L
+   ORIGO EXECUTIVE DASHBOARD v3.4
+   Changes:
+   - D&A accordion with sub-lines (Holded monthly + override)
+   - Store mode: clean P&L without D&A/Op.Profit (not allocatable)
+   - Store mode: note explaining D&A is consolidated only
+   - Financial accordion works in both modes
 ============================================================ */
 
 function eur(n) {
@@ -425,12 +428,12 @@ function render(D, storeKey) {
   if (isStore) {
     var jbs = janBase.by_store && janBase.by_store[storeKey];
     jan = jbs
-      ? Object.assign({ revenue:0, cogs:0, gross_profit:0, personnel:0, opex:0, ebitda:0, da:0, operating_profit:0, financial:0, ebt:0 }, jbs)
-      : { revenue:null, cogs:null, gross_profit:null, personnel:null, opex:null, ebitda:null, da:null, operating_profit:null, financial:null, ebt:null };
+      ? Object.assign({ revenue:0, cogs:0, gross_profit:0, personnel:0, opex:0, ebitda:0, financial:0, ebt:0 }, jbs)
+      : { revenue:null, cogs:null, gross_profit:null, personnel:null, opex:null, ebitda:null, financial:null, ebt:null };
     var fbs = febBase.by_store && febBase.by_store[storeKey];
     feb = fbs
-      ? Object.assign({ revenue:0, cogs:0, gross_profit:0, personnel:0, opex:0, ebitda:0, da:0, operating_profit:0, financial:0, ebt:0 }, fbs)
-      : { revenue:null, cogs:null, gross_profit:null, personnel:null, opex:null, ebitda:null, da:null, operating_profit:null, financial:null, ebt:null };
+      ? Object.assign({ revenue:0, cogs:0, gross_profit:0, personnel:0, opex:0, ebitda:0, financial:0, ebt:0 }, fbs)
+      : { revenue:null, cogs:null, gross_profit:null, personnel:null, opex:null, ebitda:null, financial:null, ebt:null };
   } else {
     jan = janBase;
     feb = febBase;
@@ -580,14 +583,14 @@ function render(D, storeKey) {
     storePerfBody += '<td class="num neg">' + eur(febBase.opex) + '</td>';
     storePerfBody += '<td class="num" style="color:var(--amber);font-weight:700">' + eur(febBase.ebitda) + '</td>';
     storePerfBody += '<td class="num pct" style="color:var(--amber)">' + pct(ov.ebitda.margin_pct) + '</td></tr>';
-    document.getElementById('store-note').textContent = '⚠ Per-store COGS and Personnel are based on Holded tag allocation. Entries without store tags are consolidated in HQ.';
+    document.getElementById('store-note').textContent = '⚠ Per-store COGS and Personnel are based on Holded tag allocation. Entries without store tags are consolidated in HQ. D&A and Operating Profit are consolidated-only (asset tags not available by store).';
   } else {
     storePerfBody = '<tr><td colspan="9" style="text-align:center;color:var(--text3);padding:20px">Per-store P&L data not available.</td></tr>';
   }
   document.getElementById('store-perf-body').innerHTML = storePerfBody;
   document.getElementById('overview-note').textContent = period.partial_month + ' data is partial. March personnel expenses not yet available in Holded.';
 
-  // ── P&L ──
+  // ── P&L helper functions ──
   function jDisp(val) { return val === null ? '—' : eur(val); }
   function jPctDisp(val, base) { return val === null ? '—' : pct(val / base * 100); }
 
@@ -604,30 +607,63 @@ function render(D, storeKey) {
       '<td class="num">' + eur(fVal) + '</td><td class="num pct">' + pct(fVal / fRevBase * 100) + '</td></tr>';
   }
 
-  // D&A row — subtler styling (grey, smaller, indented)
-  function plDARow(jVal, fVal) {
-    var jD = jVal === null ? '—' : eur(jVal);
-    var jP = jVal === null ? '—' : pct(jVal / jRevBase * 100);
-    return '<tr class="da-row"><td style="padding-left:14px">Depreciation &amp; Amortization</td>' +
-      '<td class="num' + (jVal !== null && jVal < 0 ? ' neg' : '') + '">' + jD + '</td>' +
-      '<td class="num pct">' + jP + '</td>' +
-      '<td class="num' + (fVal < 0 ? ' neg' : '') + '">' + eur(fVal) + '</td>' +
-      '<td class="num pct">' + pct(fVal / fRevBase * 100) + '</td></tr>';
-  }
-
-  // Operating Profit row — brown/warm styling
-  function plOpProfitRow(jVal, fVal) {
-    return '<tr class="op-profit-row"><td>Operating profit</td>' +
-      '<td class="num">' + jDisp(jVal) + '</td><td class="num pct">' + jPctDisp(jVal, jRevBase) + '</td>' +
-      '<td class="num">' + eur(fVal) + '</td><td class="num pct">' + pct(fVal / fRevBase * 100) + '</td></tr>';
-  }
-
   function plRowStyled(label, jVal, fVal, cssClass, style) {
     return '<tr class="' + cssClass + '"><td style="' + style + '">' + label + '</td>' +
       '<td class="num" style="' + style + '">' + jDisp(jVal) + '</td><td class="num" style="' + style + '">' + jPctDisp(jVal, jRevBase) + '</td>' +
       '<td class="num" style="' + style + '">' + eur(fVal) + '</td><td class="num" style="' + style + '">' + pct(fVal / fRevBase * 100) + '</td></tr>';
   }
 
+  // ── D&A accordion with sub-lines ──
+  // Sub-lines: Holded monthly entries + override amounts (static from da_override)
+  // da_override monthly amounts: 68100000=2113.51, 68100001=2.58, 68100002=606.29, 68100003=8.23
+  function plDAAccordion(jTotal, fTotal) {
+    var jD = jTotal === null ? '—' : eur(jTotal);
+    var jP = jTotal === null ? '—' : pct(jTotal / jRevBase * 100);
+    var fNeg = fTotal < 0 ? ' neg' : '';
+
+    var html = '<tr class="section-row accordion-parent" onclick="toggleAccordion(\'DA\')">';
+    html += '<td><span class="accordion-icon" id="acc-icon-DA">▶</span>Depreciation &amp; Amortization</td>';
+    html += '<td class="num' + (jTotal !== null && jTotal < 0 ? ' neg' : '') + '">' + jD + '</td>';
+    html += '<td class="num pct">' + jP + '</td>';
+    html += '<td class="num' + fNeg + '">' + eur(fTotal) + '</td>';
+    html += '<td class="num pct">' + pct(fTotal / fRevBase * 100) + '</td></tr>';
+
+    // Sub-lines: Holded actual monthly values + override
+    // We show breakdown by account. Values come from the da_override table (fixed)
+    // and from janBase/febBase.da for totals. We distribute proportionally.
+    var daLines = [
+      { name: 'Amortización inmovilizado (68100000)', jHolded: -1924.10, fHolded: -2260.25, override: -2113.51 },
+      { name: 'Amortización inmovilizado 2 (68100001)', jHolded: 0, fHolded: 0, override: -2.58 },
+      { name: 'ACTIVOS FRANÇOIS 2022 (68100002)', jHolded: 0, fHolded: 0, override: -606.29 },
+      { name: 'D&A — IT & Technology (68100003)', jHolded: -43.27, fHolded: -43.27, override: -8.23 }
+    ];
+
+    daLines.forEach(function(line) {
+      var fVal = line.fHolded + line.override;
+      var jVal = line.jHolded + line.override;
+      html += '<tr class="sub-row acc-child acc-child-DA" style="display:none">';
+      html += '<td style="padding-left:28px;font-size:12px;color:var(--text2)">' + line.name + '</td>';
+      html += '<td class="num' + (jVal < 0 ? ' neg' : '') + '">' + eur(jVal) + '</td>';
+      html += '<td class="num pct">' + pct(jVal / jRevBase * 100) + '</td>';
+      html += '<td class="num' + (fVal < 0 ? ' neg' : '') + '">' + eur(fVal) + '</td>';
+      html += '<td class="num pct">' + pct(fVal / fRevBase * 100) + '</td></tr>';
+    });
+
+    // Override note row
+    html += '<tr class="sub-row acc-child acc-child-DA" style="display:none">';
+    html += '<td colspan="5" style="padding-left:28px;font-size:11px;color:var(--text3);font-style:italic">⚙ Annual assets distributed monthly via da_override table (BQ). Reviewed annually.</td></tr>';
+
+    return html;
+  }
+
+  // ── Operating Profit row ──
+  function plOpProfitRow(jVal, fVal) {
+    return '<tr class="op-profit-row"><td>Operating profit</td>' +
+      '<td class="num">' + jDisp(jVal) + '</td><td class="num pct">' + jPctDisp(jVal, jRevBase) + '</td>' +
+      '<td class="num">' + eur(fVal) + '</td><td class="num pct">' + pct(fVal / fRevBase * 100) + '</td></tr>';
+  }
+
+  // ── Generic accordion for breakdown sections ──
   function plAccordionSection(sectionKey, parentLabel, jTotal, fTotal, parentCss, parentStyle) {
     var febItems = (febBase.breakdown && febBase.breakdown[sectionKey]) || [];
     var janItems = (janBase.breakdown && janBase.breakdown[sectionKey]) || [];
@@ -664,44 +700,67 @@ function render(D, storeKey) {
     return html;
   }
 
+  // ── Build P&L table ──
   accordionState = {};
   var pnlBody = '';
+
+  // Operating Revenue
   pnlBody += plRow('Operating revenue', jan.revenue, feb.revenue, 'section-row');
   if (!isStore) {
+    // Consolidated: show channel breakdown
     pnlBody += plRow('Physical store sales', jan.physical, feb.physical, 'sub-row');
     pnlBody += plRow('B2B sales', jan.b2b, feb.b2b, 'sub-row');
     pnlBody += plRow('E-commerce sales', jan.ecommerce, feb.ecommerce, 'sub-row');
     pnlBody += plRow('Discounts', jan.discounts, feb.discounts, 'sub-row');
+  } else {
+    // Store mode: show note that revenue is physical store only (Square)
+    pnlBody += '<tr><td colspan="5" style="padding:6px 14px 6px 28px;font-size:11px;color:var(--text3);font-style:italic">Physical store sales only (Square POS). B2B and E-commerce are consolidated at group level.</td></tr>';
   }
+
+  // COGS — accordion
   pnlBody += plAccordionSection('COGS', 'Cost of goods sold', jan.cogs, feb.cogs, 'section-row', '');
+
+  // Gross Profit
   pnlBody += plGrossRow('Gross profit', jan.gross_profit, feb.gross_profit);
+
+  // Personnel — accordion
   pnlBody += plAccordionSection('PERSONNEL', 'Personnel expenses', jan.personnel, feb.personnel, 'section-row', '');
+
+  // OPEX — accordion
   pnlBody += plAccordionSection('OPEX', 'Operating expenses', jan.opex, feb.opex, 'section-row', '');
+
+  // EBITDA
   pnlBody += plRowStyled('EBITDA', jan.ebitda, feb.ebitda, 'total-row', 'color:var(--amber)');
-  // ── D&A + Operating Profit (only in consolidated — DA is not split by store) ──
+
+  // D&A + Operating Profit: consolidated only (DA not allocatable by store)
   if (!isStore) {
     var jDA = janBase.da != null ? janBase.da : null;
     var fDA = febBase.da || 0;
-    pnlBody += plDARow(jDA, fDA);
+    pnlBody += plDAAccordion(jDA, fDA);
     var jOP = janBase.operating_profit != null ? janBase.operating_profit : null;
     var fOP = febBase.operating_profit || 0;
     pnlBody += plOpProfitRow(jOP, fOP);
     pnlBody += plAccordionSection('FINANCIAL', 'Financial results', jan.financial, feb.financial, 'section-row', '');
   } else {
-    pnlBody += plRow('Financial results', jan.financial, feb.financial || 0, 'section-row');
+    // Store mode: show DA note + Financial without accordion (no per-store DA data)
+    pnlBody += '<tr><td colspan="5" style="padding:8px 14px;font-size:11px;color:var(--text3);font-style:italic;background:var(--bg3)">⚙ D&A and Operating Profit shown in Consolidated view only (assets not tagged by store in Holded).</td></tr>';
+    pnlBody += plAccordionSection('FINANCIAL', 'Financial results', jan.financial, feb.financial || 0, 'section-row', '');
   }
+
+  // EBT
   pnlBody += plRowStyled('Earnings before taxes', jan.ebt, feb.ebt, 'total-row', 'font-weight:700');
+
   document.getElementById('pnl-table-body').innerHTML = pnlBody;
 
+  // ── Waterfall ──
   if (charts.waterfall) charts.waterfall.destroy();
   var wfRev = febBase.revenue;
-  // Waterfall: EBITDA → DA → Operating Profit → Financial → EBT
-  var wfLabels  = ['Revenue','COGS','Gross profit','Personnel','OPEX','EBITDA','D&A','Op. Profit','Financial','EBT'];
-  var wfDA      = febBase.da || 0;
-  var wfOP      = febBase.operating_profit || (febBase.ebitda + wfDA);
-  var wfValues  = [febBase.revenue, febBase.cogs, febBase.gross_profit, febBase.personnel, febBase.opex, febBase.ebitda, wfDA, wfOP, febBase.financial, febBase.ebt];
-  var wfBase2   = [0, wfRev + febBase.cogs, 0, febBase.gross_profit + febBase.personnel, febBase.gross_profit + febBase.personnel + febBase.opex, 0, febBase.ebitda + wfDA, 0, wfOP + febBase.financial, 0];
-  var wfColors  = ['#3d6635','#b33','#3d6635','#b33','#b33','#c8942a','#b33','#8b6c42','#b33','#8b6c42'];
+  var wfDA  = febBase.da || 0;
+  var wfOP  = febBase.operating_profit || (febBase.ebitda + wfDA);
+  var wfLabels = ['Revenue','COGS','Gross profit','Personnel','OPEX','EBITDA','D&A','Op. Profit','Financial','EBT'];
+  var wfValues = [febBase.revenue, febBase.cogs, febBase.gross_profit, febBase.personnel, febBase.opex, febBase.ebitda, wfDA, wfOP, febBase.financial, febBase.ebt];
+  var wfBase2  = [0, wfRev + febBase.cogs, 0, febBase.gross_profit + febBase.personnel, febBase.gross_profit + febBase.personnel + febBase.opex, 0, febBase.ebitda + wfDA, 0, wfOP + febBase.financial, 0];
+  var wfColors = ['#3d6635','#b33','#3d6635','#b33','#b33','#c8942a','#b33','#8b6c42','#b33','#8b6c42'];
   charts.waterfall = new Chart(document.getElementById('waterfallChart'), {
     type: 'bar',
     data: { labels: wfLabels, datasets: [
@@ -731,6 +790,7 @@ function render(D, storeKey) {
     }
   });
 
+  // ── Account Audit ──
   var auditBody = '';
   var accounts = D.unmapped_accounts;
   if (accounts && accounts.length > 0) {
@@ -758,6 +818,7 @@ function render(D, storeKey) {
   }
   document.getElementById('audit-table-body').innerHTML = auditBody;
 
+  // ── Productivity ──
   document.getElementById('prod-pers-value').textContent = pct(ov.personnel_pct.current);
   document.getElementById('prod-pers-pct').textContent = ppChange(ov.personnel_pct.current, ov.personnel_pct.prev) + ' vs prev';
   var prodBody = '';
@@ -766,7 +827,7 @@ function render(D, storeKey) {
     prodBody += '<td class="num">' + eur(st.feb[k]) + '</td><td class="num pct">—</td><td class="num pct">—</td></tr>';
   });
   prodBody += '<tr><td class="name">HQ (Admin)</td><td class="num pct">—</td><td class="num pct">—</td><td class="num pct">—</td><td class="num pct">—</td><td class="num pct">—</td></tr>';
-  prodBody += '<tr style="font-weight:600;background:var(--green-bg)"><td>Total</td><td class="num pct">~60</td><td class="num pct">—</td>';
+  prodBody += '<tr style="font-weight:600;background:var(--green-bg)"><td>Total</td><td class="num pct">~65</td><td class="num pct">—</td>';
   prodBody += '<td class="num">' + eur(febBase.revenue) + '</td><td class="num pct">—</td><td class="num">' + eur(febBase.personnel) + '</td></tr>';
   document.getElementById('prod-table-body').innerHTML = prodBody;
 }
