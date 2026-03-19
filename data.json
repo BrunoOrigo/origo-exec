@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-03-18T09:05:10:00Z",
+  "generated_at": "2026-03-19T05:00:23:00Z",
   "period": {
     "display_month": "Feb 2026",
     "month": "2026-02",
@@ -12,18 +12,18 @@
       "mom_pct": 20.3
     },
     "ebitda": {
-      "current": 77226.8,
-      "margin_pct": 24.1
+      "current": 76884.29,
+      "margin_pct": 24
     },
     "cogs_pct": {
-      "current": 23.6,
-      "prev": 29
+      "current": 23.7,
+      "prev": 29.2
     },
     "personnel_pct": {
       "current": 40,
       "prev": 50.3
     },
-    "revenue_partial": 182982.81
+    "revenue_partial": 192261.86
   },
   "pl": {
     "jan": {
@@ -32,13 +32,13 @@
       "ecommerce": 0,
       "discounts": 4040.63,
       "revenue": 266055.16,
-      "cogs": -77175.99,
-      "gross_profit": 188879.17,
+      "cogs": -77695.99,
+      "gross_profit": 188359.17,
       "personnel": -133811.85,
       "opex": -28645.14,
-      "ebitda": 26422.18,
+      "ebitda": 25902.18,
       "financial": -2187.94,
-      "ebt": 24234.24,
+      "ebt": 23714.24,
       "sik_mila": 372.21,
       "sik_stpau": 501.81,
       "sik_santjoan": 74.49,
@@ -59,19 +59,19 @@
         },
         "stpau": {
           "revenue": 126521.08,
-          "cogs": -39040.41,
-          "gross_profit": 87480.67,
+          "cogs": -39430.41,
+          "gross_profit": 87090.67,
           "personnel": -60769.29,
           "opex": -13552.44,
-          "ebitda": 13158.94
+          "ebitda": 12768.94
         },
         "santjoan": {
           "revenue": 36949.4,
-          "cogs": -14598.69,
-          "gross_profit": 22350.71,
+          "cogs": -14728.69,
+          "gross_profit": 22220.71,
           "personnel": -7940.64,
           "opex": -4633.94,
-          "ebitda": 9776.13
+          "ebitda": 9646.13
         },
         "hq": {
           "revenue": 0,
@@ -89,13 +89,13 @@
       "ecommerce": 0,
       "discounts": 4805.18,
       "revenue": 319978.18,
-      "cogs": -75386.04,
-      "gross_profit": 244592.14,
+      "cogs": -75700.66,
+      "gross_profit": 244277.52,
       "personnel": -127959.08,
-      "opex": -39406.26,
-      "ebitda": 77226.8,
+      "opex": -39434.15,
+      "ebitda": 76884.29,
       "financial": -2241.22,
-      "ebt": 74985.58,
+      "ebt": 74643.07,
       "sik_mila": 356.6,
       "sik_stpau": 525.84,
       "sik_santjoan": 59.16,
@@ -111,24 +111,24 @@
           "cogs": -26526.19,
           "gross_profit": 72504.92,
           "personnel": -42277.04,
-          "opex": -9180.26,
-          "ebitda": 21047.62
+          "opex": -9208.15,
+          "ebitda": 21019.73
         },
         "stpau": {
           "revenue": 127960.61,
-          "cogs": -38607.66,
-          "gross_profit": 89352.95,
+          "cogs": -38637.03,
+          "gross_profit": 89323.58,
           "personnel": -62149.3,
           "opex": -19623.23,
-          "ebitda": 7580.42
+          "ebitda": 7551.05
         },
         "santjoan": {
           "revenue": 83376.1,
-          "cogs": -10252.19,
-          "gross_profit": 73123.91,
+          "cogs": -10537.44,
+          "gross_profit": 72838.66,
           "personnel": -5462.57,
           "opex": -9403.27,
-          "ebitda": 58258.07
+          "ebitda": 57972.82
         },
         "hq": {
           "revenue": 0,
@@ -141,51 +141,51 @@
       }
     },
     "mar": {
-      "physical": 180185.21,
-      "b2b": 58.2,
+      "physical": 189239.16,
+      "b2b": 92.33,
       "ecommerce": 0,
-      "discounts": 2739.4,
-      "revenue": 182982.81,
-      "cogs": -27774.74,
-      "gross_profit": 155208.07,
+      "discounts": 2930.37,
+      "revenue": 192261.86,
+      "cogs": -28637.5,
+      "gross_profit": 163624.36,
       "personnel": 0,
       "opex": -19195.49,
-      "ebitda": 136012.58,
-      "financial": -1820.19,
-      "ebt": 134192.39,
+      "ebitda": 144428.87,
+      "financial": -1895.94,
+      "ebt": 142532.93,
       "sik_mila": 0,
       "sik_stpau": 0,
       "sik_santjoan": 0,
       "sik_hq": 0,
       "sik_untagged": 0,
       "sik_total": 0,
-      "store_mila": 56885.55,
-      "store_stpau": 60395.69,
-      "store_santjoan": 51556.04,
+      "store_mila": 59757.97,
+      "store_stpau": 63641.54,
+      "store_santjoan": 54138.63,
       "by_store": {
         "mila": {
-          "revenue": 56885.55,
-          "cogs": -6033.57,
-          "gross_profit": 50851.98,
+          "revenue": 59757.97,
+          "cogs": -6394.2,
+          "gross_profit": 53363.77,
           "personnel": 0,
           "opex": -2414.92,
-          "ebitda": 48437.06
+          "ebitda": 50948.85
         },
         "stpau": {
-          "revenue": 60395.69,
-          "cogs": -17683.17,
-          "gross_profit": 42712.52,
+          "revenue": 63641.54,
+          "cogs": -18011.1,
+          "gross_profit": 45630.44,
           "personnel": 0,
           "opex": -10611.81,
-          "ebitda": 32100.71
+          "ebitda": 35018.63
         },
         "santjoan": {
-          "revenue": 51556.04,
-          "cogs": -4058,
-          "gross_profit": 47498.04,
+          "revenue": 54138.63,
+          "cogs": -4232.2,
+          "gross_profit": 49906.43,
           "personnel": 0,
           "opex": -5550.08,
-          "ebitda": 41947.96
+          "ebitda": 44356.35
         },
         "hq": {
           "revenue": 0,
@@ -210,9 +210,9 @@
       "santjoan": 83376.1
     },
     "mar": {
-      "mila": 56885.55,
-      "stpau": 60395.69,
-      "santjoan": 51556.04
+      "mila": 59757.97,
+      "stpau": 63641.54,
+      "santjoan": 54138.63
     }
   },
   "channel": {
@@ -281,12 +281,68 @@
       "total_ytd": 108.8
     },
     {
-      "account": "629000008",
-      "name": "LON PRE SELECCION, S.L.",
+      "account": "62900005",
+      "name": "Cabify España, S.L.U.",
       "jan": 0,
-      "feb": 27.89,
+      "feb": 0,
+      "mar": 24.21,
+      "total_ytd": 24.21
+    },
+    {
+      "account": "64000000",
+      "name": "Salario",
+      "jan": 0,
+      "feb": 1202.5,
       "mar": 0,
-      "total_ytd": 27.89
+      "total_ytd": 1202.5
+    },
+    {
+      "account": "64200000",
+      "name": "Gasto S.S. Empresa",
+      "jan": 255.13,
+      "feb": 905.05,
+      "mar": 0,
+      "total_ytd": 1160.18
+    },
+    {
+      "account": "60200000",
+      "name": "AMAZON BUSINESS EU SARL SUCURSAL EN ESPANA",
+      "jan": 455,
+      "feb": 0,
+      "mar": 265.3,
+      "total_ytd": 720.3
+    },
+    {
+      "account": "63100001",
+      "name": "DOMICILIACION IMPUESTO: 2.026 ABONARE A.E.A.T",
+      "jan": 109.18,
+      "feb": 130.04,
+      "mar": 62.51,
+      "total_ytd": 301.73
+    },
+    {
+      "account": "62200001",
+      "name": "NORMA MONTAÑO CONDE",
+      "jan": 29.9,
+      "feb": 207.77,
+      "mar": 0,
+      "total_ytd": 237.67
+    },
+    {
+      "account": "62200002",
+      "name": "Factura correspondiente a Tratamiento para el Control de Cucarachas, Ratas y Ratones",
+      "jan": 0,
+      "feb": 36,
+      "mar": 195,
+      "total_ytd": 231
+    },
+    {
+      "account": "62900022",
+      "name": "(Purchase), 2V2600126, VALENFLOR SA, VALENFLOR SA, 16/01/2026",
+      "jan": 108.8,
+      "feb": 0,
+      "mar": 0,
+      "total_ytd": 108.8
     },
     {
       "account": "62900005",
@@ -353,12 +409,68 @@
       "total_ytd": 108.8
     },
     {
-      "account": "629000008",
-      "name": "LON PRE SELECCION, S.L.",
+      "account": "62900005",
+      "name": "Cabify España, S.L.U.",
       "jan": 0,
-      "feb": 27.89,
+      "feb": 0,
+      "mar": 24.21,
+      "total_ytd": 24.21
+    },
+    {
+      "account": "64000000",
+      "name": "Salario",
+      "jan": 0,
+      "feb": 1202.5,
       "mar": 0,
-      "total_ytd": 27.89
+      "total_ytd": 1202.5
+    },
+    {
+      "account": "64200000",
+      "name": "Gasto S.S. Empresa",
+      "jan": 255.13,
+      "feb": 905.05,
+      "mar": 0,
+      "total_ytd": 1160.18
+    },
+    {
+      "account": "60200000",
+      "name": "AMAZON BUSINESS EU SARL SUCURSAL EN ESPANA",
+      "jan": 455,
+      "feb": 0,
+      "mar": 265.3,
+      "total_ytd": 720.3
+    },
+    {
+      "account": "63100001",
+      "name": "DOMICILIACION IMPUESTO: 2.026 ABONARE A.E.A.T",
+      "jan": 109.18,
+      "feb": 130.04,
+      "mar": 62.51,
+      "total_ytd": 301.73
+    },
+    {
+      "account": "62200001",
+      "name": "NORMA MONTAÑO CONDE",
+      "jan": 29.9,
+      "feb": 207.77,
+      "mar": 0,
+      "total_ytd": 237.67
+    },
+    {
+      "account": "62200002",
+      "name": "Factura correspondiente a Tratamiento para el Control de Cucarachas, Ratas y Ratones",
+      "jan": 0,
+      "feb": 36,
+      "mar": 195,
+      "total_ytd": 231
+    },
+    {
+      "account": "62900022",
+      "name": "(Purchase), 2V2600126, VALENFLOR SA, VALENFLOR SA, 16/01/2026",
+      "jan": 108.8,
+      "feb": 0,
+      "mar": 0,
+      "total_ytd": 108.8
     },
     {
       "account": "62900005",
@@ -425,12 +537,68 @@
       "total_ytd": 108.8
     },
     {
-      "account": "629000008",
-      "name": "LON PRE SELECCION, S.L.",
+      "account": "62900005",
+      "name": "Cabify España, S.L.U.",
       "jan": 0,
-      "feb": 27.89,
+      "feb": 0,
+      "mar": 24.21,
+      "total_ytd": 24.21
+    },
+    {
+      "account": "64000000",
+      "name": "Salario",
+      "jan": 0,
+      "feb": 1202.5,
       "mar": 0,
-      "total_ytd": 27.89
+      "total_ytd": 1202.5
+    },
+    {
+      "account": "64200000",
+      "name": "Gasto S.S. Empresa",
+      "jan": 255.13,
+      "feb": 905.05,
+      "mar": 0,
+      "total_ytd": 1160.18
+    },
+    {
+      "account": "60200000",
+      "name": "AMAZON BUSINESS EU SARL SUCURSAL EN ESPANA",
+      "jan": 455,
+      "feb": 0,
+      "mar": 265.3,
+      "total_ytd": 720.3
+    },
+    {
+      "account": "63100001",
+      "name": "DOMICILIACION IMPUESTO: 2.026 ABONARE A.E.A.T",
+      "jan": 109.18,
+      "feb": 130.04,
+      "mar": 62.51,
+      "total_ytd": 301.73
+    },
+    {
+      "account": "62200001",
+      "name": "NORMA MONTAÑO CONDE",
+      "jan": 29.9,
+      "feb": 207.77,
+      "mar": 0,
+      "total_ytd": 237.67
+    },
+    {
+      "account": "62200002",
+      "name": "Factura correspondiente a Tratamiento para el Control de Cucarachas, Ratas y Ratones",
+      "jan": 0,
+      "feb": 36,
+      "mar": 195,
+      "total_ytd": 231
+    },
+    {
+      "account": "62900022",
+      "name": "(Purchase), 2V2600126, VALENFLOR SA, VALENFLOR SA, 16/01/2026",
+      "jan": 108.8,
+      "feb": 0,
+      "mar": 0,
+      "total_ytd": 108.8
     },
     {
       "account": "62900005",
@@ -497,14 +665,6 @@
       "total_ytd": 108.8
     },
     {
-      "account": "629000008",
-      "name": "LON PRE SELECCION, S.L.",
-      "jan": 0,
-      "feb": 27.89,
-      "mar": 0,
-      "total_ytd": 27.89
-    },
-    {
       "account": "62900005",
       "name": "Cabify España, S.L.U.",
       "jan": 0,
@@ -569,14 +729,6 @@
       "total_ytd": 108.8
     },
     {
-      "account": "629000008",
-      "name": "LON PRE SELECCION, S.L.",
-      "jan": 0,
-      "feb": 27.89,
-      "mar": 0,
-      "total_ytd": 27.89
-    },
-    {
       "account": "62900005",
       "name": "Cabify España, S.L.U.",
       "jan": 0,
@@ -639,230 +791,6 @@
       "feb": 0,
       "mar": 0,
       "total_ytd": 108.8
-    },
-    {
-      "account": "629000008",
-      "name": "LON PRE SELECCION, S.L.",
-      "jan": 0,
-      "feb": 27.89,
-      "mar": 0,
-      "total_ytd": 27.89
-    },
-    {
-      "account": "62900005",
-      "name": "Cabify España, S.L.U.",
-      "jan": 0,
-      "feb": 0,
-      "mar": 24.21,
-      "total_ytd": 24.21
-    },
-    {
-      "account": "64000000",
-      "name": "Salario",
-      "jan": 0,
-      "feb": 1202.5,
-      "mar": 0,
-      "total_ytd": 1202.5
-    },
-    {
-      "account": "64200000",
-      "name": "Gasto S.S. Empresa",
-      "jan": 255.13,
-      "feb": 905.05,
-      "mar": 0,
-      "total_ytd": 1160.18
-    },
-    {
-      "account": "60200000",
-      "name": "AMAZON BUSINESS EU SARL SUCURSAL EN ESPANA",
-      "jan": 455,
-      "feb": 0,
-      "mar": 265.3,
-      "total_ytd": 720.3
-    },
-    {
-      "account": "63100001",
-      "name": "DOMICILIACION IMPUESTO: 2.026 ABONARE A.E.A.T",
-      "jan": 109.18,
-      "feb": 130.04,
-      "mar": 62.51,
-      "total_ytd": 301.73
-    },
-    {
-      "account": "62200001",
-      "name": "NORMA MONTAÑO CONDE",
-      "jan": 29.9,
-      "feb": 207.77,
-      "mar": 0,
-      "total_ytd": 237.67
-    },
-    {
-      "account": "62200002",
-      "name": "Factura correspondiente a Tratamiento para el Control de Cucarachas, Ratas y Ratones",
-      "jan": 0,
-      "feb": 36,
-      "mar": 195,
-      "total_ytd": 231
-    },
-    {
-      "account": "62900022",
-      "name": "(Purchase), 2V2600126, VALENFLOR SA, VALENFLOR SA, 16/01/2026",
-      "jan": 108.8,
-      "feb": 0,
-      "mar": 0,
-      "total_ytd": 108.8
-    },
-    {
-      "account": "629000008",
-      "name": "LON PRE SELECCION, S.L.",
-      "jan": 0,
-      "feb": 27.89,
-      "mar": 0,
-      "total_ytd": 27.89
-    },
-    {
-      "account": "62900005",
-      "name": "Cabify España, S.L.U.",
-      "jan": 0,
-      "feb": 0,
-      "mar": 24.21,
-      "total_ytd": 24.21
-    },
-    {
-      "account": "64000000",
-      "name": "Salario",
-      "jan": 0,
-      "feb": 1202.5,
-      "mar": 0,
-      "total_ytd": 1202.5
-    },
-    {
-      "account": "64200000",
-      "name": "Gasto S.S. Empresa",
-      "jan": 255.13,
-      "feb": 905.05,
-      "mar": 0,
-      "total_ytd": 1160.18
-    },
-    {
-      "account": "60200000",
-      "name": "AMAZON BUSINESS EU SARL SUCURSAL EN ESPANA",
-      "jan": 455,
-      "feb": 0,
-      "mar": 265.3,
-      "total_ytd": 720.3
-    },
-    {
-      "account": "63100001",
-      "name": "DOMICILIACION IMPUESTO: 2.026 ABONARE A.E.A.T",
-      "jan": 109.18,
-      "feb": 130.04,
-      "mar": 62.51,
-      "total_ytd": 301.73
-    },
-    {
-      "account": "62200001",
-      "name": "NORMA MONTAÑO CONDE",
-      "jan": 29.9,
-      "feb": 207.77,
-      "mar": 0,
-      "total_ytd": 237.67
-    },
-    {
-      "account": "62200002",
-      "name": "Factura correspondiente a Tratamiento para el Control de Cucarachas, Ratas y Ratones",
-      "jan": 0,
-      "feb": 36,
-      "mar": 195,
-      "total_ytd": 231
-    },
-    {
-      "account": "62900022",
-      "name": "(Purchase), 2V2600126, VALENFLOR SA, VALENFLOR SA, 16/01/2026",
-      "jan": 108.8,
-      "feb": 0,
-      "mar": 0,
-      "total_ytd": 108.8
-    },
-    {
-      "account": "629000008",
-      "name": "LON PRE SELECCION, S.L.",
-      "jan": 0,
-      "feb": 27.89,
-      "mar": 0,
-      "total_ytd": 27.89
-    },
-    {
-      "account": "62900005",
-      "name": "Cabify España, S.L.U.",
-      "jan": 0,
-      "feb": 0,
-      "mar": 24.21,
-      "total_ytd": 24.21
-    },
-    {
-      "account": "64000000",
-      "name": "Salario",
-      "jan": 0,
-      "feb": 1202.5,
-      "mar": 0,
-      "total_ytd": 1202.5
-    },
-    {
-      "account": "64200000",
-      "name": "Gasto S.S. Empresa",
-      "jan": 255.13,
-      "feb": 905.05,
-      "mar": 0,
-      "total_ytd": 1160.18
-    },
-    {
-      "account": "60200000",
-      "name": "AMAZON BUSINESS EU SARL SUCURSAL EN ESPANA",
-      "jan": 455,
-      "feb": 0,
-      "mar": 265.3,
-      "total_ytd": 720.3
-    },
-    {
-      "account": "63100001",
-      "name": "DOMICILIACION IMPUESTO: 2.026 ABONARE A.E.A.T",
-      "jan": 109.18,
-      "feb": 130.04,
-      "mar": 62.51,
-      "total_ytd": 301.73
-    },
-    {
-      "account": "62200001",
-      "name": "NORMA MONTAÑO CONDE",
-      "jan": 29.9,
-      "feb": 207.77,
-      "mar": 0,
-      "total_ytd": 237.67
-    },
-    {
-      "account": "62200002",
-      "name": "Factura correspondiente a Tratamiento para el Control de Cucarachas, Ratas y Ratones",
-      "jan": 0,
-      "feb": 36,
-      "mar": 195,
-      "total_ytd": 231
-    },
-    {
-      "account": "62900022",
-      "name": "(Purchase), 2V2600126, VALENFLOR SA, VALENFLOR SA, 16/01/2026",
-      "jan": 108.8,
-      "feb": 0,
-      "mar": 0,
-      "total_ytd": 108.8
-    },
-    {
-      "account": "629000008",
-      "name": "LON PRE SELECCION, S.L.",
-      "jan": 0,
-      "feb": 27.89,
-      "mar": 0,
-      "total_ytd": 27.89
     },
     {
       "account": "62900005",
