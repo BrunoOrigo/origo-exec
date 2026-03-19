@@ -514,11 +514,13 @@ function render(D) {
   var chNet = ch.physical + ch.b2b + ch.ecommerce - ch.discounts;
   var chPctPhys = Math.round(ch.physical / chNet * 100);
   var chPctB2B = Math.round(ch.b2b / chNet * 100);
-  var chPctEcom = 100 - chPctPhys - chPctB2B;
+  var chPctEcom = Math.round(ch.ecommerce / chNet * 100);
 
   var legendHTML = '<div class="legend-item"><div class="legend-dot" style="background:var(--green)"></div>Store ' + chPctPhys + '%</div>';
   legendHTML += '<div class="legend-item"><div class="legend-dot" style="background:var(--amber-light)"></div>B2B ' + chPctB2B + '%</div>';
-  legendHTML += '<div class="legend-item"><div class="legend-dot" style="background:var(--blue)"></div>E-com ' + chPctEcom + '%</div>';
+  if (ch.ecommerce > 0) {
+    legendHTML += '<div class="legend-item"><div class="legend-dot" style="background:var(--blue)"></div>E-com ' + chPctEcom + '%</div>';
+  }
   document.getElementById('channel-legend').innerHTML = legendHTML;
 
   if (charts.channel) charts.channel.destroy();
@@ -726,7 +728,7 @@ function render(D) {
         datalabels: false
       },
       scales: {
-        x: { stacked: true, grid: { display: false }, ticks: { autoSkip: false, maxRotation: 0, font: { size: 11 } } },
+        x: { stacked: true, grid: { display: false }, ticks: { autoSkip: false, maxRotation: 15, font: { size: 10 } } },
         y: { stacked: true, grid: { color: grid }, ticks: { callback: function(v) { return '€' + Math.round(v/1000) + 'k'; } } }
       },
       animation: { onComplete: function() {
