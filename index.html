@@ -328,7 +328,7 @@ footer{margin:40px 24px 0;padding:16px 0;border-top:1px solid var(--border);disp
 </div>
 
 <footer>
-  <span>Origo Bakery SL — Executive Dashboard v3.5</span>
+  <span>Origo Bakery SL — Executive Dashboard v3.6</span>
   <span>Source: data.json ← n8n ← BigQuery</span>
   <span id="footer-updated">Last updated: —</span>
 </footer>
@@ -441,6 +441,9 @@ function render(D, storeKey) {
 
   var jRevBase = (jan.revenue != null && jan.revenue > 0) ? jan.revenue : 1;
   var fRevBase = (feb.revenue != null && feb.revenue > 0) ? feb.revenue : 1;
+  // Track if revenue actually exists — when false, % Rev shows '—' (avoids HQ divide-by-zero nonsense)
+  var jHasRev = jan.revenue != null && jan.revenue > 0;
+  var fHasRev = feb.revenue != null && feb.revenue > 0;
 
   var dot = document.getElementById('statusDot');
   var statusText = document.getElementById('statusText');
@@ -592,14 +595,15 @@ function render(D, storeKey) {
 
   // ── P&L helper functions ──
   function jDisp(val) { return val === null ? '—' : eur(val); }
-  // % Rev helpers: return '—' when revenue=0 (e.g. HQ) to avoid absurd percentages
-  function safePct(val, base) {
-    if (val === null || val === undefined) return '—';
-    if (!base || base === 0) return '—';
-    return pct(val / base * 100);
+  // % Rev helpers: return '—' when no revenue (e.g. HQ, or store with null Jan data)
+  function jPctDisp(val) {
+    if (!jHasRev || val === null || val === undefined) return '—';
+    return pct(val / jRevBase * 100);
   }
-  function jPctDisp(val) { return safePct(val, jRevBase); }
-  function fPctDisp(val) { return safePct(val, fRevBase); }
+  function fPctDisp(val) {
+    if (!fHasRev || val === null || val === undefined) return '—';
+    return pct(val / fRevBase * 100);
+  }
 
   function plRow(label, jVal, fVal, cssClass) {
     var neg = ((jVal !== null && jVal < 0) || fVal < 0) ? ' neg' : '';
