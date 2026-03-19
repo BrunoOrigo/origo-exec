@@ -72,6 +72,7 @@ table .down{color:var(--red)}
 .pnl-table .section-row td{font-weight:600;padding-top:14px;font-size:13px;background:var(--green-bg)}
 .pnl-table .sub-row td{color:var(--text2);font-size:12px;padding:7px 14px 7px 28px}
 .pnl-table .total-row td{font-weight:600;border-top:2px solid var(--green);padding-top:12px;background:var(--amber-bg)}
+.pnl-table .gross-row td{font-weight:600;font-size:13px;background:var(--green-bg);color:var(--green)}
 .pnl-table .neg{color:var(--red)}
 .legend{display:flex;gap:14px;margin:8px 0 0;flex-wrap:wrap}
 .legend-item{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--text3)}
@@ -326,7 +327,7 @@ footer{margin:40px 24px 0;padding:16px 0;border-top:1px solid var(--border);disp
 </div>
 
 <footer>
-  <span>Origo Bakery SL — Executive Dashboard v3.1</span>
+  <span>Origo Bakery SL — Executive Dashboard v3.2</span>
   <span>Source: data.json ← n8n ← BigQuery</span>
   <span id="footer-updated">Last updated: —</span>
 </footer>
@@ -334,8 +335,8 @@ footer{margin:40px 24px 0;padding:16px 0;border-top:1px solid var(--border);disp
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <script>
 /* ============================================================
-   ORIGO EXECUTIVE DASHBOARD v3.1
-   Changes: Fix Janeiro=0, Accordion P&L, breakRows filter
+   ORIGO EXECUTIVE DASHBOARD v3.2
+   Changes: Gross profit green styling
 ============================================================ */
 
 function eur(n) {
@@ -424,7 +425,6 @@ function render(D, storeKey) {
     jan = jbs
       ? Object.assign({ revenue:0, cogs:0, gross_profit:0, personnel:0, opex:0, ebitda:0, financial:0, ebt:0 }, jbs)
       : { revenue:null, cogs:null, gross_profit:null, personnel:null, opex:null, ebitda:null, financial:null, ebt:null };
-
     var fbs = febBase.by_store && febBase.by_store[storeKey];
     feb = fbs
       ? Object.assign({ revenue:0, cogs:0, gross_profit:0, personnel:0, opex:0, ebitda:0, financial:0, ebt:0 }, fbs)
@@ -585,7 +585,7 @@ function render(D, storeKey) {
   document.getElementById('store-perf-body').innerHTML = storePerfBody;
   document.getElementById('overview-note').textContent = period.partial_month + ' data is partial. March personnel expenses not yet available in Holded.';
 
-  // ── P&L with accordion ──
+  // ── P&L ──
   function jDisp(val) { return val === null ? '—' : eur(val); }
   function jPctDisp(val, base) { return val === null ? '—' : pct(val / base * 100); }
 
@@ -595,6 +595,16 @@ function render(D, storeKey) {
       '<td class="num' + neg + '">' + jDisp(jVal) + '</td><td class="num pct">' + jPctDisp(jVal, jRevBase) + '</td>' +
       '<td class="num' + neg + '">' + eur(fVal) + '</td><td class="num pct">' + pct(fVal / fRevBase * 100) + '</td></tr>';
   }
+
+  // Gross profit: usa classe dedicada .gross-row (verde via CSS) + valores em verde via style
+  function plGrossRow(label, jVal, fVal) {
+    var jD = jDisp(jVal);
+    var jP = jPctDisp(jVal, jRevBase);
+    return '<tr class="gross-row"><td>' + label + '</td>' +
+      '<td class="num">' + jD + '</td><td class="num pct">' + jP + '</td>' +
+      '<td class="num">' + eur(fVal) + '</td><td class="num pct">' + pct(fVal / fRevBase * 100) + '</td></tr>';
+  }
+
   function plRowStyled(label, jVal, fVal, cssClass, style) {
     return '<tr class="' + cssClass + '"><td style="' + style + '">' + label + '</td>' +
       '<td class="num" style="' + style + '">' + jDisp(jVal) + '</td><td class="num" style="' + style + '">' + jPctDisp(jVal, jRevBase) + '</td>' +
@@ -647,7 +657,7 @@ function render(D, storeKey) {
     pnlBody += plRow('Discounts', jan.discounts, feb.discounts, 'sub-row');
   }
   pnlBody += plAccordionSection('COGS', 'Cost of goods sold', jan.cogs, feb.cogs, 'section-row', '');
-  pnlBody += plRowStyled('Gross profit', jan.gross_profit, feb.gross_profit, 'section-row', 'color:var(--green)');
+  pnlBody += plGrossRow('Gross profit', jan.gross_profit, feb.gross_profit);
   pnlBody += plAccordionSection('PERSONNEL', 'Personnel expenses', jan.personnel, feb.personnel, 'section-row', '');
   pnlBody += plAccordionSection('OPEX', 'Operating expenses', jan.opex, feb.opex, 'section-row', '');
   pnlBody += plRowStyled('EBITDA', jan.ebitda, feb.ebitda, 'total-row', 'color:var(--amber)');
