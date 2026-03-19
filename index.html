@@ -328,7 +328,7 @@ footer{margin:40px 24px 0;padding:16px 0;border-top:1px solid var(--border);disp
 </div>
 
 <footer>
-  <span>Origo Bakery SL — Executive Dashboard v3.4</span>
+  <span>Origo Bakery SL — Executive Dashboard v3.5</span>
   <span>Source: data.json ← n8n ← BigQuery</span>
   <span id="footer-updated">Last updated: —</span>
 </footer>
@@ -592,25 +592,32 @@ function render(D, storeKey) {
 
   // ── P&L helper functions ──
   function jDisp(val) { return val === null ? '—' : eur(val); }
-  function jPctDisp(val, base) { return val === null ? '—' : pct(val / base * 100); }
+  // % Rev helpers: return '—' when revenue=0 (e.g. HQ) to avoid absurd percentages
+  function safePct(val, base) {
+    if (val === null || val === undefined) return '—';
+    if (!base || base === 0) return '—';
+    return pct(val / base * 100);
+  }
+  function jPctDisp(val) { return safePct(val, jRevBase); }
+  function fPctDisp(val) { return safePct(val, fRevBase); }
 
   function plRow(label, jVal, fVal, cssClass) {
     var neg = ((jVal !== null && jVal < 0) || fVal < 0) ? ' neg' : '';
     return '<tr class="' + cssClass + '"><td>' + label + '</td>' +
-      '<td class="num' + neg + '">' + jDisp(jVal) + '</td><td class="num pct">' + jPctDisp(jVal, jRevBase) + '</td>' +
-      '<td class="num' + neg + '">' + eur(fVal) + '</td><td class="num pct">' + pct(fVal / fRevBase * 100) + '</td></tr>';
+      '<td class="num' + neg + '">' + jDisp(jVal) + '</td><td class="num pct">' + jPctDisp(jVal) + '</td>' +
+      '<td class="num' + neg + '">' + eur(fVal) + '</td><td class="num pct">' + fPctDisp(fVal) + '</td></tr>';
   }
 
   function plGrossRow(label, jVal, fVal) {
     return '<tr class="gross-row"><td>' + label + '</td>' +
-      '<td class="num">' + jDisp(jVal) + '</td><td class="num pct">' + jPctDisp(jVal, jRevBase) + '</td>' +
-      '<td class="num">' + eur(fVal) + '</td><td class="num pct">' + pct(fVal / fRevBase * 100) + '</td></tr>';
+      '<td class="num">' + jDisp(jVal) + '</td><td class="num pct">' + jPctDisp(jVal) + '</td>' +
+      '<td class="num">' + eur(fVal) + '</td><td class="num pct">' + fPctDisp(fVal) + '</td></tr>';
   }
 
   function plRowStyled(label, jVal, fVal, cssClass, style) {
     return '<tr class="' + cssClass + '"><td style="' + style + '">' + label + '</td>' +
-      '<td class="num" style="' + style + '">' + jDisp(jVal) + '</td><td class="num" style="' + style + '">' + jPctDisp(jVal, jRevBase) + '</td>' +
-      '<td class="num" style="' + style + '">' + eur(fVal) + '</td><td class="num" style="' + style + '">' + pct(fVal / fRevBase * 100) + '</td></tr>';
+      '<td class="num" style="' + style + '">' + jDisp(jVal) + '</td><td class="num" style="' + style + '">' + jPctDisp(jVal) + '</td>' +
+      '<td class="num" style="' + style + '">' + eur(fVal) + '</td><td class="num" style="' + style + '">' + fPctDisp(fVal) + '</td></tr>';
   }
 
   // ── D&A accordion with sub-lines ──
@@ -618,7 +625,7 @@ function render(D, storeKey) {
   // da_override monthly amounts: 68100000=2113.51, 68100001=2.58, 68100002=606.29, 68100003=8.23
   function plDAAccordion(jTotal, fTotal) {
     var jD = jTotal === null ? '—' : eur(jTotal);
-    var jP = jTotal === null ? '—' : pct(jTotal / jRevBase * 100);
+    var jP = jPctDisp(jTotal);
     var fNeg = fTotal < 0 ? ' neg' : '';
 
     var html = '<tr class="section-row accordion-parent" onclick="toggleAccordion(\'DA\')">';
@@ -626,7 +633,7 @@ function render(D, storeKey) {
     html += '<td class="num' + (jTotal !== null && jTotal < 0 ? ' neg' : '') + '">' + jD + '</td>';
     html += '<td class="num pct">' + jP + '</td>';
     html += '<td class="num' + fNeg + '">' + eur(fTotal) + '</td>';
-    html += '<td class="num pct">' + pct(fTotal / fRevBase * 100) + '</td></tr>';
+    html += '<td class="num pct">' + fPctDisp(fTotal) + '</td></tr>';
 
     // Sub-lines: Holded actual monthly values + override
     // We show breakdown by account. Values come from the da_override table (fixed)
@@ -644,9 +651,9 @@ function render(D, storeKey) {
       html += '<tr class="sub-row acc-child acc-child-DA" style="display:none">';
       html += '<td style="padding-left:28px;font-size:12px;color:var(--text2)">' + line.name + '</td>';
       html += '<td class="num' + (jVal < 0 ? ' neg' : '') + '">' + eur(jVal) + '</td>';
-      html += '<td class="num pct">' + pct(jVal / jRevBase * 100) + '</td>';
+      html += '<td class="num pct">' + jPctDisp(jVal) + '</td>';
       html += '<td class="num' + (fVal < 0 ? ' neg' : '') + '">' + eur(fVal) + '</td>';
-      html += '<td class="num pct">' + pct(fVal / fRevBase * 100) + '</td></tr>';
+      html += '<td class="num pct">' + fPctDisp(fVal) + '</td></tr>';
     });
 
     // Override note row
@@ -659,8 +666,8 @@ function render(D, storeKey) {
   // ── Operating Profit row ──
   function plOpProfitRow(jVal, fVal) {
     return '<tr class="op-profit-row"><td>Operating profit</td>' +
-      '<td class="num">' + jDisp(jVal) + '</td><td class="num pct">' + jPctDisp(jVal, jRevBase) + '</td>' +
-      '<td class="num">' + eur(fVal) + '</td><td class="num pct">' + pct(fVal / fRevBase * 100) + '</td></tr>';
+      '<td class="num">' + jDisp(jVal) + '</td><td class="num pct">' + jPctDisp(jVal) + '</td>' +
+      '<td class="num">' + eur(fVal) + '</td><td class="num pct">' + fPctDisp(fVal) + '</td></tr>';
   }
 
   // ── Generic accordion for breakdown sections ──
@@ -672,7 +679,7 @@ function render(D, storeKey) {
     var valKey = isStore ? storeKey : 'consolidated';
 
     var jParentDisp = jTotal === null ? '—' : eur(jTotal);
-    var jParentPct  = jTotal === null ? '—' : pct(jTotal / jRevBase * 100);
+    var jParentPct  = jPctDisp(jTotal);
     var fParentNeg  = fTotal < 0 ? ' neg' : '';
 
     var html = '<tr class="' + parentCss + ' accordion-parent" onclick="toggleAccordion(\'' + sectionKey + '\')">';
@@ -680,7 +687,7 @@ function render(D, storeKey) {
     html += '<td class="num' + (jTotal !== null && jTotal < 0 ? ' neg' : '') + '">' + jParentDisp + '</td>';
     html += '<td class="num pct">' + jParentPct + '</td>';
     html += '<td class="num' + fParentNeg + '">' + eur(fTotal) + '</td>';
-    html += '<td class="num pct">' + pct(fTotal / fRevBase * 100) + '</td></tr>';
+    html += '<td class="num pct">' + fPctDisp(fTotal) + '</td></tr>';
 
     if (febItems.length > 0) {
       febItems.forEach(function(item) {
@@ -688,13 +695,13 @@ function render(D, storeKey) {
         var jItem = janMap[item.account];
         var jVal = jItem ? (parseFloat(jItem[valKey]) || 0) : null;
         var jd = jVal === null ? '—' : eur(jVal);
-        var jp = jVal === null ? '—' : pct(jVal / jRevBase * 100);
+        var jp = jPctDisp(jVal);
         html += '<tr class="sub-row acc-child acc-child-' + sectionKey + '" style="display:none">';
         html += '<td style="padding-left:28px;font-size:12px;color:var(--text2)">' + item.display_name + '</td>';
         html += '<td class="num' + (jVal !== null && jVal < 0 ? ' neg' : '') + '">' + jd + '</td>';
         html += '<td class="num pct">' + jp + '</td>';
         html += '<td class="num' + (fVal < 0 ? ' neg' : '') + '">' + eur(fVal) + '</td>';
-        html += '<td class="num pct">' + pct(fVal / fRevBase * 100) + '</td></tr>';
+        html += '<td class="num pct">' + fPctDisp(fVal) + '</td></tr>';
       });
     }
     return html;
