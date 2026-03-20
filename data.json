@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-03-20T05:01:59.296Z",
+  "generated_at": "2026-03-20T11:17:14.160Z",
   "period": {
     "display_month": "Feb 2026",
     "month": "2026-02",
@@ -130,6 +130,26 @@
             "stpau": -1969.43,
             "santjoan": -5595.27,
             "hq": 0
+          }
+        ],
+        "DA": [
+          {
+            "account": "68100000",
+            "display_name": "Depreciation & Amortization",
+            "consolidated": -1924.1,
+            "mila": -109.37,
+            "stpau": -151.33,
+            "santjoan": -1631.74,
+            "hq": -31.66
+          },
+          {
+            "account": "68100003",
+            "display_name": "D&A - IT & Technology",
+            "consolidated": -43.27,
+            "mila": 0,
+            "stpau": 0,
+            "santjoan": 0,
+            "hq": -43.27
           }
         ],
         "FINANCIAL": [
@@ -389,6 +409,44 @@
             "santjoan": 74.49,
             "hq": 61.05
           }
+        ],
+        "REVENUE": [
+          {
+            "account": "70000000",
+            "display_name": "Ventas B2B",
+            "consolidated": 27549.71,
+            "mila": 2863.95,
+            "stpau": 24504.49,
+            "santjoan": 86.49,
+            "hq": 0
+          },
+          {
+            "account": "70000001",
+            "display_name": "Physical Store Sales",
+            "consolidated": 234464.82,
+            "mila": 93039.55,
+            "stpau": 103933.95,
+            "santjoan": 37491.32,
+            "hq": 0
+          },
+          {
+            "account": "70000002",
+            "display_name": "E-commerce Sales",
+            "consolidated": 5995.74,
+            "mila": 2051.94,
+            "stpau": 3943.8,
+            "santjoan": 0,
+            "hq": 0
+          },
+          {
+            "account": "70000005",
+            "display_name": "Square Discounts",
+            "consolidated": -4040.63,
+            "mila": -1494.86,
+            "stpau": -1917.36,
+            "santjoan": -628.41,
+            "hq": 0
+          }
         ]
       }
     },
@@ -496,6 +554,26 @@
             "stpau": -1733.97,
             "santjoan": -402.64,
             "hq": 0
+          }
+        ],
+        "DA": [
+          {
+            "account": "68100000",
+            "display_name": "Depreciation & Amortization",
+            "consolidated": -2260.25,
+            "mila": -102.86,
+            "stpau": -153.19,
+            "santjoan": -1972.54,
+            "hq": -31.66
+          },
+          {
+            "account": "68100003",
+            "display_name": "D&A - IT & Technology",
+            "consolidated": -43.27,
+            "mila": 0,
+            "stpau": 0,
+            "santjoan": 0,
+            "hq": -43.27
           }
         ],
         "FINANCIAL": [
@@ -737,6 +815,44 @@
             "santjoan": 59.16,
             "hq": 61.05
           }
+        ],
+        "REVENUE": [
+          {
+            "account": "70000000",
+            "display_name": "Ventas B2B",
+            "consolidated": 28358.87,
+            "mila": 3162.76,
+            "stpau": 24893.82,
+            "santjoan": 302.29,
+            "hq": 0
+          },
+          {
+            "account": "70000001",
+            "display_name": "Physical Store Sales",
+            "consolidated": 286814.13,
+            "mila": 97777.43,
+            "stpau": 104999.49,
+            "santjoan": 84037.21,
+            "hq": 0
+          },
+          {
+            "account": "70000005",
+            "display_name": "Square Discounts",
+            "consolidated": -4805.18,
+            "mila": -1909.08,
+            "stpau": -1932.7,
+            "santjoan": -963.4,
+            "hq": 0
+          },
+          {
+            "account": "70000002",
+            "display_name": "E-commerce Sales",
+            "consolidated": 2573.27,
+            "mila": 211.66,
+            "stpau": 2361.61,
+            "santjoan": 0,
+            "hq": 0
+          }
         ]
       }
     },
@@ -910,6 +1026,44 @@
             "mila": -27.9,
             "stpau": -65.79,
             "santjoan": -11.65,
+            "hq": 0
+          }
+        ],
+        "REVENUE": [
+          {
+            "account": "70000000",
+            "display_name": "Ventas B2B",
+            "consolidated": 117.83,
+            "mila": 19.33,
+            "stpau": 98.5,
+            "santjoan": 0,
+            "hq": 0
+          },
+          {
+            "account": "70000001",
+            "display_name": "Physical Store Sales",
+            "consolidated": 197875.05,
+            "mila": 60658.87,
+            "stpau": 64792.6,
+            "santjoan": 54733.74,
+            "hq": 0
+          },
+          {
+            "account": "70000005",
+            "display_name": "Square Discounts",
+            "consolidated": -3045.84,
+            "mila": -920.23,
+            "stpau": -1224.06,
+            "santjoan": -595.11,
+            "hq": 0
+          },
+          {
+            "account": "70000002",
+            "display_name": "E-commerce Sales",
+            "consolidated": 1773.12,
+            "mila": 135.46,
+            "stpau": 1637.66,
+            "santjoan": 0,
             "hq": 0
           }
         ]
