@@ -328,7 +328,7 @@ footer{margin:40px 24px 0;padding:16px 0;border-top:1px solid var(--border);disp
 </div>
 
 <footer>
-  <span>Origo Bakery SL — Executive Dashboard v3.9</span>
+  <span>Origo Bakery SL — Executive Dashboard v4.0</span>
   <span>Source: data.json ← n8n ← BigQuery</span>
   <span id="footer-updated">Last updated: —</span>
 </footer>
@@ -336,7 +336,12 @@ footer{margin:40px 24px 0;padding:16px 0;border-top:1px solid var(--border);disp
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <script>
 /* ============================================================
-   ORIGO EXECUTIVE DASHBOARD v3.9
+   ORIGO EXECUTIVE DASHBOARD v4.0
+   Changes v4.0 (2026-03-20):
+   - Store indicator arrows (▸) in Revenue by Store and Store Performance tables
+   - Operating Revenue breakdown per store using breakdown.REVENUE (requires n8n update)
+   - D&A per store using breakdown.DA (partial — ledger only, requires n8n update)
+   - Fallback to previous display when breakdown data not yet available
    Changes v3.9 (2026-03-20):
    - Rule 1: Personnel accounts assigned to store by ACCOUNT NUMBER
      suffix (1=HQ, 2=Milà, 3=StPau, 4=Sant Joan), not by name text
@@ -468,6 +473,15 @@ function personnelAccountBelongsToStore(account, storeKey) {
   var lastDigit = account.charAt(account.length - 1);
   return accountDigitToStore[lastDigit] === storeKey;
 }
+/* Helper: compute section total from breakdown items for a store */
+function computeSectionFromBreakdown(monthData, sectionKey, storeKey) {
+  var items = (monthData.breakdown && monthData.breakdown[sectionKey]) || [];
+  var total = 0;
+  for (var i = 0; i < items.length; i++) {
+    total += parseFloat(items[i][storeKey]) || 0;
+  }
+  return total;
+}
 /* Helper: find Salary in Kind (75500000) value for a store from breakdown items */
 function getSikValueForStore(breakdownItems, storeKey) {
   for (var i = 0; i < breakdownItems.length; i++) {
@@ -511,9 +525,17 @@ function render(D, storeKey) {
     jan.financial = computeFinancialFromBreakdown(janBase, storeKey);
     feb.financial = computeFinancialFromBreakdown(febBase, storeKey);
 
-    /* ── Fix #5: EBT = EBITDA + Financial for stores (D&A not allocated) ── */
-    jan.ebt = (jan.ebitda || 0) + (jan.financial || 0);
-    feb.ebt = (feb.ebitda || 0) + (feb.financial || 0);
+    /* ── Fix #5 (v4.0): EBT = EBITDA + D&A + Financial (D&A included when breakdown available) ── */
+    var hasDAData = febBase.breakdown && febBase.breakdown.DA && febBase.breakdown.DA.length > 0;
+    if (hasDAData) {
+      feb.da = computeSectionFromBreakdown(febBase, 'DA', storeKey);
+      jan.da = computeSectionFromBreakdown(janBase, 'DA', storeKey);
+      feb.ebt = (feb.ebitda || 0) + feb.da + (feb.financial || 0);
+      jan.ebt = (jan.ebitda || 0) + jan.da + (jan.financial || 0);
+    } else {
+      jan.ebt = (jan.ebitda || 0) + (jan.financial || 0);
+      feb.ebt = (feb.ebitda || 0) + (feb.financial || 0);
+    }
   } else {
     jan = janBase;
     feb = febBase;
@@ -652,7 +674,8 @@ function render(D, storeKey) {
     var share = (sFeb / totalFeb * 100).toFixed(1) + '%';
     var cls = sFeb > sJan ? 'up' : (sFeb < sJan ? 'down' : 'pct');
     var rowHighlight = (isStore && storeKey === k) ? ' style="background:var(--green-bg)"' : '';
-    stBody += '<tr' + rowHighlight + '><td class="name">' + storeNames[k] + '</td>';
+    var storeArrow = (isStore && storeKey === k) ? '<span style="color:var(--green);margin-right:4px">▸</span>' : '';
+    stBody += '<tr' + rowHighlight + '><td class="name">' + storeArrow + storeNames[k] + '</td>';
     stBody += '<td class="num">' + eur(sJan) + '</td><td class="num">' + eur(sFeb) + '</td>';
     stBody += '<td class="num ' + cls + '">' + mom + '</td><td class="num pct">' + share + '</td></tr>';
   });
@@ -688,7 +711,8 @@ function render(D, storeKey) {
       var ebitdaPct = s.revenue > 0 ? (s.ebitda / s.revenue * 100).toFixed(1) + '%' : '—';
       var ebitdaColor = s.ebitda >= 0 ? 'color:var(--green)' : 'color:var(--red)';
       var rowHighlight = (isStore && storeKey === k) ? ' style="background:var(--green-bg)"' : '';
-      storePerfBody += '<tr' + rowHighlight + '><td class="name" style="border-left:3px solid ' + storeColors[k] + ';padding-left:11px">' + storeNames[k] + '</td>';
+      var perfArrow = (isStore && storeKey === k) ? '<span style="color:var(--green);margin-right:4px">▸</span>' : '';
+      storePerfBody += '<tr' + rowHighlight + '><td class="name" style="border-left:3px solid ' + storeColors[k] + ';padding-left:11px">' + perfArrow + storeNames[k] + '</td>';
       storePerfBody += '<td class="num">' + eur(s.revenue) + '</td>';
       storePerfBody += '<td class="num neg">-' + eur(cogsAbs) + '</td><td class="num pct">' + cogsPct + '</td>';
       storePerfBody += '<td class="num neg">-' + eur(persAbs) + '</td><td class="num pct">' + persPct + '</td>';
@@ -874,15 +898,22 @@ function render(D, storeKey) {
   accordionState = {};
   var pnlBody = '';
 
-  // Operating Revenue
-  pnlBody += plRow('Operating revenue', jan.revenue, feb.revenue, 'section-row');
-  if (!isStore) {
-    pnlBody += plRow('Physical store sales', jan.physical, feb.physical, 'sub-row');
-    pnlBody += plRow('B2B sales', jan.b2b, feb.b2b, 'sub-row');
-    pnlBody += plRow('E-commerce sales', jan.ecommerce, feb.ecommerce, 'sub-row');
-    pnlBody += plRow('Discounts', jan.discounts, feb.discounts, 'sub-row');
+  // Operating Revenue — v4.0: supports store-level breakdown via breakdown.REVENUE
+  var hasRevenueBreakdown = febBase.breakdown && febBase.breakdown.REVENUE && febBase.breakdown.REVENUE.length > 0;
+  if (hasRevenueBreakdown) {
+    // Use accordion with breakdown items (works for both consolidated and store modes)
+    pnlBody += plAccordionSection('REVENUE', 'Operating revenue', jan.revenue, feb.revenue, 'section-row', '');
   } else {
-    pnlBody += '<tr><td colspan="5" style="padding:6px 14px 6px 28px;font-size:11px;color:var(--text3);font-style:italic">Physical store sales only (Square POS). B2B and E-commerce are consolidated at group level.</td></tr>';
+    // Fallback: use top-level fields (only in consolidated mode)
+    pnlBody += plRow('Operating revenue', jan.revenue, feb.revenue, 'section-row');
+    if (!isStore) {
+      pnlBody += plRow('Physical store sales', jan.physical, feb.physical, 'sub-row');
+      pnlBody += plRow('B2B sales', jan.b2b, feb.b2b, 'sub-row');
+      pnlBody += plRow('E-commerce sales', jan.ecommerce, feb.ecommerce, 'sub-row');
+      pnlBody += plRow('Discounts', jan.discounts, feb.discounts, 'sub-row');
+    } else {
+      pnlBody += '<tr><td colspan="5" style="padding:6px 14px 6px 28px;font-size:11px;color:var(--text3);font-style:italic">Revenue breakdown by store will be available after n8n workflow update (add REVENUE to BQ — Breakdown query).</td></tr>';
+    }
   }
 
   // COGS
@@ -900,8 +931,10 @@ function render(D, storeKey) {
   // EBITDA
   pnlBody += plRowStyled('EBITDA', jan.ebitda, feb.ebitda, 'total-row', 'color:var(--amber)');
 
-  // D&A + Operating Profit: consolidated only
+  // D&A + Operating Profit — v4.0: supports store-level breakdown via breakdown.DA
+  var hasDABreakdown = febBase.breakdown && febBase.breakdown.DA && febBase.breakdown.DA.length > 0;
   if (!isStore) {
+    // Consolidated: use detailed DA accordion (hardcoded override info)
     var jDA = janBase.da != null ? janBase.da : null;
     var fDA = febBase.da || 0;
     pnlBody += plDAAccordion(jDA, fDA);
@@ -909,9 +942,18 @@ function render(D, storeKey) {
     var fOP = febBase.operating_profit || 0;
     pnlBody += plOpProfitRow(jOP, fOP);
     pnlBody += plAccordionSection('FINANCIAL', 'Financial results', jan.financial, feb.financial, 'section-row', '');
+  } else if (hasDABreakdown) {
+    // Store mode with DA data: show DA from breakdown (partial — ledger only, no override)
+    var storeDA = computeSectionFromBreakdown(febBase, 'DA', storeKey);
+    var storeDAJan = computeSectionFromBreakdown(janBase, 'DA', storeKey);
+    pnlBody += plAccordionSection('DA', 'Depreciation &amp; Amortization', storeDAJan, storeDA, 'section-row', '');
+    var storeOP = (feb.ebitda || 0) + storeDA;
+    var storeOPJan = (jan.ebitda || 0) + storeDAJan;
+    pnlBody += plOpProfitRow(jan.ebitda != null ? storeOPJan : null, storeOP);
+    pnlBody += plAccordionSection('FINANCIAL', 'Financial results', jan.financial, feb.financial, 'section-row', '');
+    pnlBody += '<tr><td colspan="5" style="padding:4px 14px;font-size:10px;color:var(--text3);font-style:italic">⚠ Store D&A shows ledger entries only. Annual override assets (da_override) not allocated by store.</td></tr>';
   } else {
-    pnlBody += '<tr><td colspan="5" style="padding:8px 14px;font-size:11px;color:var(--text3);font-style:italic;background:var(--bg3)">⚙ D&A and Operating Profit shown in Consolidated view only (assets not tagged by store in Holded).</td></tr>';
-    /* ── Fix #4: Financial total now computed from breakdown items ── */
+    pnlBody += '<tr><td colspan="5" style="padding:8px 14px;font-size:11px;color:var(--text3);font-style:italic;background:var(--bg3)">⚙ D&A and Operating Profit: store-level data available after n8n workflow update.</td></tr>';
     pnlBody += plAccordionSection('FINANCIAL', 'Financial results', jan.financial, feb.financial, 'section-row', '');
   }
 
