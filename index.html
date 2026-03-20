@@ -328,7 +328,7 @@ footer{margin:40px 24px 0;padding:16px 0;border-top:1px solid var(--border);disp
 </div>
 
 <footer>
-  <span>Origo Bakery SL — Executive Dashboard v4.0</span>
+  <span>Origo Bakery SL — Executive Dashboard v4.1</span>
   <span>Source: data.json ← n8n ← BigQuery</span>
   <span id="footer-updated">Last updated: —</span>
 </footer>
@@ -336,7 +336,11 @@ footer{margin:40px 24px 0;padding:16px 0;border-top:1px solid var(--border);disp
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <script>
 /* ============================================================
-   ORIGO EXECUTIVE DASHBOARD v4.0
+   ORIGO EXECUTIVE DASHBOARD v4.1
+   Changes v4.1 (2026-03-20):
+   - Salary in Kind: merged into salary lines in BOTH consolidated and store modes
+   - Consolidated SiK line now shows only untagged amount (tagged merged into each store's salary)
+   - If untagged SiK = 0, the line is hidden
    Changes v4.0 (2026-03-20):
    - Store indicator arrows (▸) in Revenue by Store and Store Performance tables
    - Operating Revenue breakdown per store using breakdown.REVENUE (requires n8n update)
@@ -842,12 +846,27 @@ function render(D, storeKey) {
 
     if (febItems.length > 0) {
       var lastGroup = null;
-      /* ── v3.9: Pre-compute Salary in Kind (SiK) values for merge into salary lines ── */
+      /* ── v4.1: Pre-compute Salary in Kind (SiK) values for merge into salary lines ──
+         Now applies in BOTH store mode AND consolidated mode.
+         Store mode: merge SiK for that store into its salary line
+         Consolidated mode: merge each store's SiK into its respective salary line,
+                           then SiK line shows only untagged amount ── */
       var sikFebVal = 0, sikJanVal = 0;
-      if (isStore && sectionKey === 'PERSONNEL') {
-        sikFebVal = getSikValueForStore(febItems, storeKey);
-        var janPersItems = (janBase.breakdown && janBase.breakdown.PERSONNEL) || [];
-        sikJanVal = getSikValueForStore(janPersItems, storeKey);
+      var sikFebByStore = {}, sikJanByStore = {};
+      if (sectionKey === 'PERSONNEL') {
+        if (isStore) {
+          sikFebVal = getSikValueForStore(febItems, storeKey);
+          var janPersItems = (janBase.breakdown && janBase.breakdown.PERSONNEL) || [];
+          sikJanVal = getSikValueForStore(janPersItems, storeKey);
+        } else {
+          // Consolidated: get SiK per store for merging into salary lines
+          var storeKeys = ['mila', 'stpau', 'santjoan', 'hq'];
+          var janPersItems = (janBase.breakdown && janBase.breakdown.PERSONNEL) || [];
+          storeKeys.forEach(function(sk) {
+            sikFebByStore[sk] = getSikValueForStore(febItems, sk);
+            sikJanByStore[sk] = getSikValueForStore(janPersItems, sk);
+          });
+        }
       }
       febItems.forEach(function(item) {
         var account = item.account;
@@ -855,9 +874,26 @@ function render(D, storeKey) {
         var jItem = janMap[account];
         var jVal = jItem ? (parseFloat(jItem[valKey]) || 0) : null;
 
-        /* ── v3.9 Rule 2: In store mode, SiK (755) has NO own line — merged into salary ── */
-        if (isStore && sectionKey === 'PERSONNEL' && account.startsWith('755')) return;
-        /* ── In consolidated, SiK appears normally as its own line ── */
+        /* ── v4.1: SiK (755) — merged into salary lines in BOTH modes ── */
+        if (sectionKey === 'PERSONNEL' && account.startsWith('755')) {
+          if (isStore) {
+            return; // Store mode: SiK has no own line (merged into salary)
+          } else {
+            // Consolidated: show only the UNTAGGED amount
+            var sikFebItem = febItems.find(function(x) { return x.account.startsWith('755'); });
+            var sikJanItem = janPersItems ? janPersItems.find(function(x) { return x.account.startsWith('755'); }) : null;
+            var sikStoreKeys = ['mila', 'stpau', 'santjoan', 'hq'];
+            var fTagged = 0, jTagged = 0;
+            sikStoreKeys.forEach(function(sk) {
+              if (sikFebItem) fTagged += parseFloat(sikFebItem[sk]) || 0;
+              if (sikJanItem) jTagged += parseFloat(sikJanItem[sk]) || 0;
+            });
+            fVal = fVal - fTagged; // untagged = consolidated - sum of all store tags
+            if (jVal !== null) jVal = jVal - jTagged;
+            // Skip if both untagged values are 0
+            if (Math.abs(fVal) < 0.01 && (jVal === null || Math.abs(jVal) < 0.01)) return;
+          }
+        }
 
         /* ── v3.9 Rules 1+3: In store mode, filter personnel by account number ── */
         if (isStore && sectionKey === 'PERSONNEL') {
@@ -866,6 +902,16 @@ function render(D, storeKey) {
           if (account.startsWith('64000')) {
             fVal += sikFebVal;
             if (jVal !== null) jVal += sikJanVal;
+          }
+        }
+
+        /* ── v4.1: Consolidated — merge each store's SiK into its salary line ── */
+        if (!isStore && sectionKey === 'PERSONNEL' && account.startsWith('64000')) {
+          var lastDigit = account.charAt(account.length - 1);
+          var salaryStore = accountDigitToStore[lastDigit];
+          if (salaryStore && sikFebByStore[salaryStore]) {
+            fVal += sikFebByStore[salaryStore];
+            if (jVal !== null) jVal += (sikJanByStore[salaryStore] || 0);
           }
         }
 
