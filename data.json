@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-03-20T13:34:34.933Z",
+  "generated_at": "2026-03-21T05:01:23.223Z",
   "period": {
     "display_month": "Feb 2026",
     "month": "2026-02",
@@ -23,7 +23,7 @@
       "current": 39.9,
       "prev": 50
     },
-    "revenue_partial": 202811.84
+    "revenue_partial": 214328.29
   },
   "pl": {
     "jan": {
@@ -857,20 +857,20 @@
       }
     },
     "mar": {
-      "physical": 197875.05,
+      "physical": 209039.26,
       "b2b": 117.83,
-      "ecommerce": 1773.12,
-      "discounts": 3045.84,
-      "revenue": 202811.84,
+      "ecommerce": 1894.11,
+      "discounts": 3277.09,
+      "revenue": 214328.29,
       "cogs": -30127.89,
-      "gross_profit": 172683.95,
+      "gross_profit": 184200.4,
       "personnel": 0,
       "opex": -19656.65,
-      "ebitda": 153027.3,
+      "ebitda": 164543.75,
       "da": -2730.61,
-      "operating_profit": 150296.69,
+      "operating_profit": 161813.14,
       "financial": -1977.77,
-      "ebt": 148318.92,
+      "ebt": 159835.37,
       "sik_mila": 0,
       "sik_stpau": 0,
       "sik_santjoan": 0,
@@ -1042,7 +1042,7 @@
           {
             "account": "70000001",
             "display_name": "Physical Store Sales",
-            "consolidated": 197875.05,
+            "consolidated": 209039.26,
             "mila": 60658.87,
             "stpau": 64792.6,
             "santjoan": 54733.74,
@@ -1051,7 +1051,7 @@
           {
             "account": "70000005",
             "display_name": "Square Discounts",
-            "consolidated": -3045.84,
+            "consolidated": -3277.09,
             "mila": -920.23,
             "stpau": -1224.06,
             "santjoan": -595.11,
@@ -1060,9 +1060,9 @@
           {
             "account": "70000002",
             "display_name": "E-commerce Sales",
-            "consolidated": 1773.12,
-            "mila": 135.46,
-            "stpau": 1637.66,
+            "consolidated": 1894.11,
+            "mila": 159.02,
+            "stpau": 1735.09,
             "santjoan": 0,
             "hq": 0
           }
