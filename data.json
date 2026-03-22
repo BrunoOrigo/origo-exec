@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-03-22T05:01:13.136Z",
+  "generated_at": "2026-03-22T18:39:34.658Z",
   "period": {
     "display_month": "Feb 2026",
     "month": "2026-02",
@@ -23,7 +23,7 @@
       "current": 40.3,
       "prev": 50
     },
-    "revenue_partial": 228671.67
+    "revenue_partial": 232182.35
   },
   "pl": {
     "jan": {
@@ -858,52 +858,52 @@
     },
     "mar": {
       "physical": 223102.58,
-      "b2b": 117.83,
+      "b2b": 3628.51,
       "ecommerce": 1949.97,
       "discounts": 3501.29,
-      "revenue": 228671.67,
+      "revenue": 232182.35,
       "cogs": -30393.19,
-      "gross_profit": 198278.48,
+      "gross_profit": 201789.16,
       "personnel": 0,
       "opex": -19493.3,
-      "ebitda": 178785.18,
+      "ebitda": 182295.86,
       "da": -2730.61,
-      "operating_profit": 176054.57,
+      "operating_profit": 179565.25,
       "financial": -1977.77,
-      "ebt": 174076.8,
+      "ebt": 177587.48,
       "sik_mila": 0,
       "sik_stpau": 0,
       "sik_santjoan": 0,
       "sik_hq": 0,
       "sik_untagged": 0,
       "sik_total": 0,
-      "store_mila": 59757.97,
-      "store_stpau": 63667.04,
-      "store_santjoan": 54138.63,
+      "store_mila": 60202.06,
+      "store_stpau": 66816.27,
+      "store_santjoan": 54173.82,
       "by_store": {
         "mila": {
-          "revenue": 59757.97,
+          "revenue": 60202.06,
           "cogs": -7542.74,
-          "gross_profit": 52215.23,
+          "gross_profit": 52659.32,
           "personnel": 0,
           "opex": -2667.73,
-          "ebitda": 49547.5
+          "ebitda": 49991.59
         },
         "stpau": {
-          "revenue": 63667.04,
+          "revenue": 66816.27,
           "cogs": -18551.19,
-          "gross_profit": 45115.85,
+          "gross_profit": 48265.08,
           "personnel": 0,
           "opex": -10611.81,
-          "ebitda": 34504.04
+          "ebitda": 37653.27
         },
         "santjoan": {
-          "revenue": 54138.63,
+          "revenue": 54173.82,
           "cogs": -4299.26,
-          "gross_profit": 49839.37,
+          "gross_profit": 49874.56,
           "personnel": 0,
           "opex": -5550.08,
-          "ebitda": 44289.29
+          "ebitda": 44324.48
         },
         "hq": {
           "revenue": 0,
@@ -1082,9 +1082,9 @@
       "santjoan": 83376.1
     },
     "mar": {
-      "mila": 59757.97,
-      "stpau": 63667.04,
-      "santjoan": 54138.63
+      "mila": 60202.06,
+      "stpau": 66816.27,
+      "santjoan": 54173.82
     }
   },
   "channel": {
