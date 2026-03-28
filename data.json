@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-03-27T05:01:46.977Z",
+  "generated_at": "2026-03-28T05:01:46.254Z",
   "period": {
     "display_month": "Feb 2026",
     "month": "2026-02",
@@ -23,7 +23,7 @@
       "current": 42.1,
       "prev": 50.1
     },
-    "revenue_partial": 281188.71
+    "revenue_partial": 292818.55
   },
   "pl": {
     "jan": {
@@ -866,20 +866,20 @@
       }
     },
     "mar": {
-      "physical": 274241.6,
+      "physical": 285524.72,
       "b2b": 0,
-      "ecommerce": 2508.61,
-      "discounts": 4438.5,
-      "revenue": 281188.71,
+      "ecommerce": 2562.72,
+      "discounts": 4731.11,
+      "revenue": 292818.55,
       "cogs": -38905.87,
-      "gross_profit": 242282.84,
+      "gross_profit": 253912.68,
       "personnel": 0,
       "opex": -24031.51,
-      "ebitda": 218251.33,
+      "ebitda": 229881.17,
       "da": -2730.61,
-      "operating_profit": 215520.72,
+      "operating_profit": 227150.56,
       "financial": -2629.91,
-      "ebt": 212890.81,
+      "ebt": 224520.65,
       "sik_mila": 0,
       "sik_stpau": 0,
       "sik_santjoan": 0,
@@ -1096,7 +1096,7 @@
           {
             "account": "70000001",
             "display_name": "Physical Store Sales",
-            "consolidated": 274241.6,
+            "consolidated": 285524.72,
             "mila": 85964.93,
             "stpau": 91535.34,
             "santjoan": 78828.51,
@@ -1105,7 +1105,7 @@
           {
             "account": "70000005",
             "display_name": "Square Discounts",
-            "consolidated": -4438.5,
+            "consolidated": -4731.11,
             "mila": -1343.97,
             "stpau": -1803.88,
             "santjoan": -852.75,
@@ -1114,9 +1114,9 @@
           {
             "account": "70000002",
             "display_name": "E-commerce Sales",
-            "consolidated": 2508.61,
+            "consolidated": 2562.72,
             "mila": 251.34,
-            "stpau": 2257.27,
+            "stpau": 2311.38,
             "santjoan": 0,
             "hq": 0
           }
