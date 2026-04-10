@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-04-09T04:02:00.059Z",
+  "generated_at": "2026-04-10T04:01:53.816Z",
   "period": {
     "display_month": "Mar 2026",
     "month": "2026-03",
@@ -23,7 +23,7 @@
       "current": 0.2,
       "prev": 42.1
     },
-    "revenue_partial": 93610.13
+    "revenue_partial": 104567.34
   },
   "pl": {
     "jan": {
@@ -35,53 +35,53 @@
       "cogs": -80572.41,
       "gross_profit": 191681.02,
       "personnel": -136476.59,
-      "opex": -35182.77,
-      "ebitda": 20021.66,
+      "opex": -35227.77,
+      "ebitda": 19976.66,
       "da": -4707.98,
-      "operating_profit": 15313.68,
+      "operating_profit": 15268.68,
       "financial": -2260.3,
-      "ebt": 13053.38,
+      "ebt": 13008.38,
       "sik_mila": 372.21,
       "sik_stpau": 524.01,
       "sik_santjoan": 74.49,
       "sik_hq": 61.05,
       "sik_untagged": 0,
       "sik_total": 1031.76,
-      "store_mila": 94408.64,
-      "store_stpau": 126521.08,
-      "store_santjoan": 36949.4,
+      "store_mila": 94838.08,
+      "store_stpau": 126953.48,
+      "store_santjoan": 37134.39,
       "by_store": {
         "mila": {
-          "revenue": 94408.64,
+          "revenue": 94838.08,
           "cogs": -24749.58,
-          "gross_profit": 69659.06,
+          "gross_profit": 70088.5,
           "personnel": -47325.02,
           "opex": -7268.74,
-          "ebitda": 15065.3
+          "ebitda": 15494.74
         },
         "stpau": {
-          "revenue": 126521.08,
+          "revenue": 126953.48,
           "cogs": -40710.24,
-          "gross_profit": 85810.84,
+          "gross_profit": 86243.24,
           "personnel": -63178.9,
           "opex": -13570.05,
-          "ebitda": 9061.89
+          "ebitda": 9494.29
         },
         "santjoan": {
-          "revenue": 36949.4,
+          "revenue": 37134.39,
           "cogs": -15112.59,
-          "gross_profit": 21836.81,
+          "gross_profit": 22021.8,
           "personnel": -8195.77,
           "opex": -7985.56,
-          "ebitda": 5655.48
+          "ebitda": 5840.47
         },
         "hq": {
           "revenue": 0,
           "cogs": 0,
           "gross_profit": 0,
           "personnel": -17776.9,
-          "opex": -6358.42,
-          "ebitda": -24135.32
+          "opex": -6403.42,
+          "ebitda": -24180.32
         }
       },
       "breakdown": {
@@ -266,11 +266,11 @@
           {
             "account": "62900001",
             "display_name": "Subscriptions",
-            "consolidated": -982.86,
+            "consolidated": -1027.86,
             "mila": 0,
             "stpau": 0,
             "santjoan": 0,
-            "hq": -982.86
+            "hq": -1027.86
           },
           {
             "account": "62900002",
@@ -446,6 +446,15 @@
             "stpau": -1917.36,
             "santjoan": -628.41,
             "hq": 0
+          },
+          {
+            "account": "70000008",
+            "display_name": "Too Good To Go",
+            "consolidated": 1046.83,
+            "mila": 429.44,
+            "stpau": 432.4,
+            "santjoan": 184.99,
+            "hq": 0
           }
         ]
       }
@@ -471,33 +480,33 @@
       "sik_hq": 61.05,
       "sik_untagged": 16.84,
       "sik_total": 1044.34,
-      "store_mila": 99031.11,
-      "store_stpau": 127960.61,
-      "store_santjoan": 83376.1,
+      "store_mila": 99595.93,
+      "store_stpau": 128326.39,
+      "store_santjoan": 83727.05,
       "by_store": {
         "mila": {
-          "revenue": 99031.11,
+          "revenue": 99595.93,
           "cogs": -27757.6,
-          "gross_profit": 71273.51,
+          "gross_profit": 71838.33,
           "personnel": -44665.36,
           "opex": -9167.56,
-          "ebitda": 17440.59
+          "ebitda": 18005.41
         },
         "stpau": {
-          "revenue": 127960.61,
+          "revenue": 128326.39,
           "cogs": -40341.67,
-          "gross_profit": 87618.94,
+          "gross_profit": 87984.72,
           "personnel": -66122.93,
           "opex": -19827.16,
-          "ebitda": 1668.85
+          "ebitda": 2034.63
         },
         "santjoan": {
-          "revenue": 83376.1,
+          "revenue": 83727.05,
           "cogs": -10189.83,
-          "gross_profit": 73186.27,
+          "gross_profit": 73537.22,
           "personnel": -5975.59,
           "opex": -9614.91,
-          "ebitda": 57595.77
+          "ebitda": 57946.72
         },
         "hq": {
           "revenue": 0,
@@ -861,6 +870,15 @@
             "stpau": -1932.7,
             "santjoan": -963.4,
             "hq": 0
+          },
+          {
+            "account": "70000008",
+            "display_name": "Too Good To Go",
+            "consolidated": 1281.55,
+            "mila": 564.82,
+            "stpau": 365.78,
+            "santjoan": 350.95,
+            "hq": 0
           }
         ]
       }
@@ -886,33 +904,33 @@
       "sik_hq": 0,
       "sik_untagged": 0,
       "sik_total": 0,
-      "store_mila": 112283.56,
-      "store_stpau": 144351.98,
-      "store_santjoan": 99105.49,
+      "store_mila": 113013.65,
+      "store_stpau": 144814.32,
+      "store_santjoan": 99446.84,
       "by_store": {
         "mila": {
-          "revenue": 112283.56,
+          "revenue": 113013.65,
           "cogs": -33054.47,
-          "gross_profit": 79229.09,
+          "gross_profit": 79959.18,
           "personnel": 0,
           "opex": -6362,
-          "ebitda": 72867.09
+          "ebitda": 73597.18
         },
         "stpau": {
-          "revenue": 144351.98,
+          "revenue": 144814.32,
           "cogs": -59377.51,
-          "gross_profit": 84974.47,
+          "gross_profit": 85436.81,
           "personnel": 0,
           "opex": -16614.52,
-          "ebitda": 68359.95
+          "ebitda": 68822.29
         },
         "santjoan": {
-          "revenue": 99105.49,
+          "revenue": 99446.84,
           "cogs": -18264.1,
-          "gross_profit": 80841.39,
+          "gross_profit": 81182.74,
           "personnel": 0,
           "opex": -8690.41,
-          "ebitda": 72150.98
+          "ebitda": 72492.33
         },
         "hq": {
           "revenue": 0,
@@ -1177,58 +1195,67 @@
             "stpau": -2326.24,
             "santjoan": -1161.58,
             "hq": 0
+          },
+          {
+            "account": "70000008",
+            "display_name": "Too Good To Go",
+            "consolidated": 1533.78,
+            "mila": 730.09,
+            "stpau": 462.34,
+            "santjoan": 341.35,
+            "hq": 0
           }
         ]
       }
     },
     "apr": {
-      "physical": 83395.28,
-      "b2b": 7873.06,
-      "ecommerce": 433.04,
-      "discounts": 1908.75,
-      "revenue": 93610.13,
-      "cogs": -3633.51,
-      "gross_profit": 89976.62,
+      "physical": 92407.06,
+      "b2b": 9294.71,
+      "ecommerce": 734.49,
+      "discounts": 2131.08,
+      "revenue": 104567.34,
+      "cogs": -3733.71,
+      "gross_profit": 100833.63,
       "personnel": 0,
       "opex": -16608.43,
-      "ebitda": 73368.19,
+      "ebitda": 84225.2,
       "da": -2730.61,
-      "operating_profit": 70637.58,
-      "financial": -782.87,
-      "ebt": 69854.71,
+      "operating_profit": 81494.59,
+      "financial": -865.23,
+      "ebt": 80629.36,
       "sik_mila": 0,
       "sik_stpau": 0,
       "sik_santjoan": 0,
       "sik_hq": 0,
       "sik_untagged": 0,
       "sik_total": 0,
-      "store_mila": 23659.33,
-      "store_stpau": 34445.08,
-      "store_santjoan": 22951.9,
+      "store_mila": 23881.52,
+      "store_stpau": 35615.83,
+      "store_santjoan": 22980.61,
       "by_store": {
         "mila": {
-          "revenue": 23659.33,
+          "revenue": 23881.52,
           "cogs": -1537.26,
-          "gross_profit": 22122.07,
+          "gross_profit": 22344.26,
           "personnel": 0,
           "opex": -1775.34,
-          "ebitda": 20346.73
+          "ebitda": 20568.92
         },
         "stpau": {
-          "revenue": 34445.08,
+          "revenue": 35615.83,
           "cogs": -2096.25,
-          "gross_profit": 32348.83,
+          "gross_profit": 33519.58,
           "personnel": 0,
           "opex": -9102.84,
-          "ebitda": 23245.99
+          "ebitda": 24416.74
         },
         "santjoan": {
-          "revenue": 22951.9,
-          "cogs": 0,
-          "gross_profit": 22951.9,
+          "revenue": 22980.61,
+          "cogs": -100.2,
+          "gross_profit": 22880.41,
           "personnel": 0,
           "opex": -5108.01,
-          "ebitda": 17843.89
+          "ebitda": 17772.4
         },
         "hq": {
           "revenue": 0,
@@ -1253,10 +1280,10 @@
           {
             "account": "60100000",
             "display_name": "Raw Materials",
-            "consolidated": -2943.73,
+            "consolidated": -3043.93,
             "mila": -1292.73,
             "stpau": -1651,
-            "santjoan": 0,
+            "santjoan": -100.2,
             "hq": 0
           }
         ],
@@ -1264,7 +1291,7 @@
           {
             "account": "62600001",
             "display_name": "Square Fees",
-            "consolidated": -782.87,
+            "consolidated": -865.23,
             "mila": -230.76,
             "stpau": -268.56,
             "santjoan": -202.57,
@@ -1313,7 +1340,7 @@
           {
             "account": "70000001",
             "display_name": "Physical Store Sales",
-            "consolidated": 83395.28,
+            "consolidated": 92407.06,
             "mila": 23795.38,
             "stpau": 27764.17,
             "santjoan": 23325.3,
@@ -1322,7 +1349,7 @@
           {
             "account": "70000005",
             "display_name": "Square Discounts",
-            "consolidated": -1908.75,
+            "consolidated": -2131.08,
             "mila": -686.76,
             "stpau": -601.63,
             "santjoan": -413.21,
@@ -1331,9 +1358,9 @@
           {
             "account": "70000002",
             "display_name": "E-commerce Sales",
-            "consolidated": 433.04,
-            "mila": 2.88,
-            "stpau": 430.16,
+            "consolidated": 734.49,
+            "mila": 25.5,
+            "stpau": 708.99,
             "santjoan": 0,
             "hq": 0
           }
@@ -1343,24 +1370,24 @@
   },
   "stores": {
     "jan": {
-      "mila": 94408.64,
-      "stpau": 126521.08,
-      "santjoan": 36949.4
+      "mila": 94838.08,
+      "stpau": 126953.48,
+      "santjoan": 37134.39
     },
     "feb": {
-      "mila": 99031.11,
-      "stpau": 127960.61,
-      "santjoan": 83376.1
+      "mila": 99595.93,
+      "stpau": 128326.39,
+      "santjoan": 83727.05
     },
     "mar": {
-      "mila": 112283.56,
-      "stpau": 144351.98,
-      "santjoan": 99105.49
+      "mila": 113013.65,
+      "stpau": 144814.32,
+      "santjoan": 99446.84
     },
     "apr": {
-      "mila": 23659.33,
-      "stpau": 34445.08,
-      "santjoan": 22951.9
+      "mila": 23881.52,
+      "stpau": 35615.83,
+      "santjoan": 22980.61
     }
   },
   "channel": {
@@ -1373,20 +1400,12 @@
   "debt": null,
   "unmapped_accounts": [
     {
-      "account": "70000008",
-      "name": "28/02/2026 105 packs salvados, Origo Bakery - Pg. de St. Joan, 52 (Pack sorpresa)",
-      "jan": -1046.83,
-      "feb": -1281.55,
-      "mar": -1533.78,
-      "total_ytd": -3862.16
-    },
-    {
       "account": "63100001",
       "name": "303 2T  2025",
       "jan": 109.18,
       "feb": 130.04,
       "mar": 148.88,
-      "total_ytd": 388.1
+      "total_ytd": 403.45
     },
     {
       "account": "77800000",
