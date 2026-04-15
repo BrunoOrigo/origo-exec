@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-04-15T04:01:48.453Z",
+  "generated_at": "2026-04-15T16:51:56.773Z",
   "period": {
     "display_month": "Mar 2026",
     "month": "2026-03",
@@ -7,23 +7,23 @@
   },
   "overview": {
     "revenue": {
-      "current": 369763.08,
-      "prev": 322551.45,
-      "mom_pct": 14.6
+      "current": 360097.05,
+      "prev": 313805.46,
+      "mom_pct": 14.8
     },
     "ebitda": {
-      "current": 222094.38,
-      "margin_pct": 60.1
+      "current": 212428.35,
+      "margin_pct": 59
     },
     "cogs_pct": {
-      "current": 30,
-      "prev": 24.3
+      "current": 30.8,
+      "prev": 24.9
     },
     "personnel_pct": {
-      "current": 0.2,
-      "prev": 42.1
+      "current": 0.3,
+      "prev": 43.2
     },
-    "revenue_partial": 168242.5
+    "revenue_partial": 147996.67
   },
   "pl": {
     "jan": {
@@ -31,16 +31,16 @@
       "b2b": 27549.71,
       "ecommerce": 6198.27,
       "discounts": 4040.63,
-      "revenue": 272253.43,
+      "revenue": 265016.47,
       "cogs": -80572.41,
-      "gross_profit": 191681.02,
+      "gross_profit": 184444.06,
       "personnel": -136476.59,
       "opex": -35227.77,
-      "ebitda": 19976.66,
+      "ebitda": 12739.7,
       "da": -4707.98,
-      "operating_profit": 15268.68,
+      "operating_profit": 8031.72,
       "financial": -2260.3,
-      "ebt": 13008.38,
+      "ebt": 5771.42,
       "sik_mila": 372.21,
       "sik_stpau": 524.01,
       "sik_santjoan": 74.49,
@@ -464,16 +464,16 @@
       "b2b": 28358.87,
       "ecommerce": 2573.27,
       "discounts": 4805.18,
-      "revenue": 322551.45,
+      "revenue": 313805.46,
       "cogs": -78289.1,
-      "gross_profit": 244262.35,
+      "gross_profit": 235516.36,
       "personnel": -135708.38,
       "opex": -40878.52,
-      "ebitda": 67675.45,
+      "ebitda": 58929.46,
       "da": -5060.9,
-      "operating_profit": 62614.55,
+      "operating_profit": 53868.56,
       "financial": -2295.43,
-      "ebt": 60319.12,
+      "ebt": 51573.13,
       "sik_mila": 363.8,
       "sik_stpau": 543.49,
       "sik_santjoan": 59.16,
@@ -888,16 +888,16 @@
       "b2b": 31083.27,
       "ecommerce": 2897.38,
       "discounts": 5547.26,
-      "revenue": 369763.08,
+      "revenue": 360097.05,
       "cogs": -110877.02,
-      "gross_profit": 258886.06,
+      "gross_profit": 249220.03,
       "personnel": -922,
       "opex": -35869.68,
-      "ebitda": 222094.38,
+      "ebitda": 212428.35,
       "da": -3110.64,
-      "operating_profit": 218983.74,
+      "operating_profit": 209317.71,
       "financial": -3183.35,
-      "ebt": 215800.39,
+      "ebt": 206134.36,
       "sik_mila": 0,
       "sik_stpau": 0,
       "sik_santjoan": 0,
@@ -1222,16 +1222,16 @@
       "b2b": 14222.89,
       "ecommerce": 1013.35,
       "discounts": 3092.97,
-      "revenue": 168242.5,
+      "revenue": 147996.67,
       "cogs": -3733.71,
-      "gross_profit": 164508.79,
+      "gross_profit": 144262.96,
       "personnel": 0,
       "opex": -16608.43,
-      "ebitda": 147900.36,
+      "ebitda": 127654.53,
       "da": -2730.61,
-      "operating_profit": 145169.75,
+      "operating_profit": 124923.92,
       "financial": -1428.47,
-      "ebt": 143741.28,
+      "ebt": 123495.45,
       "sik_mila": 0,
       "sik_stpau": 0,
       "sik_santjoan": 0,
