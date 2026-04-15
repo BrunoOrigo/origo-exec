@@ -215,12 +215,12 @@ footer{margin:40px 24px 0;padding:16px 0;border-top:1px solid var(--border);disp
 
   <!-- ===== P&L ===== -->
   <div id="tab-pnl" style="display:none">
-    <div class="section-title">P&L statement — Jan vs Feb 2026</div>
+    <div class="section-title" id="pnl-table-title">P&L statement — loading…</div>
     <div class="note-box">Source: Holded → BigQuery → Google Sheets P&L 2026. All % shown as share of operating revenue.</div>
     <div class="chart-card pnl-table" style="padding:0;overflow:hidden;margin-bottom:20px">
       <table>
         <thead>
-          <tr><th></th><th class="num">Jan 2026</th><th class="num">% Rev</th><th class="num">Feb 2026</th><th class="num">% Rev</th></tr>
+          <tr><th></th><th class="num" id="pnl-col-prev">—</th><th class="num">% Rev</th><th class="num" id="pnl-col-curr">—</th><th class="num">% Rev</th></tr>
         </thead>
         <tbody id="pnl-table-body"></tbody>
       </table>
@@ -507,9 +507,19 @@ function render(D, storeKey) {
   var st = D.stores;
   var ch = D.channel;
 
-  var plKeys = Object.keys(pl).sort();
-  var janBase = pl.jan || pl[plKeys[0]] || {};
-  var febBase = pl.feb || pl[plKeys[1]] || pl[plKeys[0]] || {};
+  /* v4.2: Dynamic month selection — always show prev vs current complete month.
+     period.month (e.g. '2026-03') is the last complete month set by n8n.
+     pl object contains all 2026 months as keys (jan, feb, mar, apr…) */
+  var MON_NAMES  = ['jan','feb','mar','apr','may','jun','jul','aug','sep','oct','nov','dec'];
+  var MON_LABELS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  var pnlYear    = period.month.split('-')[0];
+  var pnlCurNum  = parseInt(period.month.split('-')[1], 10); // 1–12
+  var curMonKey  = MON_NAMES[pnlCurNum - 1];
+  var prevMonKey = pnlCurNum > 1 ? MON_NAMES[pnlCurNum - 2] : null;
+  var pnlCurrLabel = MON_LABELS[pnlCurNum - 1] + ' ' + pnlYear;
+  var pnlPrevLabel = prevMonKey ? (MON_LABELS[pnlCurNum - 2] + ' ' + pnlYear) : 'Prev';
+  var janBase = (prevMonKey && pl[prevMonKey]) ? pl[prevMonKey] : pl.jan || {};
+  var febBase = pl[curMonKey] || pl.feb || {};
 
   janBase = Object.assign({ revenue:0, cogs:0, gross_profit:0, personnel:0, opex:0, ebitda:0, da:0, operating_profit:0, financial:0, ebt:0, physical:0, b2b:0, ecommerce:0, discounts:0, by_store:null }, janBase);
   febBase = Object.assign({ revenue:0, cogs:0, gross_profit:0, personnel:0, opex:0, ebitda:0, da:0, operating_profit:0, financial:0, ebt:0, physical:0, b2b:0, ecommerce:0, discounts:0, by_store:null }, febBase);
@@ -940,18 +950,40 @@ function render(D, storeKey) {
     return html;
   }
 
+  // ── Update P&L title and column headers dynamically (v4.2) ──
+  var pnlTitleEl = document.getElementById('pnl-table-title');
+  if (pnlTitleEl) pnlTitleEl.textContent = 'P&L statement — ' + pnlPrevLabel + ' vs ' + pnlCurrLabel;
+  var pnlColPrevEl = document.getElementById('pnl-col-prev');
+  var pnlColCurrEl = document.getElementById('pnl-col-curr');
+  if (pnlColPrevEl) pnlColPrevEl.textContent = pnlPrevLabel;
+  if (pnlColCurrEl) pnlColCurrEl.textContent = pnlCurrLabel;
+
   // ── Build P&L table ──
   accordionState = {};
   var pnlBody = '';
 
-  // Operating Revenue — v4.0: supports store-level breakdown via breakdown.REVENUE
+  /* v4.2 — NET Operating Revenue rule
+     Parent row = sum of breakdown.REVENUE children (NET value).
+     Replaces jan.revenue / feb.revenue (pre-aggregated BQ total that may include
+     unmapped or unreconciled items not visible as child lines).
+     Also overrides jRevBase / fRevBase so ALL % columns = % of NET Operating Revenue. */
+  var revKey = isStore ? storeKey : 'consolidated';
+  var jRevNet = (janBase.breakdown && janBase.breakdown.REVENUE && janBase.breakdown.REVENUE.length > 0)
+    ? computeSectionFromBreakdown(janBase, 'REVENUE', revKey)
+    : ((jan.physical||0) + (jan.b2b||0) + (jan.ecommerce||0) - Math.abs(jan.discounts||0));
+  var fRevNet = (febBase.breakdown && febBase.breakdown.REVENUE && febBase.breakdown.REVENUE.length > 0)
+    ? computeSectionFromBreakdown(febBase, 'REVENUE', revKey)
+    : ((feb.physical||0) + (feb.b2b||0) + (feb.ecommerce||0) - Math.abs(feb.discounts||0));
+  if (jRevNet > 0) { jRevBase = jRevNet; jHasRev = true; }
+  if (fRevNet > 0) { fRevBase = fRevNet; fHasRev = true; }
+
+  // Operating Revenue — v4.2: parent = NET (sum of children); % base = NET
   var hasRevenueBreakdown = febBase.breakdown && febBase.breakdown.REVENUE && febBase.breakdown.REVENUE.length > 0;
   if (hasRevenueBreakdown) {
-    // Use accordion with breakdown items (works for both consolidated and store modes)
-    pnlBody += plAccordionSection('REVENUE', 'Operating revenue', jan.revenue, feb.revenue, 'section-row', '');
+    pnlBody += plAccordionSection('REVENUE', 'Operating revenue', jRevNet, fRevNet, 'section-row', '');
   } else {
-    // Fallback: use top-level fields (only in consolidated mode)
-    pnlBody += plRow('Operating revenue', jan.revenue, feb.revenue, 'section-row');
+    // Fallback: no breakdown available — use sum of top-level channel fields
+    pnlBody += plRow('Operating revenue', jRevNet, fRevNet, 'section-row');
     if (!isStore) {
       pnlBody += plRow('Physical store sales', jan.physical, feb.physical, 'sub-row');
       pnlBody += plRow('B2B sales', jan.b2b, feb.b2b, 'sub-row');
