@@ -91,6 +91,10 @@ table .down{color:var(--red)}
 .stale-banner{background:var(--amber-bg);border:1px solid #e8d9a8;color:var(--amber);padding:10px 24px;font-size:12px;text-align:center;display:none}
 footer{margin:40px 24px 0;padding:16px 0;border-top:1px solid var(--border);display:flex;justify-content:space-between;font-size:11px;color:var(--text3)}
 
+/* ── P&L N-column compact ── */
+.pnl-table table th { padding:8px 10px; font-size:10px; white-space:nowrap }
+.pnl-table table td { padding:8px 10px; font-size:12px; white-space:nowrap }
+.pnl-table .sub-row td, .pnl-table .acc-child td { padding:6px 10px; font-size:11px }
 /* ── Accordion P&L ── */
 .accordion-parent { cursor:pointer; user-select:none; }
 .accordion-parent:hover td { background:rgba(61,102,53,.06); }
@@ -216,14 +220,16 @@ footer{margin:40px 24px 0;padding:16px 0;border-top:1px solid var(--border);disp
   <!-- ===== P&L ===== -->
   <div id="tab-pnl" style="display:none">
     <div class="section-title" id="pnl-table-title">P&L statement — loading…</div>
-    <div class="note-box">Source: Holded → BigQuery → Google Sheets P&L 2026. All % shown as share of operating revenue.</div>
-    <div class="chart-card pnl-table" style="padding:0;overflow:hidden;margin-bottom:20px">
+    <div class="note-box">Source: Holded → BigQuery. All % shown as share of operating revenue. * Mês em curso (dados parciais).</div>
+    <div style="overflow-x:auto;margin-bottom:20px">
+    <div class="chart-card pnl-table" style="padding:0;overflow:visible;min-width:600px">
       <table>
         <thead>
-          <tr><th></th><th class="num" id="pnl-col-prev">—</th><th class="num">% Rev</th><th class="num" id="pnl-col-curr">—</th><th class="num">% Rev</th></tr>
+          <tr id="pnl-table-head"><th style="min-width:200px"></th></tr>
         </thead>
         <tbody id="pnl-table-body"></tbody>
       </table>
+    </div>
     </div>
     <div class="section-title" id="waterfall-title">P&L waterfall — February 2026</div>
     <div class="chart-card">
@@ -520,6 +526,37 @@ function render(D, storeKey) {
   var pnlPrevLabel = prevMonKey ? (MON_LABELS[pnlCurNum - 2] + ' ' + pnlYear) : 'Prev';
   var janBase = (prevMonKey && pl[prevMonKey]) ? pl[prevMonKey] : pl.jan || {};
   var febBase = pl[curMonKey] || pl.feb || {};
+
+  /* v4.3 PIN-110: All months for P&L N-column table */
+  var MON_ORDER_PL = {jan:1,feb:2,mar:3,apr:4,may:5,jun:6,jul:7,aug:8,sep:9,oct:10,nov:11,dec:12};
+  var pnlYearStr   = pnlYear;
+  var pnlPartialKey = pnlCurNum < 12 ? MON_NAMES[pnlCurNum] : null; // next month = partial
+  var pnlAllKeys = Object.keys(pl).filter(function(k){ return MON_ORDER_PL[k]; })
+    .sort(function(a,b){ return MON_ORDER_PL[a] - MON_ORDER_PL[b]; });
+  var pnlBaseTemplate = { revenue:0,cogs:0,gross_profit:0,personnel:0,opex:0,ebitda:0,
+    da:0,operating_profit:0,financial:0,ebt:0,physical:0,b2b:0,ecommerce:0,discounts:0,by_store:null };
+  var pnlBases = pnlAllKeys.map(function(k){
+    return Object.assign({}, pnlBaseTemplate, pl[k]);
+  });
+  var pnlData = pnlBases.map(function(base){
+    if (!isStore) return base;
+    var bs = base.by_store && base.by_store[storeKey];
+    var d = bs ? Object.assign({revenue:0,cogs:0,gross_profit:0,personnel:0,opex:0,ebitda:0},bs)
+               : {revenue:null,cogs:null,gross_profit:null,personnel:null,opex:null,ebitda:null};
+    d.financial = computeFinancialFromBreakdown(base, storeKey);
+    var hasDA2 = base.breakdown && base.breakdown.DA && base.breakdown.DA.length > 0;
+    d.da       = hasDA2 ? computeSectionFromBreakdown(base,'DA',storeKey) : 0;
+    d.ebt      = (d.ebitda||0) + d.da + (d.financial||0);
+    return d;
+  });
+  var pnlRevBases = pnlBases.map(function(base, idx){
+    var vKey = isStore ? storeKey : 'consolidated';
+    var revItems = (base.breakdown && base.breakdown.REVENUE) || [];
+    var rev = revItems.length > 0
+      ? revItems.reduce(function(s,i){ return s+(parseFloat(i[vKey])||0); }, 0)
+      : (pnlData[idx].revenue || 0);
+    return rev > 0 ? Math.round(rev*100)/100 : 1;
+  });
 
   janBase = Object.assign({ revenue:0, cogs:0, gross_profit:0, personnel:0, opex:0, ebitda:0, da:0, operating_profit:0, financial:0, ebt:0, physical:0, b2b:0, ecommerce:0, discounts:0, by_store:null }, janBase);
   febBase = Object.assign({ revenue:0, cogs:0, gross_profit:0, personnel:0, opex:0, ebitda:0, da:0, operating_profit:0, financial:0, ebt:0, physical:0, b2b:0, ecommerce:0, discounts:0, by_store:null }, febBase);
@@ -950,93 +987,166 @@ function render(D, storeKey) {
     return html;
   }
 
-  // ── Update P&L title and column headers dynamically (v4.2) ──
-  var pnlTitleEl = document.getElementById('pnl-table-title');
-  if (pnlTitleEl) pnlTitleEl.textContent = 'P&L statement — ' + pnlPrevLabel + ' vs ' + pnlCurrLabel;
-  var pnlColPrevEl = document.getElementById('pnl-col-prev');
-  var pnlColCurrEl = document.getElementById('pnl-col-curr');
-  if (pnlColPrevEl) pnlColPrevEl.textContent = pnlPrevLabel;
-  if (pnlColCurrEl) pnlColCurrEl.textContent = pnlCurrLabel;
+  // ── N-column P&L helpers (PIN-110) ──
+  var pnlN = pnlAllKeys.length;
+  function mDisp(val){ return val===null?'—':eur(val); }
+  function mPct(val,idx){
+    if(val===null||val===undefined||pnlRevBases[idx]<=1) return '—';
+    return pct(val/pnlRevBases[idx]*100);
+  }
+  function plRowN(label,vals,cssClass){
+    var r='<tr class="'+cssClass+'"><td>'+label+'</td>';
+    vals.forEach(function(v,i){
+      var neg=(v!==null&&v<0)?' neg':'';
+      r+='<td class="num'+neg+'">'+mDisp(v)+'</td><td class="num pct">'+mPct(v,i)+'</td>';
+    }); return r+'</tr>';
+  }
+  function plGrossRowN(label,vals){
+    var r='<tr class="gross-row"><td>'+label+'</td>';
+    vals.forEach(function(v,i){
+      r+='<td class="num">'+mDisp(v)+'</td><td class="num pct">'+mPct(v,i)+'</td>';
+    }); return r+'</tr>';
+  }
+  function plRowStyledN(label,vals,cssClass,style){
+    var r='<tr class="'+cssClass+'"><td style="'+style+'">'+label+'</td>';
+    vals.forEach(function(v,i){
+      r+='<td class="num" style="'+style+'">'+mDisp(v)+'</td><td class="num" style="'+style+'">'+mPct(v,i)+'</td>';
+    }); return r+'</tr>';
+  }
+  function plOpProfitRowN(vals){
+    var r='<tr class="op-profit-row"><td>Operating profit</td>';
+    vals.forEach(function(v,i){
+      r+='<td class="num">'+mDisp(v)+'</td><td class="num pct">'+mPct(v,i)+'</td>';
+    }); return r+'</tr>';
+  }
+  function plAccordionSectionN(sectionKey,parentLabel,parentVals,parentCss,parentStyle){
+    var allMthItems = pnlBases.map(function(base){
+      return (base.breakdown && base.breakdown[sectionKey]) || [];
+    });
+    var mthMaps = allMthItems.map(function(items){
+      var m={}; items.forEach(function(i){ m[i.account]=i; }); return m;
+    });
+    var refItems=[]; for(var mi=pnlN-1;mi>=0;mi--){ if(allMthItems[mi].length>0){refItems=allMthItems[mi];break;} }
+    var vKey = isStore ? storeKey : 'consolidated';
+    var html='<tr class="'+parentCss+' accordion-parent" onclick="toggleAccordion(\''+sectionKey+'\')">';
+    html+='<td style="'+(parentStyle||'')+'"><span class="accordion-icon" id="acc-icon-'+sectionKey+'">▶</span>'+parentLabel+'</td>';
+    parentVals.forEach(function(v,i){ var neg=(v!==null&&v<0)?' neg':''; html+='<td class="num'+neg+'">'+mDisp(v)+'</td><td class="num pct">'+mPct(v,i)+'</td>'; });
+    html+='</tr>';
+    if(refItems.length===0) return html;
+    // SiK precompute
+    var sikByMth={}, sikByMthStore={};
+    if(sectionKey==='PERSONNEL'){
+      if(isStore){ allMthItems.forEach(function(items,idx){ sikByMth[idx]=getSikValueForStore(items,storeKey); }); }
+      else{
+        var sks=['mila','stpau','santjoan','hq'];
+        allMthItems.forEach(function(items,idx){ sikByMthStore[idx]={}; sks.forEach(function(sk){ sikByMthStore[idx][sk]=getSikValueForStore(items,sk); }); });
+      }
+    }
+    var lastGrp=null;
+    refItems.forEach(function(item){
+      var account=item.account;
+      if(isStore&&sectionKey==='PERSONNEL'&&!personnelAccountBelongsToStore(account,storeKey)) return;
+      var rowVals=pnlBases.map(function(_,idx){
+        var mItem=mthMaps[idx][account]; if(!mItem) return null;
+        var val=parseFloat(mItem[vKey])||0;
+        if(sectionKey==='PERSONNEL'){
+          if(account.startsWith('755')){
+            if(isStore) return null;
+            var sks2=['mila','stpau','santjoan','hq']; var tagged=0;
+            sks2.forEach(function(sk){ tagged+=parseFloat(mItem[sk])||0; });
+            val=val-tagged; if(Math.abs(val)<0.01) return null;
+          }
+          if(isStore&&account.startsWith('64000')) val+=(sikByMth[idx]||0);
+          if(!isStore&&account.startsWith('64000')){
+            var ld=account.charAt(account.length-1); var ss=accountDigitToStore[ld];
+            if(ss&&sikByMthStore[idx]&&sikByMthStore[idx][ss]) val+=sikByMthStore[idx][ss];
+          }
+        }
+        return val;
+      });
+      if(isStore&&rowVals.every(function(v){ return v===null||v===0; })) return;
+      if(sectionKey==='PERSONNEL'){
+        var grp=getPersonnelGroupLabel(account);
+        if(grp&&grp!==lastGrp){
+          html+='<tr class="acc-child acc-child-PERSONNEL" style="display:none"><td colspan="'+(1+pnlN*2)+'" style="padding:4px 14px 4px 28px;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--text3);background:var(--bg3)">'+grp+'</td></tr>';
+          lastGrp=grp;
+        }
+      }
+      html+='<tr class="sub-row acc-child acc-child-'+sectionKey+'" style="display:none">';
+      html+='<td style="padding-left:28px;font-size:12px;color:var(--text2)">'+item.display_name+'</td>';
+      rowVals.forEach(function(v,i){ var neg=(v!==null&&v<0)?' neg':''; html+='<td class="num'+neg+'">'+mDisp(v)+'</td><td class="num pct">'+mPct(v,i)+'</td>'; });
+      html+='</tr>';
+    });
+    return html;
+  }
 
-  // ── Build P&L table ──
+  // ── Update P&L table header (PIN-110 v4.3: N dynamic columns) ──
+  var pnlHeadEl = document.getElementById('pnl-table-head');
+  if (pnlHeadEl) {
+    var headHtml = '<th style="min-width:180px"></th>';
+    pnlAllKeys.forEach(function(k) {
+      var lbl = MON_LABELS[MON_ORDER_PL[k]-1] + ' ' + pnlYearStr + (k===pnlPartialKey?' *':'');
+      headHtml += '<th class="num" style="min-width:90px">'+lbl+'</th><th class="num" style="min-width:52px">% Rev</th>';
+    });
+    pnlHeadEl.innerHTML = headHtml;
+  }
+  var pnlTitleEl = document.getElementById('pnl-table-title');
+  if (pnlTitleEl) {
+    var lbls = pnlAllKeys.map(function(k){ return MON_LABELS[MON_ORDER_PL[k]-1]+' '+pnlYearStr+(k===pnlPartialKey?' *':''); });
+    pnlTitleEl.textContent = 'P&L statement — ' + lbls.join(' | ');
+  }
+
+  // ── Build P&L table (PIN-110 v4.3: N-column) ──
   accordionState = {};
   var pnlBody = '';
 
-  /* v4.2 — NET Operating Revenue rule
-     Parent row = sum of breakdown.REVENUE children (NET value).
-     Replaces jan.revenue / feb.revenue (pre-aggregated BQ total that may include
-     unmapped or unreconciled items not visible as child lines).
-     Also overrides jRevBase / fRevBase so ALL % columns = % of NET Operating Revenue. */
-  var revKey = isStore ? storeKey : 'consolidated';
-  var jRevNet = (janBase.breakdown && janBase.breakdown.REVENUE && janBase.breakdown.REVENUE.length > 0)
-    ? computeSectionFromBreakdown(janBase, 'REVENUE', revKey)
-    : ((jan.physical||0) + (jan.b2b||0) + (jan.ecommerce||0) - Math.abs(jan.discounts||0));
-  var fRevNet = (febBase.breakdown && febBase.breakdown.REVENUE && febBase.breakdown.REVENUE.length > 0)
-    ? computeSectionFromBreakdown(febBase, 'REVENUE', revKey)
-    : ((feb.physical||0) + (feb.b2b||0) + (feb.ecommerce||0) - Math.abs(feb.discounts||0));
-  if (jRevNet > 0) { jRevBase = jRevNet; jHasRev = true; }
-  if (fRevNet > 0) { fRevBase = fRevNet; fHasRev = true; }
+  // ── P&L N-column build (PIN-110 v4.3) ──
 
-  // Operating Revenue — v4.2: parent = NET (sum of children); % base = NET
-  var hasRevenueBreakdown = febBase.breakdown && febBase.breakdown.REVENUE && febBase.breakdown.REVENUE.length > 0;
-  if (hasRevenueBreakdown) {
-    pnlBody += plAccordionSection('REVENUE', 'Operating revenue', jRevNet, fRevNet, 'section-row', '');
+  // Operating Revenue (NET sum of breakdown.REVENUE children per month)
+  var hasRevBD = pnlBases.some(function(b){ return b.breakdown && b.breakdown.REVENUE && b.breakdown.REVENUE.length>0; });
+  if (hasRevBD) {
+    pnlBody += plAccordionSectionN('REVENUE', 'Operating revenue', pnlRevBases, 'section-row', '');
   } else {
-    // Fallback: no breakdown available — use sum of top-level channel fields
-    pnlBody += plRow('Operating revenue', jRevNet, fRevNet, 'section-row');
-    if (!isStore) {
-      pnlBody += plRow('Physical store sales', jan.physical, feb.physical, 'sub-row');
-      pnlBody += plRow('B2B sales', jan.b2b, feb.b2b, 'sub-row');
-      pnlBody += plRow('E-commerce sales', jan.ecommerce, feb.ecommerce, 'sub-row');
-      pnlBody += plRow('Discounts', jan.discounts, feb.discounts, 'sub-row');
-    } else {
-      pnlBody += '<tr><td colspan="5" style="padding:6px 14px 6px 28px;font-size:11px;color:var(--text3);font-style:italic">Revenue breakdown by store will be available after n8n workflow update (add REVENUE to BQ — Breakdown query).</td></tr>';
-    }
+    pnlBody += plRowN('Operating revenue', pnlRevBases, 'section-row');
   }
 
   // COGS
-  pnlBody += plAccordionSection('COGS', 'Cost of goods sold', jan.cogs, feb.cogs, 'section-row', '');
+  pnlBody += plAccordionSectionN('COGS', 'Cost of goods sold', pnlData.map(function(d){return d.cogs;}), 'section-row', '');
 
   // Gross Profit
-  pnlBody += plGrossRow('Gross profit', jan.gross_profit, feb.gross_profit);
+  pnlBody += plGrossRowN('Gross profit', pnlData.map(function(d){return d.gross_profit;}));
 
   // Personnel
-  pnlBody += plAccordionSection('PERSONNEL', 'Personnel expenses', jan.personnel, feb.personnel, 'section-row', '');
+  pnlBody += plAccordionSectionN('PERSONNEL', 'Personnel expenses', pnlData.map(function(d){return d.personnel;}), 'section-row', '');
 
   // OPEX
-  pnlBody += plAccordionSection('OPEX', 'Operating expenses', jan.opex, feb.opex, 'section-row', '');
+  pnlBody += plAccordionSectionN('OPEX', 'Operating expenses', pnlData.map(function(d){return d.opex;}), 'section-row', '');
 
   // EBITDA
-  pnlBody += plRowStyled('EBITDA', jan.ebitda, feb.ebitda, 'total-row', 'color:var(--amber)');
+  pnlBody += plRowStyledN('EBITDA', pnlData.map(function(d){return d.ebitda;}), 'total-row', 'color:var(--amber)');
 
-  // D&A + Operating Profit — v4.0: supports store-level breakdown via breakdown.DA
-  var hasDABreakdown = febBase.breakdown && febBase.breakdown.DA && febBase.breakdown.DA.length > 0;
-  if (!isStore) {
-    // Consolidated: use detailed DA accordion (hardcoded override info)
-    var jDA = janBase.da != null ? janBase.da : null;
-    var fDA = febBase.da || 0;
-    pnlBody += plDAAccordion(jDA, fDA);
-    var jOP = janBase.operating_profit != null ? janBase.operating_profit : null;
-    var fOP = febBase.operating_profit || 0;
-    pnlBody += plOpProfitRow(jOP, fOP);
-    pnlBody += plAccordionSection('FINANCIAL', 'Financial results', jan.financial, feb.financial, 'section-row', '');
-  } else if (hasDABreakdown) {
-    // Store mode with DA data: show DA from breakdown (partial — ledger only, no override)
-    var storeDA = computeSectionFromBreakdown(febBase, 'DA', storeKey);
-    var storeDAJan = computeSectionFromBreakdown(janBase, 'DA', storeKey);
-    pnlBody += plAccordionSection('DA', 'Depreciation &amp; Amortization', storeDAJan, storeDA, 'section-row', '');
-    var storeOP = (feb.ebitda || 0) + storeDA;
-    var storeOPJan = (jan.ebitda || 0) + storeDAJan;
-    pnlBody += plOpProfitRow(jan.ebitda != null ? storeOPJan : null, storeOP);
-    pnlBody += plAccordionSection('FINANCIAL', 'Financial results', jan.financial, feb.financial, 'section-row', '');
-    pnlBody += '<tr><td colspan="5" style="padding:4px 14px;font-size:10px;color:var(--text3);font-style:italic">⚠ Store D&A shows ledger entries only. Annual override assets (da_override) not allocated by store.</td></tr>';
+  // D&A
+  var daValsN = pnlData.map(function(d){return d.da||null;});
+  var hasDABDN = pnlBases.some(function(b){return b.breakdown&&b.breakdown.DA&&b.breakdown.DA.length>0;});
+  if (!isStore || hasDABDN) {
+    pnlBody += plAccordionSectionN('DA', 'Depreciation &amp; Amortization', daValsN, 'section-row', '');
+    if (isStore) pnlBody += '<tr><td colspan="'+(1+pnlN*2)+'" style="padding:4px 14px;font-size:10px;color:var(--text3);font-style:italic">⚠ Store D&A: ledger entries only (da_override not per-store).</td></tr>';
   } else {
-    pnlBody += '<tr><td colspan="5" style="padding:8px 14px;font-size:11px;color:var(--text3);font-style:italic;background:var(--bg3)">⚙ D&A and Operating Profit: store-level data available after n8n workflow update.</td></tr>';
-    pnlBody += plAccordionSection('FINANCIAL', 'Financial results', jan.financial, feb.financial, 'section-row', '');
+    pnlBody += '<tr><td colspan="'+(1+pnlN*2)+'" style="padding:8px 14px;font-size:11px;color:var(--text3);font-style:italic;background:var(--bg3)">⚙ D&A store-level: requires n8n workflow update.</td></tr>';
   }
 
-  // EBT — Fix #5: now correctly computed for stores as EBITDA + Financial
-  pnlBody += plRowStyled('Earnings before taxes', jan.ebt, feb.ebt, 'total-row', 'font-weight:700');
+  // Operating Profit
+  var opValsN = pnlData.map(function(d,i){
+    if(d.operating_profit!=null) return d.operating_profit;
+    return (d.ebitda||0)+(d.da||0);
+  });
+  pnlBody += plOpProfitRowN(opValsN);
+
+  // Financial
+  pnlBody += plAccordionSectionN('FINANCIAL', 'Financial results', pnlData.map(function(d){return d.financial;}), 'section-row', '');
+
+  // EBT
+  pnlBody += plRowStyledN('Earnings before taxes', pnlData.map(function(d){return d.ebt;}), 'total-row', 'font-weight:700');
 
   document.getElementById('pnl-table-body').innerHTML = pnlBody;
 
