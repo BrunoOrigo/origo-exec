@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-04-16T04:01:42.805Z",
+  "generated_at": "2026-04-16T09:34:15.643Z",
   "period": {
     "display_month": "Mar 2026",
     "month": "2026-03",
@@ -23,7 +23,7 @@
       "current": 0.3,
       "prev": 43.2
     },
-    "revenue_partial": 156987.09
+    "revenue_partial": 172150.32
   },
   "pl": {
     "jan": {
@@ -1222,16 +1222,16 @@
       "b2b": 15326.23,
       "ecommerce": 1069.84,
       "discounts": 3310.87,
-      "revenue": 156987.09,
+      "revenue": 172150.32,
       "cogs": -8266.3,
-      "gross_profit": 148720.79,
+      "gross_profit": 163884.02,
       "personnel": 0,
       "opex": -17476.63,
-      "ebitda": 131244.16,
+      "ebitda": 146407.39,
       "da": -2730.61,
-      "operating_profit": 128513.55,
+      "operating_profit": 143676.78,
       "financial": -1514.54,
-      "ebt": 126999.01,
+      "ebt": 142162.24,
       "sik_mila": 0,
       "sik_stpau": 0,
       "sik_santjoan": 0,
@@ -1357,11 +1357,11 @@
         "REVENUE": [
           {
             "account": "70000000",
-            "display_name": "Ventas B2B",
-            "consolidated": 163,
-            "mila": 93,
-            "stpau": 70,
-            "santjoan": 0,
+            "display_name": "B2B Sales",
+            "consolidated": 15326.23,
+            "mila": 1369.99,
+            "stpau": 13861.32,
+            "santjoan": 94.92,
             "hq": 0
           },
           {
