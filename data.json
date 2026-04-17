@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-04-17T08:31:43.996Z",
+  "generated_at": "2026-04-17T13:01:50.213Z",
   "period": {
     "display_month": "Mar 2026",
     "month": "2026-03",
@@ -136,20 +136,38 @@
           {
             "account": "68100000",
             "display_name": "Depreciation & Amortization",
-            "consolidated": -1925.95,
-            "mila": -109.37,
-            "stpau": -151.33,
-            "santjoan": -1633.59,
-            "hq": -31.66
+            "consolidated": -4039.46,
+            "mila": -300.93,
+            "stpau": -1125.02,
+            "santjoan": -2517.85,
+            "hq": -95.66
           },
           {
             "account": "68100003",
             "display_name": "D&A - IT & Technology",
-            "consolidated": -51.42,
+            "consolidated": -59.65,
+            "mila": -0.75,
+            "stpau": -3.79,
+            "santjoan": -3.44,
+            "hq": -51.67
+          },
+          {
+            "account": "68100001",
+            "display_name": "Amortización del inmovilizado material (2)",
+            "consolidated": -2.58,
+            "mila": -0.23,
+            "stpau": -1.19,
+            "santjoan": -1.08,
+            "hq": -0.08
+          },
+          {
+            "account": "68100002",
+            "display_name": "ACTIVOS FRANÇOIS 2022",
+            "consolidated": -606.29,
             "mila": 0,
             "stpau": 0,
             "santjoan": 0,
-            "hq": -51.42
+            "hq": -606.29
           }
         ],
         "FINANCIAL": [
@@ -578,20 +596,38 @@
           {
             "account": "68100000",
             "display_name": "Depreciation & Amortization",
-            "consolidated": -2276.5,
-            "mila": -102.86,
-            "stpau": -163.7,
-            "santjoan": -1978.28,
-            "hq": -31.66
+            "consolidated": -4390.01,
+            "mila": -294.42,
+            "stpau": -1137.39,
+            "santjoan": -2862.54,
+            "hq": -95.66
           },
           {
             "account": "68100003",
             "display_name": "D&A - IT & Technology",
-            "consolidated": -53.79,
+            "consolidated": -62.02,
+            "mila": -0.75,
+            "stpau": -3.79,
+            "santjoan": -3.44,
+            "hq": -54.04
+          },
+          {
+            "account": "68100001",
+            "display_name": "Amortización del inmovilizado material (2)",
+            "consolidated": -2.58,
+            "mila": -0.23,
+            "stpau": -1.19,
+            "santjoan": -1.08,
+            "hq": -0.08
+          },
+          {
+            "account": "68100002",
+            "display_name": "ACTIVOS FRANÇOIS 2022",
+            "consolidated": -606.29,
             "mila": 0,
             "stpau": 0,
             "santjoan": 0,
-            "hq": -53.79
+            "hq": -606.29
           }
         ],
         "FINANCIAL": [
@@ -1011,20 +1047,38 @@
           {
             "account": "68100000",
             "display_name": "Depreciation & Amortization",
-            "consolidated": -337.91,
-            "mila": -49.17,
-            "stpau": -38.37,
-            "santjoan": -250.37,
-            "hq": 0
+            "consolidated": -2451.42,
+            "mila": -240.73,
+            "stpau": -1012.06,
+            "santjoan": -1134.63,
+            "hq": -64
           },
           {
             "account": "68100003",
             "display_name": "D&A - IT & Technology",
-            "consolidated": -42.12,
+            "consolidated": -50.35,
+            "mila": -0.75,
+            "stpau": -3.79,
+            "santjoan": -3.44,
+            "hq": -42.37
+          },
+          {
+            "account": "68100001",
+            "display_name": "Amortización del inmovilizado material (2)",
+            "consolidated": -2.58,
+            "mila": -0.23,
+            "stpau": -1.19,
+            "santjoan": -1.08,
+            "hq": -0.08
+          },
+          {
+            "account": "68100002",
+            "display_name": "ACTIVOS FRANÇOIS 2022",
+            "consolidated": -606.29,
             "mila": 0,
             "stpau": 0,
             "santjoan": 0,
-            "hq": -42.12
+            "hq": -606.29
           }
         ],
         "FINANCIAL": [
@@ -1426,6 +1480,44 @@
             "stpau": 1196.24,
             "santjoan": 0,
             "hq": 0
+          }
+        ],
+        "DA": [
+          {
+            "account": "68100003",
+            "display_name": "Amortización informática y tecnología",
+            "consolidated": -8.23,
+            "mila": -0.75,
+            "stpau": -3.79,
+            "santjoan": -3.44,
+            "hq": -0.25
+          },
+          {
+            "account": "68100001",
+            "display_name": "Amortización del inmovilizado material (2)",
+            "consolidated": -2.58,
+            "mila": -0.23,
+            "stpau": -1.19,
+            "santjoan": -1.08,
+            "hq": -0.08
+          },
+          {
+            "account": "68100000",
+            "display_name": "Amortización del inmovilizado material",
+            "consolidated": -2113.51,
+            "mila": -191.56,
+            "stpau": -973.69,
+            "santjoan": -884.26,
+            "hq": -64
+          },
+          {
+            "account": "68100002",
+            "display_name": "ACTIVOS FRANÇOIS 2022",
+            "consolidated": -606.29,
+            "mila": 0,
+            "stpau": 0,
+            "santjoan": 0,
+            "hq": -606.29
           }
         ]
       }
