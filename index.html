@@ -104,6 +104,8 @@ footer{margin:40px 24px 0;padding:16px 0;border-top:1px solid var(--border);disp
 .pnl-table .acc-child td:first-child { padding-left:28px; font-weight:400; color:var(--text2); font-size:12px; }
 .pnl-table .acc-child td { padding-top:7px; padding-bottom:7px; }
 .pnl-table .subgroup-total td { font-weight:600; font-size:11px; color:var(--text2); border-top:1px solid var(--border); padding:5px 10px 5px 28px; background:var(--bg3); }
+#storeBadge{position:fixed;top:14px;right:24px;z-index:200;background:rgba(26,26,24,.85);backdrop-filter:blur(8px);color:#fff;padding:5px 14px;border-radius:20px;font-size:11px;font-weight:500;letter-spacing:.03em;opacity:0;transition:opacity .25s;pointer-events:none;display:flex;align-items:center;gap:6px}
+#storeBadge .dot{width:6px;height:6px;border-radius:50%;background:var(--green)}
 
 @media(max-width:768px){
   .kpi-grid,.debt-grid{grid-template-columns:repeat(2,1fr)}
@@ -128,6 +130,7 @@ footer{margin:40px 24px 0;padding:16px 0;border-top:1px solid var(--border);disp
     </select>
   </div>
 </header>
+<div id="storeBadge"><span class="dot"></span><span id="storeBadgeText"></span></div>
 <div class="stale-banner" id="staleBanner"></div>
 <div class="main">
   <div class="tabs">
@@ -460,7 +463,21 @@ var currentData = null;
 document.getElementById('storeFilter').addEventListener('change', function() {
   currentStoreKey = this.value;
   if (currentData) render(currentData, currentStoreKey);
+  updateStoreBadge();
 });
+
+/* ── Store badge: floating indicator when scrolled past header ── */
+var storeBadgeEl=document.getElementById('storeBadge');
+var storeBadgeText=document.getElementById('storeBadgeText');
+var headerEl=document.querySelector('header');
+function updateStoreBadge(){
+  var sel=document.getElementById('storeFilter');
+  if(sel.value==='all'){storeBadgeEl.style.opacity='0';return;}
+  storeBadgeText.textContent=sel.options[sel.selectedIndex].text;
+  var past=window.scrollY>headerEl.offsetHeight+40;
+  storeBadgeEl.style.opacity=past?'1':'0';
+}
+window.addEventListener('scroll',updateStoreBadge,{passive:true});
 
 /* ── Helper: compute financial total from FINANCIAL breakdown for a given store ── */
 function computeFinancialFromBreakdown(monthData, storeKey) {
