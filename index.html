@@ -66,7 +66,9 @@ table tr:last-child td{border-bottom:none}
 table tr:nth-child(even){background:var(--bg3)}
 table .name{font-weight:500}
 table .num{text-align:right;font-variant-numeric:tabular-nums}
-table .pct{color:var(--text3);font-size:12px}
+table .pct{color:var(--text3);font-size:11px}
+table .pct-up{color:var(--green)}
+table .pct-down{color:var(--red)}
 table .up{color:var(--green)}
 table .down{color:var(--red)}
 .pnl-table .section-row td{font-weight:600;padding-top:14px;font-size:13px;background:var(--green-bg)}
@@ -101,6 +103,7 @@ footer{margin:40px 24px 0;padding:16px 0;border-top:1px solid var(--border);disp
 .accordion-icon { display:inline-block; width:14px; font-size:9px; color:var(--text3); margin-right:4px; transition: transform .15s; }
 .pnl-table .acc-child td:first-child { padding-left:28px; font-weight:400; color:var(--text2); font-size:12px; }
 .pnl-table .acc-child td { padding-top:7px; padding-bottom:7px; }
+.pnl-table .subgroup-total td { font-weight:600; font-size:11px; color:var(--text2); border-top:1px solid var(--border); padding:5px 10px 5px 28px; background:var(--bg3); }
 
 @media(max-width:768px){
   .kpi-grid,.debt-grid{grid-template-columns:repeat(2,1fr)}
@@ -220,7 +223,7 @@ footer{margin:40px 24px 0;padding:16px 0;border-top:1px solid var(--border);disp
   <!-- ===== P&L ===== -->
   <div id="tab-pnl" style="display:none">
     <div class="section-title" id="pnl-table-title">P&L statement — loading…</div>
-    <div class="note-box">Source: Holded → BigQuery. All % shown as share of operating revenue. * Mês em curso (dados parciais).</div>
+    <div class="note-box">Source: Holded → BigQuery. All % shown as share of operating revenue. * Current month (partial data).</div>
     <div style="overflow-x:auto;margin-bottom:20px">
     <div class="chart-card pnl-table" style="padding:0;overflow:visible;min-width:600px">
       <table>
@@ -557,6 +560,8 @@ function render(D, storeKey) {
       : (pnlData[idx].revenue || 0);
     return rev > 0 ? Math.round(rev*100)/100 : 1;
   });
+
+  var pnlRevYTD = pnlRevBases.reduce(function(s,v){ return s+v; },0);
 
   janBase = Object.assign({ revenue:0, cogs:0, gross_profit:0, personnel:0, opex:0, ebitda:0, da:0, operating_profit:0, financial:0, ebt:0, physical:0, b2b:0, ecommerce:0, discounts:0, by_store:null }, janBase);
   febBase = Object.assign({ revenue:0, cogs:0, gross_profit:0, personnel:0, opex:0, ebitda:0, da:0, operating_profit:0, financial:0, ebt:0, physical:0, b2b:0, ecommerce:0, discounts:0, by_store:null }, febBase);
@@ -994,30 +999,39 @@ function render(D, storeKey) {
     if(val===null||val===undefined||pnlRevBases[idx]<=1) return '—';
     return pct(val/pnlRevBases[idx]*100);
   }
+  function pctCls(val){ return (val>0.005)?' pct-up':(val<-0.005)?' pct-down':''; }
+  function ytdSum(vals){ return vals.reduce(function(s,v){ return s+(v||0); },0); }
+  function mPctYTD(val){ if(val===null||val===undefined||pnlRevYTD<=1) return '—'; return pct(val/pnlRevYTD*100); }
+  function ytdCells(vals){
+    var t=ytdSum(vals); var neg=(t<-0.005)?' neg':'';
+    return '<td class="num'+neg+'" style="border-left:2px solid var(--border2)">'+mDisp(t)+'</td><td class="num pct'+pctCls(t)+'">'+mPctYTD(t)+'</td>';
+  }
   function plRowN(label,vals,cssClass){
     var r='<tr class="'+cssClass+'"><td>'+label+'</td>';
     vals.forEach(function(v,i){
       var neg=(v!==null&&v<0)?' neg':'';
-      r+='<td class="num'+neg+'">'+mDisp(v)+'</td><td class="num pct">'+mPct(v,i)+'</td>';
-    }); return r+'</tr>';
+      r+='<td class="num'+neg+'">'+mDisp(v)+'</td><td class="num pct'+pctCls(v)+'">'+mPct(v,i)+'</td>';
+    }); r+=ytdCells(vals); return r+'</tr>';
   }
   function plGrossRowN(label,vals){
     var r='<tr class="gross-row"><td>'+label+'</td>';
     vals.forEach(function(v,i){
-      r+='<td class="num">'+mDisp(v)+'</td><td class="num pct">'+mPct(v,i)+'</td>';
-    }); return r+'</tr>';
+      r+='<td class="num">'+mDisp(v)+'</td><td class="num pct'+pctCls(v)+'">'+mPct(v,i)+'</td>';
+    }); r+=ytdCells(vals); return r+'</tr>';
   }
   function plRowStyledN(label,vals,cssClass,style){
     var r='<tr class="'+cssClass+'"><td style="'+style+'">'+label+'</td>';
     vals.forEach(function(v,i){
-      r+='<td class="num" style="'+style+'">'+mDisp(v)+'</td><td class="num" style="'+style+'">'+mPct(v,i)+'</td>';
-    }); return r+'</tr>';
+      r+='<td class="num" style="'+style+'">'+mDisp(v)+'</td><td class="num pct'+pctCls(v)+'" style="'+style+'">'+mPct(v,i)+'</td>';
+    }); var t=ytdSum(vals); var neg2=(t<-0.005)?' neg':'';
+    r+='<td class="num'+neg2+'" style="border-left:2px solid var(--border2);'+style+'">'+mDisp(t)+'</td><td class="num pct'+pctCls(t)+'" style="'+style+'">'+mPctYTD(t)+'</td>';
+    return r+'</tr>';
   }
   function plOpProfitRowN(vals){
     var r='<tr class="op-profit-row"><td>Operating profit</td>';
     vals.forEach(function(v,i){
-      r+='<td class="num">'+mDisp(v)+'</td><td class="num pct">'+mPct(v,i)+'</td>';
-    }); return r+'</tr>';
+      r+='<td class="num">'+mDisp(v)+'</td><td class="num pct'+pctCls(v)+'">'+mPct(v,i)+'</td>';
+    }); r+=ytdCells(vals); return r+'</tr>';
   }
   function plAccordionSectionN(sectionKey,parentLabel,parentVals,parentCss,parentStyle){
     var allMthItems = pnlBases.map(function(base){
@@ -1034,7 +1048,8 @@ function render(D, storeKey) {
     var vKey = isStore ? storeKey : 'consolidated';
     var html='<tr class="'+parentCss+' accordion-parent" onclick="toggleAccordion(\''+sectionKey+'\')">';
     html+='<td style="'+(parentStyle||'')+'"><span class="accordion-icon" id="acc-icon-'+sectionKey+'">▶</span>'+parentLabel+'</td>';
-    parentVals.forEach(function(v,i){ var neg=(v!==null&&v<0)?' neg':''; html+='<td class="num'+neg+'">'+mDisp(v)+'</td><td class="num pct">'+mPct(v,i)+'</td>'; });
+    parentVals.forEach(function(v,i){ var neg=(v!==null&&v<0)?' neg':''; html+='<td class="num'+neg+'">'+mDisp(v)+'</td><td class="num pct'+pctCls(v)+'">'+mPct(v,i)+'</td>'; });
+    html+=ytdCells(parentVals);
     html+='</tr>';
     if(refItems.length===0) return html;
     // SiK precompute
@@ -1047,6 +1062,15 @@ function render(D, storeKey) {
       }
     }
     var lastGrp=null;
+    var grpTotals=null; // array of per-month subtotals for current group
+    var grpLabel=null;
+    function emitSubgroupTotal(){
+      if(!grpTotals||!grpLabel) return '';
+      var r='<tr class="acc-child acc-child-PERSONNEL subgroup-total" style="display:none"><td>Total '+grpLabel+'</td>';
+      grpTotals.forEach(function(v,i){ var neg=(v!==null&&v<0)?' neg':''; r+='<td class="num'+neg+'">'+mDisp(v)+'</td><td class="num pct'+pctCls(v)+'">'+mPct(v,i)+'</td>'; });
+      r+=ytdCells(grpTotals);
+      return r+'</tr>';
+    }
     refItems.forEach(function(item){
       var account=item.account;
       if(isStore&&sectionKey==='PERSONNEL'&&!personnelAccountBelongsToStore(account,storeKey)) return;
@@ -1072,15 +1096,24 @@ function render(D, storeKey) {
       if(sectionKey==='PERSONNEL'){
         var grp=getPersonnelGroupLabel(account);
         if(grp&&grp!==lastGrp){
-          html+='<tr class="acc-child acc-child-PERSONNEL" style="display:none"><td colspan="'+(1+pnlN*2)+'" style="padding:4px 14px 4px 28px;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--text3);background:var(--bg3)">'+grp+'</td></tr>';
+          // Emit subtotal for previous group before starting new one
+          html+=emitSubgroupTotal();
+          html+='<tr class="acc-child acc-child-PERSONNEL" style="display:none"><td colspan="'+(1+pnlN*2+2)+'" style="padding:4px 14px 4px 28px;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--text3);background:var(--bg3)">'+grp+'</td></tr>';
           lastGrp=grp;
+          grpLabel=grp;
+          grpTotals=pnlBases.map(function(){return 0;});
         }
+        // Accumulate into group totals
+        if(grpTotals) rowVals.forEach(function(v,i){ grpTotals[i]+=(v||0); });
       }
       html+='<tr class="sub-row acc-child acc-child-'+sectionKey+'" style="display:none">';
       html+='<td style="padding-left:28px;font-size:12px;color:var(--text2)">'+item.display_name+'</td>';
-      rowVals.forEach(function(v,i){ var neg=(v!==null&&v<0)?' neg':''; html+='<td class="num'+neg+'">'+mDisp(v)+'</td><td class="num pct">'+mPct(v,i)+'</td>'; });
+      rowVals.forEach(function(v,i){ var neg=(v!==null&&v<0)?' neg':''; html+='<td class="num'+neg+'">'+mDisp(v)+'</td><td class="num pct'+pctCls(v)+'">'+mPct(v,i)+'</td>'; });
+      html+=ytdCells(rowVals);
       html+='</tr>';
     });
+    // Emit subtotal for last group
+    if(sectionKey==='PERSONNEL') html+=emitSubgroupTotal();
     return html;
   }
 
@@ -1092,6 +1125,7 @@ function render(D, storeKey) {
       var lbl = MON_LABELS[MON_ORDER_PL[k]-1] + ' ' + pnlYearStr + (k===pnlPartialKey?' *':'');
       headHtml += '<th class="num" style="min-width:90px">'+lbl+'</th><th class="num" style="min-width:52px">% Rev</th>';
     });
+    headHtml += '<th class="num" style="min-width:90px;border-left:2px solid rgba(255,255,255,.3)">YTD '+pnlYearStr+'</th><th class="num" style="min-width:52px">% Rev</th>';
     pnlHeadEl.innerHTML = headHtml;
   }
   var pnlTitleEl = document.getElementById('pnl-table-title');
@@ -1101,7 +1135,7 @@ function render(D, storeKey) {
   }
 
   // ── Build P&L table (PIN-110 v4.3: N-column) ──
-  accordionState = {};
+  // Note: accordionState preserved across store changes (no reset)
   var pnlBody = '';
 
   // ── P&L N-column build (PIN-110 v4.3) ──
@@ -1134,9 +1168,9 @@ function render(D, storeKey) {
   var hasDABDN = pnlBases.some(function(b){return b.breakdown&&b.breakdown.DA&&b.breakdown.DA.length>0;});
   if (!isStore || hasDABDN) {
     pnlBody += plAccordionSectionN('DA', 'Depreciation &amp; Amortization', daValsN, 'section-row', '');
-    if (isStore) pnlBody += '<tr><td colspan="'+(1+pnlN*2)+'" style="padding:4px 14px;font-size:10px;color:var(--text3);font-style:italic">⚠ Store D&A: ledger entries only (da_override not per-store).</td></tr>';
+    // PL-08: da_override now has per-store columns — no warning needed
   } else {
-    pnlBody += '<tr><td colspan="'+(1+pnlN*2)+'" style="padding:8px 14px;font-size:11px;color:var(--text3);font-style:italic;background:var(--bg3)">⚙ D&A store-level: requires n8n workflow update.</td></tr>';
+    pnlBody += '<tr><td colspan="'+(1+pnlN*2+2)+'" style="padding:8px 14px;font-size:11px;color:var(--text3);font-style:italic;background:var(--bg3)">⚙ D&A store-level: requires n8n workflow update.</td></tr>';
   }
 
   // Operating Profit
@@ -1153,6 +1187,15 @@ function render(D, storeKey) {
   pnlBody += plRowStyledN('Earnings before taxes', pnlData.map(function(d){return d.ebt;}), 'total-row', 'font-weight:700');
 
   document.getElementById('pnl-table-body').innerHTML = pnlBody;
+
+  // Restore accordion state after rebuild
+  Object.keys(accordionState).forEach(function(section){
+    if(accordionState[section]){
+      document.querySelectorAll('.acc-child-'+section).forEach(function(el){ el.style.display=''; });
+      var icon=document.getElementById('acc-icon-'+section);
+      if(icon) icon.textContent='▼';
+    }
+  });
 
   // ── Waterfall ──
   if (charts.waterfall) charts.waterfall.destroy();
