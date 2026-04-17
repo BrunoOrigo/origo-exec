@@ -67,8 +67,8 @@ table tr:nth-child(even){background:var(--bg3)}
 table .name{font-weight:500}
 table .num{text-align:right;font-variant-numeric:tabular-nums}
 table .pct{color:var(--text3);font-size:11px}
-table .pct-up{color:var(--green)}
-table .pct-down{color:var(--red)}
+table .pct-up{color:var(--green)}table .pct-down{color:var(--red)}
+.pnl-table td.pct-up{color:var(--green)}.pnl-table td.pct-down{color:var(--red)}
 table .up{color:var(--green)}
 table .down{color:var(--red)}
 .pnl-table .section-row td{font-weight:600;padding-top:14px;font-size:13px;background:var(--green-bg)}
@@ -1062,14 +1062,19 @@ function render(D, storeKey) {
       }
     }
     var lastGrp=null;
-    var grpTotals=null; // array of per-month subtotals for current group
+    var grpTotals=null;
     var grpLabel=null;
-    function emitSubgroupTotal(){
+    var grpChildBuf=''; // buffer child rows, emit after header with totals
+    function emitGroup(){
       if(!grpTotals||!grpLabel) return '';
-      var r='<tr class="acc-child acc-child-PERSONNEL subgroup-total" style="display:none"><td>Total '+grpLabel+'</td>';
+      // Header row WITH subtotal values
+      var r='<tr class="acc-child acc-child-PERSONNEL subgroup-total" style="display:none"><td>'+grpLabel+'</td>';
       grpTotals.forEach(function(v,i){ var neg=(v!==null&&v<0)?' neg':''; r+='<td class="num'+neg+'">'+mDisp(v)+'</td><td class="num pct'+pctCls(v)+'">'+mPct(v,i)+'</td>'; });
       r+=ytdCells(grpTotals);
-      return r+'</tr>';
+      r+='</tr>';
+      var out=r+grpChildBuf;
+      grpChildBuf='';
+      return out;
     }
     refItems.forEach(function(item){
       var account=item.account;
@@ -1096,24 +1101,23 @@ function render(D, storeKey) {
       if(sectionKey==='PERSONNEL'){
         var grp=getPersonnelGroupLabel(account);
         if(grp&&grp!==lastGrp){
-          // Emit subtotal for previous group before starting new one
-          html+=emitSubgroupTotal();
-          html+='<tr class="acc-child acc-child-PERSONNEL" style="display:none"><td colspan="'+(1+pnlN*2+2)+'" style="padding:4px 14px 4px 28px;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--text3);background:var(--bg3)">'+grp+'</td></tr>';
+          // Emit previous group (header with totals + buffered children)
+          html+=emitGroup();
           lastGrp=grp;
           grpLabel=grp;
           grpTotals=pnlBases.map(function(){return 0;});
         }
-        // Accumulate into group totals
         if(grpTotals) rowVals.forEach(function(v,i){ grpTotals[i]+=(v||0); });
       }
-      html+='<tr class="sub-row acc-child acc-child-'+sectionKey+'" style="display:none">';
-      html+='<td style="padding-left:28px;font-size:12px;color:var(--text2)">'+item.display_name+'</td>';
-      rowVals.forEach(function(v,i){ var neg=(v!==null&&v<0)?' neg':''; html+='<td class="num'+neg+'">'+mDisp(v)+'</td><td class="num pct'+pctCls(v)+'">'+mPct(v,i)+'</td>'; });
-      html+=ytdCells(rowVals);
-      html+='</tr>';
+      var childRow='<tr class="sub-row acc-child acc-child-'+sectionKey+'" style="display:none">';
+      childRow+='<td style="padding-left:28px;font-size:12px;color:var(--text2)">'+item.display_name+'</td>';
+      rowVals.forEach(function(v,i){ var neg=(v!==null&&v<0)?' neg':''; childRow+='<td class="num'+neg+'">'+mDisp(v)+'</td><td class="num pct'+pctCls(v)+'">'+mPct(v,i)+'</td>'; });
+      childRow+=ytdCells(rowVals);
+      childRow+='</tr>';
+      if(sectionKey==='PERSONNEL'&&grpLabel){ grpChildBuf+=childRow; } else { html+=childRow; }
     });
-    // Emit subtotal for last group
-    if(sectionKey==='PERSONNEL') html+=emitSubgroupTotal();
+    // Emit last group
+    if(sectionKey==='PERSONNEL') html+=emitGroup();
     return html;
   }
 
