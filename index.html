@@ -334,7 +334,7 @@ footer{margin:40px 24px 0;padding:16px 0;border-top:1px solid var(--border);disp
 </div>
 
 <footer>
-  <span>Origo Bakery SL — Executive Dashboard v4.1</span>
+  <span>Origo Bakery SL — Executive Dashboard v4.5</span>
   <span>Source: data.json ← n8n ← BigQuery</span>
   <span id="footer-updated">Last updated: —</span>
 </footer>
@@ -1026,7 +1026,11 @@ function render(D, storeKey) {
     var mthMaps = allMthItems.map(function(items){
       var m={}; items.forEach(function(i){ m[i.account]=i; }); return m;
     });
-    var refItems=[]; for(var mi=pnlN-1;mi>=0;mi--){ if(allMthItems[mi].length>0){refItems=allMthItems[mi];break;} }
+    // Build refItems from UNION of all months (fix: partial months hide older accounts)
+    var _acctMap={};
+    allMthItems.forEach(function(items){ items.forEach(function(i){ if(!_acctMap[i.account]) _acctMap[i.account]=i; }); });
+    var refItems=Object.values(_acctMap);
+    refItems.sort(function(a,b){ return a.account<b.account?-1:a.account>b.account?1:0; });
     var vKey = isStore ? storeKey : 'consolidated';
     var html='<tr class="'+parentCss+' accordion-parent" onclick="toggleAccordion(\''+sectionKey+'\')">';
     html+='<td style="'+(parentStyle||'')+'"><span class="accordion-icon" id="acc-icon-'+sectionKey+'">▶</span>'+parentLabel+'</td>';
