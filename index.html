@@ -187,6 +187,10 @@ footer{margin:40px 24px 0;padding:16px 0;border-top:1px solid var(--border);disp
         <div class="kpi-sub"><span class="kpi-pct pos" id="pnl-kpi-pers-pct">—</span> vs prev</div>
       </div>
     </div>
+    <!-- v4.8 PIN-121: Payroll lag note — shown only when PL-09 heuristic filtered a month -->
+    <div id="pnl-payroll-note" class="note-box" style="display:none;background:var(--green-bg);border-color:#c8d9c0;color:var(--green-dark);margin-top:12px">
+      ⓘ KPIs show the most recent month with complete data. Payroll is typically posted in Holded ~15 days after month-end, so figures may lag the current month. Once personnel entries are booked, the cards refresh automatically.
+    </div>
     <div class="section-title" id="pnl-table-title">P&L statement — loading…</div>
     <div class="note-box">Source: Holded → BigQuery. All % shown as share of operating revenue. * Current month (partial data).</div>
     <div style="overflow-x:auto;margin-bottom:20px">
@@ -302,7 +306,7 @@ footer{margin:40px 24px 0;padding:16px 0;border-top:1px solid var(--border);disp
 </div>
 
 <footer>
-  <span>Origo Bakery SL — Executive Dashboard v4.7</span>
+  <span>Origo Bakery SL — Executive Dashboard v4.8</span>
   <span>Source: data.json ← n8n ← BigQuery</span>
   <span id="footer-updated">Last updated: —</span>
 </footer>
@@ -310,7 +314,18 @@ footer{margin:40px 24px 0;padding:16px 0;border-top:1px solid var(--border);disp
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <script>
 /* ============================================================
-   ORIGO EXECUTIVE DASHBOARD v4.7
+   ORIGO EXECUTIVE DASHBOARD v4.8
+   Changes v4.8 (2026-04-20, CC-8 session):
+   - PIN-121: P&L tab shows conditional payroll-lag note when
+     PL-09 heuristic filtered a month (helps users understand
+     why "reference month" lags current month). Banner hidden
+     when store's latest data month == last month in period.
+   - PIN-120 (interim): expense sections (COGS/Personnel/
+     OPEX/DA/Financial) render fully neutral — both pctCls
+     and neg class suppressed, so % and € cells use default
+     text color. Revenue, Gross Profit, EBITDA, Op Profit,
+     EBT unchanged. Future PIN-120b: colour expense rows by
+     MoM delta (lower cost MoM → green). Cosmetic only.
    Changes v4.7 (2026-04-17, COWORK 7):
    - P&L tab: added 4 KPI cards at top (Revenue NET, Gross margin,
      EBITDA margin, Personnel %). Reacts to store dropdown. MoM badge
@@ -725,6 +740,13 @@ function render(D, storeKey) {
     pnlPerPctCur != null ? pct(pnlPerPctCur) : '—',
     pnlBadgePp(pnlPerPctCur, pnlPerPctPrev, true)); // lower is better
 
+  // PIN-121: show payroll lag note when PL-09 filtered a month
+  var pnlLagNote = document.getElementById('pnl-payroll-note');
+  if (pnlLagNote) {
+    var showLag = pnlKpiCurIdx >= 0 && pnlKpiCurIdx < pnlAllKeys.length - 1;
+    pnlLagNote.style.display = showLag ? '' : 'none';
+  }
+
   // ── P&L helper functions ──
   function jDisp(val) { return val === null ? '—' : eur(val); }
   function jPctDisp(val) {
@@ -928,12 +950,16 @@ function render(D, storeKey) {
     if(val===null||val===undefined||pnlRevBases[idx]<=1) return '—';
     return pct(val/pnlRevBases[idx]*100);
   }
-  function pctCls(val){ return (val>0.005)?' pct-up':(val<-0.005)?' pct-down':''; }
+  // PIN-120 interim: expense rows get no color (neutral). Future PIN-120b: MoM-delta coloring.
+  function pctCls(val, isExpense){
+    if (isExpense) return '';
+    return (val>0.005)?' pct-up':(val<-0.005)?' pct-down':'';
+  }
   function ytdSum(vals){ return vals.reduce(function(s,v){ return s+(v||0); },0); }
   function mPctYTD(val){ if(val===null||val===undefined||pnlRevYTD<=1) return '—'; return pct(val/pnlRevYTD*100); }
-  function ytdCells(vals){
-    var t=ytdSum(vals); var neg=(t<-0.005)?' neg':'';
-    return '<td class="num'+neg+'" style="border-left:2px solid var(--border2)">'+mDisp(t)+'</td><td class="num pct'+pctCls(t)+'">'+mPctYTD(t)+'</td>';
+  function ytdCells(vals, isExpense){
+    var t=ytdSum(vals); var neg=(!isExpense && t<-0.005)?' neg':'';
+    return '<td class="num'+neg+'" style="border-left:2px solid var(--border2)">'+mDisp(t)+'</td><td class="num pct'+pctCls(t,isExpense)+'">'+mPctYTD(t)+'</td>';
   }
   function plRowN(label,vals,cssClass){
     var r='<tr class="'+cssClass+'"><td>'+label+'</td>';
@@ -963,6 +989,9 @@ function render(D, storeKey) {
     }); r+=ytdCells(vals); return r+'</tr>';
   }
   function plAccordionSectionN(sectionKey,parentLabel,parentVals,parentCss,parentStyle){
+    // PIN-120: expense sections render neutral pct cells (COGS, PERSONNEL, OPEX, DA, FINANCIAL).
+    // REVENUE stays coloured (positive=green semantics).
+    var isExpense = sectionKey==='COGS'||sectionKey==='PERSONNEL'||sectionKey==='OPEX'||sectionKey==='DA'||sectionKey==='FINANCIAL';
     var allMthItems = pnlBases.map(function(base){
       return (base.breakdown && base.breakdown[sectionKey]) || [];
     });
@@ -977,8 +1006,8 @@ function render(D, storeKey) {
     var vKey = isStore ? storeKey : 'consolidated';
     var html='<tr class="'+parentCss+' accordion-parent" onclick="toggleAccordion(\''+sectionKey+'\')">';
     html+='<td style="'+(parentStyle||'')+'"><span class="accordion-icon" id="acc-icon-'+sectionKey+'">▶</span>'+parentLabel+'</td>';
-    parentVals.forEach(function(v,i){ var neg=(v!==null&&v<0)?' neg':''; html+='<td class="num'+neg+'">'+mDisp(v)+'</td><td class="num pct'+pctCls(v)+'">'+mPct(v,i)+'</td>'; });
-    html+=ytdCells(parentVals);
+    parentVals.forEach(function(v,i){ var neg=(!isExpense&&v!==null&&v<0)?' neg':''; html+='<td class="num'+neg+'">'+mDisp(v)+'</td><td class="num pct'+pctCls(v,isExpense)+'">'+mPct(v,i)+'</td>'; });
+    html+=ytdCells(parentVals,isExpense);
     html+='</tr>';
     if(refItems.length===0) return html;
     // SiK precompute
@@ -998,8 +1027,8 @@ function render(D, storeKey) {
       if(!grpTotals||!grpLabel) return '';
       // Header row WITH subtotal values
       var r='<tr class="acc-child acc-child-PERSONNEL subgroup-total" style="display:none"><td>'+grpLabel+'</td>';
-      grpTotals.forEach(function(v,i){ var neg=(v!==null&&v<0)?' neg':''; r+='<td class="num'+neg+'">'+mDisp(v)+'</td><td class="num pct'+pctCls(v)+'">'+mPct(v,i)+'</td>'; });
-      r+=ytdCells(grpTotals);
+      grpTotals.forEach(function(v,i){ var neg=(!isExpense&&v!==null&&v<0)?' neg':''; r+='<td class="num'+neg+'">'+mDisp(v)+'</td><td class="num pct'+pctCls(v,isExpense)+'">'+mPct(v,i)+'</td>'; });
+      r+=ytdCells(grpTotals,isExpense);
       r+='</tr>';
       var out=r+grpChildBuf;
       grpChildBuf='';
@@ -1040,8 +1069,8 @@ function render(D, storeKey) {
       }
       var childRow='<tr class="sub-row acc-child acc-child-'+sectionKey+'" style="display:none">';
       childRow+='<td style="padding-left:28px;font-size:12px;color:var(--text2)">'+item.display_name+'</td>';
-      rowVals.forEach(function(v,i){ var neg=(v!==null&&v<0)?' neg':''; childRow+='<td class="num'+neg+'">'+mDisp(v)+'</td><td class="num pct'+pctCls(v)+'">'+mPct(v,i)+'</td>'; });
-      childRow+=ytdCells(rowVals);
+      rowVals.forEach(function(v,i){ var neg=(!isExpense&&v!==null&&v<0)?' neg':''; childRow+='<td class="num'+neg+'">'+mDisp(v)+'</td><td class="num pct'+pctCls(v,isExpense)+'">'+mPct(v,i)+'</td>'; });
+      childRow+=ytdCells(rowVals,isExpense);
       childRow+='</tr>';
       if(sectionKey==='PERSONNEL'&&grpLabel){ grpChildBuf+=childRow; } else { html+=childRow; }
     });
