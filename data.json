@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-04-26T04:02:20.622Z",
+  "generated_at": "2026-04-27T04:02:31.293Z",
   "period": {
     "display_month": "Mar 2026",
     "month": "2026-03",
@@ -23,7 +23,7 @@
       "current": 37,
       "prev": 43.2
     },
-    "revenue_partial": 285195.76
+    "revenue_partial": 299945.3
   },
   "pl": {
     "jan": {
@@ -1380,45 +1380,45 @@
       }
     },
     "apr": {
-      "physical": 262829.36,
-      "b2b": 25768.73,
-      "ecommerce": 1908.22,
-      "discounts": 5310.55,
-      "revenue": 285195.76,
+      "physical": 276874.12,
+      "b2b": 26562.33,
+      "ecommerce": 1985.96,
+      "discounts": 5477.11,
+      "revenue": 299945.3,
       "cogs": -34521.23,
-      "gross_profit": 250674.53,
+      "gross_profit": 265424.07,
       "personnel": 0,
       "opex": -22121.42,
-      "ebitda": 228553.11,
+      "ebitda": 243302.65,
       "da": -2730.61,
-      "operating_profit": 225822.5,
-      "financial": -2379.83,
-      "ebt": 223442.67,
+      "operating_profit": 240572.04,
+      "financial": -2720.97,
+      "ebt": 237851.07,
       "sik_mila": 0,
       "sik_stpau": 0,
       "sik_santjoan": 0,
       "sik_hq": 0,
       "sik_untagged": 0,
       "sik_total": 0,
-      "store_mila": 86719.17,
-      "store_stpau": 115994.05,
+      "store_mila": 86724.46,
+      "store_stpau": 116782.36,
       "store_santjoan": 80659.8,
       "by_store": {
         "mila": {
-          "revenue": 86719.17,
+          "revenue": 86724.46,
           "cogs": -13930.2,
-          "gross_profit": 72788.97,
+          "gross_profit": 72794.26,
           "personnel": 0,
           "opex": -4279.08,
-          "ebitda": 68509.89
+          "ebitda": 68515.18
         },
         "stpau": {
-          "revenue": 115994.05,
+          "revenue": 116782.36,
           "cogs": -15475.07,
-          "gross_profit": 100518.98,
+          "gross_profit": 101307.29,
           "personnel": 0,
           "opex": -9158.64,
-          "ebitda": 91360.34
+          "ebitda": 92148.65
         },
         "santjoan": {
           "revenue": 80659.8,
@@ -1489,7 +1489,7 @@
           {
             "account": "62600001",
             "display_name": "Square Fees",
-            "consolidated": -2320.62,
+            "consolidated": -2661.76,
             "mila": -761.89,
             "stpau": -851.05,
             "santjoan": -707.68,
@@ -1574,16 +1574,16 @@
           {
             "account": "70000000",
             "display_name": "B2B Sales",
-            "consolidated": 25768.73,
-            "mila": 2426.09,
-            "stpau": 23114.42,
+            "consolidated": 26562.33,
+            "mila": 2431.38,
+            "stpau": 23902.73,
             "santjoan": 228.22,
             "hq": 0
           },
           {
             "account": "70000001",
             "display_name": "Physical Store Sales",
-            "consolidated": 262829.36,
+            "consolidated": 276874.12,
             "mila": 86574.48,
             "stpau": 94646.04,
             "santjoan": 81608.84,
@@ -1592,7 +1592,7 @@
           {
             "account": "70000005",
             "display_name": "Square Discounts",
-            "consolidated": -5310.55,
+            "consolidated": -5477.11,
             "mila": -2221.4,
             "stpau": -1911.89,
             "santjoan": -1177.26,
@@ -1601,9 +1601,9 @@
           {
             "account": "70000002",
             "display_name": "E-commerce Sales",
-            "consolidated": 1908.22,
-            "mila": 89.23,
-            "stpau": 1818.99,
+            "consolidated": 1985.96,
+            "mila": 95.19,
+            "stpau": 1890.77,
             "santjoan": 0,
             "hq": 0
           }
@@ -1666,8 +1666,8 @@
       "santjoan": 99446.84
     },
     "apr": {
-      "mila": 86719.17,
-      "stpau": 115994.05,
+      "mila": 86724.46,
+      "stpau": 116782.36,
       "santjoan": 80659.8
     }
   },
@@ -1711,6 +1711,14 @@
       "feb": 0,
       "mar": 0,
       "total_ytd": 195
+    },
+    {
+      "account": "70000006",
+      "name": "Open Dispute",
+      "jan": 0,
+      "feb": 0,
+      "mar": 0,
+      "total_ytd": 53.14
     },
     {
       "account": "62900005",
