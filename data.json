@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-05-01T04:02:34.825Z",
+  "generated_at": "2026-05-02T04:03:17.928Z",
   "period": {
     "display_month": "Apr 2026",
     "month": "2026-04",
@@ -23,7 +23,7 @@
       "current": 0,
       "prev": 37.6
     },
-    "revenue_partial": null
+    "revenue_partial": 13972.6
   },
   "pl": {
     "jan": {
@@ -1674,6 +1674,143 @@
           }
         ]
       }
+    },
+    "may": {
+      "physical": 13050.12,
+      "b2b": 1030.75,
+      "ecommerce": 31.15,
+      "discounts": 139.42,
+      "revenue": 13972.6,
+      "cogs": 0,
+      "gross_profit": 13972.6,
+      "personnel": 0,
+      "opex": 0,
+      "ebitda": 13972.6,
+      "da": -2730.61,
+      "operating_profit": 11241.99,
+      "financial": 0,
+      "ebt": 11241.99,
+      "sik_mila": 0,
+      "sik_stpau": 0,
+      "sik_santjoan": 0,
+      "sik_hq": 0,
+      "sik_untagged": 0,
+      "sik_total": 0,
+      "store_mila": 238.9,
+      "store_stpau": 791.85,
+      "store_santjoan": null,
+      "by_store": {
+        "mila": {
+          "revenue": 238.9,
+          "cogs": 0,
+          "gross_profit": 238.9,
+          "personnel": 0,
+          "opex": 0,
+          "ebitda": 238.9
+        },
+        "stpau": {
+          "revenue": 791.85,
+          "cogs": 0,
+          "gross_profit": 791.85,
+          "personnel": 0,
+          "opex": 0,
+          "ebitda": 791.85
+        },
+        "santjoan": {
+          "revenue": 0,
+          "cogs": 0,
+          "gross_profit": 0,
+          "personnel": 0,
+          "opex": 0,
+          "ebitda": 0
+        },
+        "hq": {
+          "revenue": 0,
+          "cogs": 0,
+          "gross_profit": 0,
+          "personnel": 0,
+          "opex": 0,
+          "ebitda": 0
+        }
+      },
+      "breakdown": {
+        "REVENUE": [
+          {
+            "account": "70000001",
+            "display_name": "Physical Store Sales",
+            "consolidated": 13050.12,
+            "mila": 0,
+            "stpau": 0,
+            "santjoan": 0,
+            "hq": 0
+          },
+          {
+            "account": "70000005",
+            "display_name": "Square Discounts",
+            "consolidated": -139.42,
+            "mila": 0,
+            "stpau": 0,
+            "santjoan": 0,
+            "hq": 0
+          },
+          {
+            "account": "70000002",
+            "display_name": "E-commerce Sales",
+            "consolidated": 31.15,
+            "mila": 0,
+            "stpau": 31.15,
+            "santjoan": 0,
+            "hq": 0
+          },
+          {
+            "account": "70000000",
+            "display_name": "B2B Sales",
+            "consolidated": 1030.75,
+            "mila": 238.9,
+            "stpau": 791.85,
+            "santjoan": 0,
+            "hq": 0
+          }
+        ],
+        "DA": [
+          {
+            "account": "68100003",
+            "display_name": "Amortización informática y tecnología",
+            "consolidated": -8.23,
+            "mila": -0.75,
+            "stpau": -3.79,
+            "santjoan": -3.44,
+            "hq": -0.25
+          },
+          {
+            "account": "68100002",
+            "display_name": "ACTIVOS FRANÇOIS 2022",
+            "consolidated": -606.29,
+            "mila": 0,
+            "stpau": 0,
+            "santjoan": 0,
+            "hq": -606.29
+          },
+          {
+            "account": "68100001",
+            "display_name": "Amortización del inmovilizado material (2)",
+            "consolidated": -2.58,
+            "mila": 0,
+            "stpau": 0,
+            "santjoan": 0,
+            "hq": -2.58
+          },
+          {
+            "account": "68100000",
+            "display_name": "Amortización del inmovilizado material",
+            "consolidated": -2113.51,
+            "mila": -223.66,
+            "stpau": -1838.43,
+            "santjoan": -9.11,
+            "hq": -42.3
+          }
+        ]
+      }
     }
   },
   "stores": {
@@ -1696,6 +1833,11 @@
       "mila": 94354,
       "stpau": 104496.2,
       "santjoan": 90386.72
+    },
+    "may": {
+      "mila": 238.9,
+      "stpau": 791.85,
+      "santjoan": 0
     }
   },
   "channel": {
