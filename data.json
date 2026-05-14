@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-05-12T04:03:27.447Z",
+  "generated_at": "2026-05-14T04:02:12.156Z",
   "period": {
     "display_month": "Apr 2026",
     "month": "2026-04",
@@ -12,8 +12,8 @@
       "mom_pct": -4.9
     },
     "ebitda": {
-      "current": 47053.55,
-      "margin_pct": 13.7
+      "current": 45917.32,
+      "margin_pct": 13.4
     },
     "cogs_pct": {
       "current": 31,
@@ -23,7 +23,7 @@
       "current": 43.6,
       "prev": 37.6
     },
-    "revenue_partial": 133009.2
+    "revenue_partial": 152990.87
   },
   "pl": {
     "jan": {
@@ -89,18 +89,18 @@
           {
             "account": "60000000",
             "display_name": "Merchandise",
-            "consolidated": -11993.19,
-            "mila": -4771.58,
-            "stpau": -3627.18,
+            "consolidated": -11764.93,
+            "mila": -4667.82,
+            "stpau": -3502.68,
             "santjoan": -3594.43,
             "hq": 0
           },
           {
             "account": "60100000",
             "display_name": "Raw Materials",
-            "consolidated": -43182.34,
-            "mila": -13031.01,
-            "stpau": -25534.57,
+            "consolidated": -43410.6,
+            "mila": -13134.77,
+            "stpau": -25659.07,
             "santjoan": -4616.76,
             "hq": 0
           },
@@ -492,10 +492,10 @@
       "ecommerce": 2573.27,
       "discounts": 4805.18,
       "revenue": 313805.46,
-      "cogs": -78289.1,
-      "gross_profit": 235516.36,
+      "cogs": -78264.98,
+      "gross_profit": 235540.48,
       "personnel": -135708.38,
-      "opex": -41063.01,
+      "opex": -41087.13,
       "ebitda": 58744.97,
       "da": -5072.36,
       "operating_profit": 53672.61,
@@ -529,10 +529,10 @@
         },
         "santjoan": {
           "revenue": 83727.05,
-          "cogs": -10189.83,
-          "gross_profit": 73537.22,
+          "cogs": -10165.71,
+          "gross_profit": 73561.34,
           "personnel": -5975.59,
-          "opex": -9614.91,
+          "opex": -9639.03,
           "ebitda": 57946.72
         },
         "hq": {
@@ -549,28 +549,28 @@
           {
             "account": "60000000",
             "display_name": "Merchandise",
-            "consolidated": -9335.24,
-            "mila": -3288.13,
-            "stpau": -4413.99,
+            "consolidated": -8494.84,
+            "mila": -2904.25,
+            "stpau": -3957.47,
             "santjoan": -1633.12,
             "hq": 0
           },
           {
             "account": "60100000",
             "display_name": "Raw Materials",
-            "consolidated": -47158.7,
-            "mila": -15975.18,
-            "stpau": -24798.24,
-            "santjoan": -6385.28,
+            "consolidated": -48177.26,
+            "mila": -16359.06,
+            "stpau": -25254.76,
+            "santjoan": -6563.44,
             "hq": 0
           },
           {
             "account": "60100002",
             "display_name": "Flour",
-            "consolidated": -14016.45,
+            "consolidated": -13838.29,
             "mila": -4962.57,
             "stpau": -8875.72,
-            "santjoan": -178.16,
+            "santjoan": 0,
             "hq": 0
           },
           {
@@ -585,10 +585,10 @@
           {
             "account": "60200002",
             "display_name": "Small equipments",
-            "consolidated": -3189.72,
+            "consolidated": -3165.6,
             "mila": -970.84,
             "stpau": -1786.74,
-            "santjoan": -432.14,
+            "santjoan": -408.02,
             "hq": 0
           }
         ],
@@ -708,11 +708,11 @@
           {
             "account": "62700000",
             "display_name": "Advertising",
-            "consolidated": -1803.29,
+            "consolidated": -1680.89,
             "mila": 0,
             "stpau": 0,
             "santjoan": 0,
-            "hq": -1803.29
+            "hq": -1680.89
           },
           {
             "account": "62800000",
@@ -735,19 +735,19 @@
           {
             "account": "62900001",
             "display_name": "Subscriptions",
-            "consolidated": -427.88,
+            "consolidated": -550.28,
             "mila": 0,
             "stpau": 0,
             "santjoan": 0,
-            "hq": -427.88
+            "hq": -550.28
           },
           {
             "account": "62900002",
             "display_name": "Cleaning",
-            "consolidated": -3439.56,
+            "consolidated": -3463.68,
             "mila": -1266.97,
             "stpau": -1530.75,
-            "santjoan": -641.84,
+            "santjoan": -665.96,
             "hq": 0
           },
           {
@@ -1000,19 +1000,19 @@
           {
             "account": "60000000",
             "display_name": "Merchandise",
-            "consolidated": -15071.79,
-            "mila": -5337.49,
-            "stpau": -7633.51,
-            "santjoan": -2100.79,
+            "consolidated": -12715.56,
+            "mila": -4777.22,
+            "stpau": -5926.8,
+            "santjoan": -2011.54,
             "hq": 0
           },
           {
             "account": "60100000",
             "display_name": "Raw Materials",
-            "consolidated": -69858.06,
-            "mila": -22639.33,
-            "stpau": -36532.25,
-            "santjoan": -10686.48,
+            "consolidated": -72214.29,
+            "mila": -23199.6,
+            "stpau": -38238.96,
+            "santjoan": -10775.73,
             "hq": 0
           },
           {
@@ -1385,15 +1385,15 @@
       "ecommerce": 2468.03,
       "discounts": 6321.63,
       "revenue": 342408.58,
-      "cogs": -106022.74,
-      "gross_profit": 236385.84,
+      "cogs": -106155.15,
+      "gross_profit": 236253.43,
       "personnel": -149178.98,
-      "opex": -40153.31,
-      "ebitda": 47053.55,
+      "opex": -41157.13,
+      "ebitda": 45917.32,
       "da": -5196.14,
-      "operating_profit": 41857.41,
+      "operating_profit": 40721.18,
       "financial": -3210.36,
-      "ebt": 38647.05,
+      "ebt": 37510.82,
       "sik_mila": 371.24,
       "sik_stpau": 556.86,
       "sik_santjoan": 39.41,
@@ -1406,35 +1406,35 @@
       "by_store": {
         "mila": {
           "revenue": 104023.25,
-          "cogs": -37207.01,
-          "gross_profit": 66816.24,
+          "cogs": -36537.6,
+          "gross_profit": 67485.65,
           "personnel": -53607.22,
-          "opex": -9134.53,
+          "opex": -9803.94,
           "ebitda": 4074.49
         },
         "stpau": {
           "revenue": 139469.98,
-          "cogs": -51954.43,
-          "gross_profit": 87515.55,
+          "cogs": -52342.43,
+          "gross_profit": 87127.55,
           "personnel": -71860.57,
-          "opex": -16161.94,
-          "ebitda": -506.96
+          "opex": -16194.1,
+          "ebitda": -927.12
         },
         "santjoan": {
           "revenue": 96522.34,
-          "cogs": -16785.54,
-          "gross_profit": 79736.8,
+          "cogs": -17259.68,
+          "gross_profit": 79262.66,
           "personnel": -4374.65,
-          "opex": -6527.99,
-          "ebitda": 68834.16
+          "opex": -6776.8,
+          "ebitda": 68111.21
         },
         "hq": {
           "revenue": 0,
           "cogs": -75.76,
           "gross_profit": -75.76,
           "personnel": -17345.05,
-          "opex": -6890.23,
-          "ebitda": -24311.04
+          "opex": -6943.67,
+          "ebitda": -24364.48
         }
       },
       "breakdown": {
@@ -1442,47 +1442,47 @@
           {
             "account": "60000000",
             "display_name": "Merchandise",
-            "consolidated": -14237.15,
-            "mila": -3786.92,
-            "stpau": -7049.35,
-            "santjoan": -3325.12,
-            "hq": -75.76
+            "consolidated": -10277.95,
+            "mila": -1678.05,
+            "stpau": -6201.79,
+            "santjoan": -2398.11,
+            "hq": 0
           },
           {
             "account": "60100000",
             "display_name": "Raw Materials",
-            "consolidated": -69091.96,
-            "mila": -25001.25,
-            "stpau": -32824.72,
-            "santjoan": -11265.99,
+            "consolidated": -71676.32,
+            "mila": -25751.63,
+            "stpau": -33868.09,
+            "santjoan": -12056.6,
             "hq": 0
           },
           {
             "account": "60100002",
             "display_name": "Flour",
-            "consolidated": -15888.64,
+            "consolidated": -15710.48,
             "mila": -4573.84,
             "stpau": -11136.64,
-            "santjoan": -178.16,
+            "santjoan": 0,
             "hq": 0
           },
           {
             "account": "60200001",
             "display_name": "Packaging",
-            "consolidated": -4613.94,
-            "mila": -2281.45,
+            "consolidated": -5926.2,
+            "mila": -2843.36,
             "stpau": -557.82,
-            "santjoan": -1774.67,
+            "santjoan": -2525.02,
             "hq": 0
           },
           {
             "account": "60200002",
             "display_name": "Small equipments",
-            "consolidated": -2191.05,
-            "mila": -1563.55,
-            "stpau": -385.9,
-            "santjoan": -241.6,
-            "hq": 0
+            "consolidated": -2564.2,
+            "mila": -1690.72,
+            "stpau": -578.09,
+            "santjoan": -279.95,
+            "hq": -75.76
           }
         ],
         "DA": [
@@ -1574,17 +1574,17 @@
           {
             "account": "62200000",
             "display_name": "Repairs and maintenance",
-            "consolidated": -3147.06,
-            "mila": -2546.31,
+            "consolidated": -3937.56,
+            "mila": -3246.31,
             "stpau": -504.95,
-            "santjoan": -95.8,
+            "santjoan": -186.3,
             "hq": 0
           },
           {
             "account": "62300000",
             "display_name": "Professional Services",
-            "consolidated": -2740.66,
-            "mila": -82.64,
+            "consolidated": -2658.02,
+            "mila": 0,
             "stpau": 0,
             "santjoan": 0,
             "hq": -2658.02
@@ -1601,11 +1601,11 @@
           {
             "account": "62500000",
             "display_name": "Insurance",
-            "consolidated": -76.12,
+            "consolidated": -154.67,
             "mila": 0,
             "stpau": 0,
             "santjoan": 0,
-            "hq": 0
+            "hq": -78.55
           },
           {
             "account": "62700000",
@@ -1619,10 +1619,10 @@
           {
             "account": "62800000",
             "display_name": "Utilities",
-            "consolidated": -4671.52,
-            "mila": -1177.09,
+            "consolidated": -4917.47,
+            "mila": -1229.14,
             "stpau": -2955.09,
-            "santjoan": -539.34,
+            "santjoan": -733.24,
             "hq": 0
           },
           {
@@ -1637,28 +1637,28 @@
           {
             "account": "62900001",
             "display_name": "Subscriptions",
-            "consolidated": -3416.86,
+            "consolidated": -3391.75,
             "mila": 0,
             "stpau": 0,
             "santjoan": 0,
-            "hq": -3416.86
+            "hq": -3391.75
           },
           {
             "account": "62900002",
             "display_name": "Cleaning",
-            "consolidated": -3038.69,
+            "consolidated": -3070.85,
             "mila": -327.84,
-            "stpau": -753.04,
+            "stpau": -785.2,
             "santjoan": -595.31,
             "hq": 0
           },
           {
             "account": "62900004",
             "display_name": "Employee General Expenses",
-            "consolidated": -46.91,
+            "consolidated": -11.32,
             "mila": 0,
             "stpau": -11.32,
-            "santjoan": -35.59,
+            "santjoan": 0,
             "hq": 0
           },
           {
@@ -1822,61 +1822,61 @@
       }
     },
     "may": {
-      "physical": 122913.44,
-      "b2b": 11267.87,
-      "ecommerce": 923.92,
-      "discounts": 2096.03,
-      "revenue": 133009.2,
-      "cogs": -4732.89,
-      "gross_profit": 128276.31,
+      "physical": 140589.81,
+      "b2b": 13612.07,
+      "ecommerce": 1248.63,
+      "discounts": 2459.64,
+      "revenue": 152990.87,
+      "cogs": -9091.04,
+      "gross_profit": 143899.83,
       "personnel": 0,
-      "opex": -15930.15,
-      "ebitda": 112346.16,
+      "opex": -17816.74,
+      "ebitda": 126083.09,
       "da": -2730.61,
-      "operating_profit": 109615.55,
-      "financial": -1199.29,
-      "ebt": 108416.26,
+      "operating_profit": 123352.48,
+      "financial": -1399.79,
+      "ebt": 121952.69,
       "sik_mila": 0,
       "sik_stpau": 0,
       "sik_santjoan": 0,
       "sik_hq": 0,
       "sik_untagged": 0,
       "sik_total": 0,
-      "store_mila": 36771.74,
-      "store_stpau": 51172.35,
-      "store_santjoan": 35889.74,
+      "store_mila": 42500.65,
+      "store_stpau": 59193.98,
+      "store_santjoan": 41183.7,
       "by_store": {
         "mila": {
-          "revenue": 36771.74,
-          "cogs": -2972.3,
-          "gross_profit": 33799.44,
+          "revenue": 42500.65,
+          "cogs": -4607.32,
+          "gross_profit": 37893.33,
           "personnel": 0,
-          "opex": -3191.58,
-          "ebitda": 30607.86
+          "opex": -3278.27,
+          "ebitda": 34615.06
         },
         "stpau": {
-          "revenue": 51172.35,
-          "cogs": -909.62,
-          "gross_profit": 50262.73,
+          "revenue": 59193.98,
+          "cogs": -3621.87,
+          "gross_profit": 55572.11,
           "personnel": 0,
-          "opex": -6087.28,
-          "ebitda": 44175.45
+          "opex": -6087.18,
+          "ebitda": 49484.93
         },
         "santjoan": {
-          "revenue": 35889.74,
-          "cogs": -850.97,
-          "gross_profit": 35038.77,
+          "revenue": 41183.7,
+          "cogs": -861.85,
+          "gross_profit": 40321.85,
           "personnel": 0,
           "opex": -5565,
-          "ebitda": 29473.77
+          "ebitda": 34756.85
         },
         "hq": {
           "revenue": 0,
           "cogs": 0,
           "gross_profit": 0,
           "personnel": 0,
-          "opex": -1068.18,
-          "ebitda": -1068.18
+          "opex": -2868.18,
+          "ebitda": -2868.18
         }
       },
       "breakdown": {
@@ -1884,18 +1884,18 @@
           {
             "account": "60000000",
             "display_name": "Merchandise",
-            "consolidated": -1546.12,
-            "mila": -1384,
-            "stpau": 0,
+            "consolidated": -4459.02,
+            "mila": -2768,
+            "stpau": -1528.9,
             "santjoan": -162.12,
             "hq": 0
           },
           {
             "account": "60100000",
             "display_name": "Raw Materials",
-            "consolidated": -1649.91,
-            "mila": -681.38,
-            "stpau": -884.53,
+            "consolidated": -3002.86,
+            "mila": -888.97,
+            "stpau": -2029.89,
             "santjoan": -84,
             "hq": 0
           },
@@ -1911,10 +1911,10 @@
           {
             "account": "60200002",
             "display_name": "Small equipments",
-            "consolidated": -557.28,
-            "mila": -349.26,
-            "stpau": -25.09,
-            "santjoan": -182.93,
+            "consolidated": -649.58,
+            "mila": -392.69,
+            "stpau": -63.08,
+            "santjoan": -193.81,
             "hq": 0
           }
         ],
@@ -1922,10 +1922,19 @@
           {
             "account": "62600001",
             "display_name": "Square Fees",
-            "consolidated": -1199.29,
-            "mila": -340.27,
-            "stpau": -382.62,
-            "santjoan": -329.41,
+            "consolidated": -1362.82,
+            "mila": -409.77,
+            "stpau": -464.5,
+            "santjoan": -404.67,
+            "hq": 0
+          },
+          {
+            "account": "66230000",
+            "display_name": "Interest on Loans",
+            "consolidated": -36.97,
+            "mila": -36.97,
+            "stpau": 0,
+            "santjoan": 0,
             "hq": 0
           }
         ],
@@ -1958,6 +1967,15 @@
             "hq": 0
           },
           {
+            "account": "62300000",
+            "display_name": "Professional Services",
+            "consolidated": -1800,
+            "mila": 0,
+            "stpau": 0,
+            "santjoan": 0,
+            "hq": -1800
+          },
+          {
             "account": "62500000",
             "display_name": "Insurance",
             "consolidated": -792.84,
@@ -1969,9 +1987,9 @@
           {
             "account": "62800000",
             "display_name": "Utilities",
-            "consolidated": -3417.3,
-            "mila": -957.97,
-            "stpau": -2002.34,
+            "consolidated": -3503.89,
+            "mila": -1044.66,
+            "stpau": -2002.24,
             "santjoan": -456.99,
             "hq": 0
           },
@@ -1998,36 +2016,36 @@
           {
             "account": "70000000",
             "display_name": "B2B Sales",
-            "consolidated": 11267.87,
-            "mila": 932.92,
-            "stpau": 10289.15,
+            "consolidated": 13612.07,
+            "mila": 1308.27,
+            "stpau": 12258,
             "santjoan": 45.8,
             "hq": 0
           },
           {
             "account": "70000001",
             "display_name": "Physical Store Sales",
-            "consolidated": 122913.44,
-            "mila": 36611.63,
-            "stpau": 41599.46,
-            "santjoan": 36277.53,
+            "consolidated": 140589.81,
+            "mila": 42100,
+            "stpau": 47796.33,
+            "santjoan": 41625.83,
             "hq": 0
           },
           {
             "account": "70000005",
             "display_name": "Square Discounts",
-            "consolidated": -2096.03,
-            "mila": -772.81,
-            "stpau": -750.26,
-            "santjoan": -433.59,
+            "consolidated": -2459.64,
+            "mila": -907.62,
+            "stpau": -894.35,
+            "santjoan": -487.93,
             "hq": 0
           },
           {
             "account": "70000002",
             "display_name": "E-commerce Sales",
-            "consolidated": 923.92,
-            "mila": 66.97,
-            "stpau": 856.95,
+            "consolidated": 1248.63,
+            "mila": 132.42,
+            "stpau": 1116.21,
             "santjoan": 0,
             "hq": 0
           }
@@ -2095,9 +2113,9 @@
       "santjoan": 96522.34
     },
     "may": {
-      "mila": 36771.74,
-      "stpau": 51172.35,
-      "santjoan": 35889.74
+      "mila": 42500.65,
+      "stpau": 59193.98,
+      "santjoan": 41183.7
     }
   },
   "channel": {
@@ -2124,14 +2142,6 @@
       "feb": 0,
       "mar": -202.29,
       "total_ytd": -202.29
-    },
-    {
-      "account": "60200000",
-      "name": "Factura de compra de ventiladores Neijiaer",
-      "jan": 0,
-      "feb": 0,
-      "mar": 0,
-      "total_ytd": 37.99
     },
     {
       "account": "62900005",
