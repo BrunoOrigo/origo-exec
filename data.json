@@ -1,29 +1,29 @@
 {
-  "generated_at": "2026-05-31T04:02:07.129Z",
+  "generated_at": "2026-06-01T04:02:45.971Z",
   "period": {
-    "display_month": "Apr 2026",
-    "month": "2026-04",
-    "partial_month": "May 2026"
+    "display_month": "May 2026",
+    "month": "2026-05",
+    "partial_month": "Jun 2026"
   },
   "overview": {
     "revenue": {
-      "current": 342408.58,
-      "prev": 360097.05,
-      "mom_pct": -4.9
+      "current": 326161.58,
+      "prev": 342408.58,
+      "mom_pct": -4.7
     },
     "ebitda": {
-      "current": 42131.41,
-      "margin_pct": 12.3
+      "current": 266316.66,
+      "margin_pct": 81.7
     },
     "cogs_pct": {
-      "current": 31.7,
-      "prev": 30.8
+      "current": 8.3,
+      "prev": 31.7
     },
     "personnel_pct": {
-      "current": 43.6,
-      "prev": 37.6
+      "current": 1.7,
+      "prev": 43.6
     },
-    "revenue_partial": 345985.53
+    "revenue_partial": null
   },
   "pl": {
     "jan": {
@@ -1813,53 +1813,53 @@
       }
     },
     "may": {
-      "physical": 317701.31,
-      "b2b": 31969.89,
-      "ecommerce": 2490.79,
-      "discounts": 6176.46,
-      "revenue": 345985.53,
+      "physical": 329660.61,
+      "b2b": 289.01,
+      "ecommerce": 2542.27,
+      "discounts": 6330.31,
+      "revenue": 326161.58,
       "cogs": -27151.78,
-      "gross_profit": 318833.75,
+      "gross_profit": 299009.8,
       "personnel": -5474.62,
       "opex": -27218.52,
-      "ebitda": 286140.61,
-      "da": -2730.61,
-      "operating_profit": 283410,
-      "financial": -3002.78,
-      "ebt": 280407.22,
+      "ebitda": 266316.66,
+      "da": -2777.5,
+      "operating_profit": 263539.16,
+      "financial": -3287.98,
+      "ebt": 260251.18,
       "sik_mila": 6.85,
       "sik_stpau": 32.01,
       "sik_santjoan": 0,
       "sik_hq": 0,
       "sik_untagged": 0,
       "sik_total": 38.86,
-      "store_mila": 102066.75,
-      "store_stpau": 140620.97,
-      "store_santjoan": 101096.03,
+      "store_mila": 102402.02,
+      "store_stpau": 116503.66,
+      "store_santjoan": 104713.63,
       "by_store": {
         "mila": {
-          "revenue": 102066.75,
+          "revenue": 102402.02,
           "cogs": -9469.32,
-          "gross_profit": 92597.43,
+          "gross_profit": 92932.7,
           "personnel": -841.75,
           "opex": -4679.85,
-          "ebitda": 87075.83
+          "ebitda": 87411.1
         },
         "stpau": {
-          "revenue": 140620.97,
+          "revenue": 116503.66,
           "cogs": -14322.37,
-          "gross_profit": 126298.6,
+          "gross_profit": 102181.29,
           "personnel": -4632.87,
           "opex": -7031.21,
-          "ebitda": 114634.52
+          "ebitda": 90517.21
         },
         "santjoan": {
-          "revenue": 101096.03,
+          "revenue": 104713.63,
           "cogs": -3411.57,
-          "gross_profit": 97684.46,
+          "gross_profit": 101302.06,
           "personnel": 0,
           "opex": -8205.15,
-          "ebitda": 89479.31
+          "ebitda": 93096.91
         },
         "hq": {
           "revenue": 0,
@@ -1909,6 +1909,44 @@
             "hq": 0
           }
         ],
+        "DA": [
+          {
+            "account": "68100000",
+            "display_name": "Depreciation & Amortization",
+            "consolidated": -2160.4,
+            "mila": -223.66,
+            "stpau": -1854.33,
+            "santjoan": -40.1,
+            "hq": -42.3
+          },
+          {
+            "account": "68100003",
+            "display_name": "Amortización informática y tecnología",
+            "consolidated": -8.23,
+            "mila": -0.75,
+            "stpau": -3.79,
+            "santjoan": -3.44,
+            "hq": -0.25
+          },
+          {
+            "account": "68100002",
+            "display_name": "ACTIVOS FRANÇOIS 2022",
+            "consolidated": -606.29,
+            "mila": 0,
+            "stpau": 0,
+            "santjoan": 0,
+            "hq": -606.29
+          },
+          {
+            "account": "68100001",
+            "display_name": "Amortización del inmovilizado material (2)",
+            "consolidated": -2.58,
+            "mila": 0,
+            "stpau": 0,
+            "santjoan": 0,
+            "hq": -2.58
+          }
+        ],
         "FINANCIAL": [
           {
             "account": "62600000",
@@ -1922,7 +1960,7 @@
           {
             "account": "62600001",
             "display_name": "Square Fees",
-            "consolidated": -2914.62,
+            "consolidated": -3199.82,
             "mila": -926.12,
             "stpau": -1046.24,
             "santjoan": -942.26,
@@ -2116,77 +2154,39 @@
         "REVENUE": [
           {
             "account": "70000000",
-            "display_name": "B2B Sales",
-            "consolidated": 31969.89,
-            "mila": 3207.16,
-            "stpau": 28596.63,
-            "santjoan": 166.1,
+            "display_name": "Ventas B2B",
+            "consolidated": 289.01,
+            "mila": 147,
+            "stpau": 142.01,
+            "santjoan": 0,
             "hq": 0
           },
           {
             "account": "70000001",
             "display_name": "Physical Store Sales",
-            "consolidated": 317701.31,
-            "mila": 101152.9,
-            "stpau": 114323.89,
-            "santjoan": 102224.52,
+            "consolidated": 329660.61,
+            "mila": 104760.22,
+            "stpau": 118882.31,
+            "santjoan": 106018.08,
             "hq": 0
           },
           {
             "account": "70000005",
             "display_name": "Square Discounts",
-            "consolidated": -6176.46,
-            "mila": -2440.31,
-            "stpau": -2441.56,
-            "santjoan": -1294.59,
+            "consolidated": -6330.31,
+            "mila": -2505.2,
+            "stpau": -2520.66,
+            "santjoan": -1304.45,
             "hq": 0
           },
           {
             "account": "70000002",
             "display_name": "E-commerce Sales",
-            "consolidated": 2490.79,
+            "consolidated": 2542.27,
             "mila": 157.22,
-            "stpau": 2333.57,
+            "stpau": 2385.05,
             "santjoan": 0,
             "hq": 0
-          }
-        ],
-        "DA": [
-          {
-            "account": "68100003",
-            "display_name": "Amortización informática y tecnología",
-            "consolidated": -8.23,
-            "mila": -0.75,
-            "stpau": -3.79,
-            "santjoan": -3.44,
-            "hq": -0.25
-          },
-          {
-            "account": "68100002",
-            "display_name": "ACTIVOS FRANÇOIS 2022",
-            "consolidated": -606.29,
-            "mila": 0,
-            "stpau": 0,
-            "santjoan": 0,
-            "hq": -606.29
-          },
-          {
-            "account": "68100001",
-            "display_name": "Amortización del inmovilizado material (2)",
-            "consolidated": -2.58,
-            "mila": 0,
-            "stpau": 0,
-            "santjoan": 0,
-            "hq": -2.58
-          },
-          {
-            "account": "68100000",
-            "display_name": "Amortización del inmovilizado material",
-            "consolidated": -2113.51,
-            "mila": -223.66,
-            "stpau": -1838.43,
-            "santjoan": -9.11,
-            "hq": -42.3
           }
         ]
       }
@@ -2214,16 +2214,16 @@
       "santjoan": 96522.34
     },
     "may": {
-      "mila": 102066.75,
-      "stpau": 140620.97,
-      "santjoan": 101096.03
+      "mila": 102402.02,
+      "stpau": 116503.66,
+      "santjoan": 104713.63
     }
   },
   "channel": {
-    "physical": 313576.45,
-    "b2b": 31378.43,
-    "ecommerce": 2468.03,
-    "discounts": 6321.63
+    "physical": 329660.61,
+    "b2b": 289.01,
+    "ecommerce": 2542.27,
+    "discounts": 6330.31
   },
   "productivity": null,
   "debt": null,
@@ -2234,7 +2234,7 @@
       "jan": 70.32,
       "feb": 70.32,
       "mar": 70.32,
-      "total_ytd": 281.28
+      "total_ytd": 351.6
     },
     {
       "account": "77800000",
