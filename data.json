@@ -1,29 +1,29 @@
 {
-  "generated_at": "2026-06-30T04:04:06.052Z",
+  "generated_at": "2026-07-01T04:04:16.145Z",
   "period": {
-    "display_month": "May 2026",
-    "month": "2026-05",
-    "partial_month": "Jun 2026"
+    "display_month": "Jun 2026",
+    "month": "2026-06",
+    "partial_month": "Jul 2026"
   },
   "overview": {
     "revenue": {
-      "current": 361230.69,
-      "prev": 342408.58,
-      "mom_pct": 5.5
+      "current": 275584.39,
+      "prev": 361230.69,
+      "mom_pct": -23.7
     },
     "ebitda": {
-      "current": 85285.87,
-      "margin_pct": 23.6
+      "current": 199178.81,
+      "margin_pct": 72.3
     },
     "cogs_pct": {
-      "current": 18.3,
-      "prev": 31.6
+      "current": 16.7,
+      "prev": 18.3
     },
     "personnel_pct": {
-      "current": 45.5,
-      "prev": 43.2
+      "current": 0,
+      "prev": 45.5
     },
-    "revenue_partial": 297119.35
+    "revenue_partial": null
   },
   "pl": {
     "jan": {
@@ -2255,53 +2255,53 @@
       }
     },
     "jun": {
-      "physical": 270038.58,
-      "b2b": 29262.44,
-      "ecommerce": 3846.53,
-      "discounts": 6028.2,
-      "revenue": 297119.35,
-      "cogs": -45891.84,
-      "gross_profit": 251227.51,
+      "physical": 277623.65,
+      "b2b": 171.23,
+      "ecommerce": 3962.64,
+      "discounts": 6173.13,
+      "revenue": 275584.39,
+      "cogs": -45957.47,
+      "gross_profit": 229626.92,
       "personnel": 0,
       "opex": -30448.11,
-      "ebitda": 220779.4,
-      "da": -2730.61,
-      "operating_profit": 218048.79,
-      "financial": -2742.3,
-      "ebt": 215306.49,
+      "ebitda": 199178.81,
+      "da": -2811.44,
+      "operating_profit": 196367.37,
+      "financial": -2817.98,
+      "ebt": 193549.39,
       "sik_mila": 0,
       "sik_stpau": 0,
       "sik_santjoan": 0,
       "sik_hq": 0,
       "sik_untagged": 0,
       "sik_total": 0,
-      "store_mila": 88521.62,
-      "store_stpau": 120252.37,
-      "store_santjoan": 84640.66,
+      "store_mila": 88614.67,
+      "store_stpau": 96129.99,
+      "store_santjoan": 86877.09,
       "by_store": {
         "mila": {
-          "revenue": 88521.62,
-          "cogs": -14015.92,
-          "gross_profit": 74505.7,
+          "revenue": 88614.67,
+          "cogs": -14050.67,
+          "gross_profit": 74564,
           "personnel": 0,
           "opex": -6661.69,
-          "ebitda": 67844.01
+          "ebitda": 67902.31
         },
         "stpau": {
-          "revenue": 120252.37,
-          "cogs": -29441.49,
-          "gross_profit": 90810.88,
+          "revenue": 96129.99,
+          "cogs": -29467.46,
+          "gross_profit": 66662.53,
           "personnel": 0,
           "opex": -12954.42,
-          "ebitda": 77856.46
+          "ebitda": 53708.11
         },
         "santjoan": {
-          "revenue": 84640.66,
-          "cogs": -2434.43,
-          "gross_profit": 82206.23,
+          "revenue": 86877.09,
+          "cogs": -2439.34,
+          "gross_profit": 84437.75,
           "personnel": 0,
           "opex": -6547.66,
-          "ebitda": 75658.57
+          "ebitda": 77890.09
         },
         "hq": {
           "revenue": 0,
@@ -2353,11 +2353,49 @@
           {
             "account": "60200002",
             "display_name": "Small equipments",
-            "consolidated": -1359.1,
-            "mila": -592.23,
-            "stpau": -562.48,
-            "santjoan": -204.39,
+            "consolidated": -1424.73,
+            "mila": -626.98,
+            "stpau": -588.45,
+            "santjoan": -209.3,
             "hq": 0
+          }
+        ],
+        "DA": [
+          {
+            "account": "68100000",
+            "display_name": "Depreciation & Amortization",
+            "consolidated": -2194.34,
+            "mila": -223.66,
+            "stpau": -1919.26,
+            "santjoan": -9.11,
+            "hq": -42.3
+          },
+          {
+            "account": "68100003",
+            "display_name": "Amortización informática y tecnología",
+            "consolidated": -8.23,
+            "mila": -0.75,
+            "stpau": -3.79,
+            "santjoan": -3.44,
+            "hq": -0.25
+          },
+          {
+            "account": "68100002",
+            "display_name": "ACTIVOS FRANÇOIS 2022",
+            "consolidated": -606.29,
+            "mila": 0,
+            "stpau": 0,
+            "santjoan": 0,
+            "hq": -606.29
+          },
+          {
+            "account": "68100001",
+            "display_name": "Amortización del inmovilizado material (2)",
+            "consolidated": -2.58,
+            "mila": 0,
+            "stpau": 0,
+            "santjoan": 0,
+            "hq": -2.58
           }
         ],
         "FINANCIAL": [
@@ -2373,10 +2411,10 @@
           {
             "account": "62600001",
             "display_name": "Square Fees",
-            "consolidated": -2700.76,
-            "mila": -757.97,
-            "stpau": -836.49,
-            "santjoan": -759.01,
+            "consolidated": -2776.44,
+            "mila": -869.17,
+            "stpau": -959.87,
+            "santjoan": -871.72,
             "hq": 0
           },
           {
@@ -2493,77 +2531,39 @@
         "REVENUE": [
           {
             "account": "70000000",
-            "display_name": "B2B Sales",
-            "consolidated": 29262.44,
-            "mila": 2384.73,
-            "stpau": 26678.87,
-            "santjoan": 198.84,
+            "display_name": "Ventas B2B",
+            "consolidated": 171.23,
+            "mila": 73.5,
+            "stpau": 97.73,
+            "santjoan": 0,
             "hq": 0
           },
           {
             "account": "70000001",
             "display_name": "Physical Store Sales",
-            "consolidated": 270038.58,
-            "mila": 88544.83,
-            "stpau": 95847.83,
-            "santjoan": 85645.92,
+            "consolidated": 277623.65,
+            "mila": 91095.73,
+            "stpau": 98426.42,
+            "santjoan": 88101.5,
             "hq": 0
           },
           {
             "account": "70000005",
             "display_name": "Square Discounts",
-            "consolidated": -6028.2,
-            "mila": -2481.44,
-            "stpau": -2342.66,
-            "santjoan": -1204.1,
+            "consolidated": -6173.13,
+            "mila": -2554.56,
+            "stpau": -2394.16,
+            "santjoan": -1224.41,
             "hq": 0
           },
           {
             "account": "70000002",
             "display_name": "E-commerce Sales",
-            "consolidated": 3846.53,
+            "consolidated": 3962.64,
             "mila": 1372.73,
-            "stpau": 2473.8,
+            "stpau": 2589.91,
             "santjoan": 0,
             "hq": 0
-          }
-        ],
-        "DA": [
-          {
-            "account": "68100003",
-            "display_name": "Amortización informática y tecnología",
-            "consolidated": -8.23,
-            "mila": -0.75,
-            "stpau": -3.79,
-            "santjoan": -3.44,
-            "hq": -0.25
-          },
-          {
-            "account": "68100002",
-            "display_name": "ACTIVOS FRANÇOIS 2022",
-            "consolidated": -606.29,
-            "mila": 0,
-            "stpau": 0,
-            "santjoan": 0,
-            "hq": -606.29
-          },
-          {
-            "account": "68100001",
-            "display_name": "Amortización del inmovilizado material (2)",
-            "consolidated": -2.58,
-            "mila": 0,
-            "stpau": 0,
-            "santjoan": 0,
-            "hq": -2.58
-          },
-          {
-            "account": "68100000",
-            "display_name": "Amortización del inmovilizado material",
-            "consolidated": -2113.51,
-            "mila": -223.66,
-            "stpau": -1838.43,
-            "santjoan": -9.11,
-            "hq": -42.3
           }
         ]
       }
@@ -2596,16 +2596,16 @@
       "santjoan": 105362.96
     },
     "jun": {
-      "mila": 88521.62,
-      "stpau": 120252.37,
-      "santjoan": 84640.66
+      "mila": 88614.67,
+      "stpau": 96129.99,
+      "santjoan": 86877.09
     }
   },
   "channel": {
-    "physical": 329660.61,
-    "b2b": 33579.66,
-    "ecommerce": 2542.27,
-    "discounts": 6330.31
+    "physical": 277623.65,
+    "b2b": 171.23,
+    "ecommerce": 3962.64,
+    "discounts": 6173.13
   },
   "productivity": null,
   "debt": null,
@@ -2635,14 +2635,6 @@
       "total_ytd": -202.29
     },
     {
-      "account": "60200000",
-      "name": " loudishilouxingqugangleishangmaoyouxiangongsi",
-      "jan": 0,
-      "feb": 0,
-      "mar": 0,
-      "total_ytd": 85.51
-    },
-    {
       "account": "70000006",
       "name": "Dispute Released",
       "jan": 0,
@@ -2657,6 +2649,14 @@
       "feb": 0,
       "mar": 24.21,
       "total_ytd": 33.3
+    },
+    {
+      "account": "60200000",
+      "name": "Factura de compra de etiquetas autoadhesivas de Pokornys",
+      "jan": 0,
+      "feb": 0,
+      "mar": 0,
+      "total_ytd": 19.88
     },
     {
       "account": "64900000",
