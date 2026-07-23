@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-22T04:03:38.801Z",
+  "generated_at": "2026-07-23T04:03:41.200Z",
   "period": {
     "display_month": "Jun 2026",
     "month": "2026-06",
@@ -23,7 +23,7 @@
       "current": 48.1,
       "prev": 43.9
     },
-    "revenue_partial": 195846.37
+    "revenue_partial": 203695.9
   },
   "pl": {
     "jan": {
@@ -2697,53 +2697,53 @@
       }
     },
     "jul": {
-      "physical": 177790.72,
-      "b2b": 21089.15,
-      "ecommerce": 1251.97,
-      "discounts": 4285.47,
-      "revenue": 195846.37,
+      "physical": 184974.57,
+      "b2b": 21937.46,
+      "ecommerce": 1265.99,
+      "discounts": 4482.12,
+      "revenue": 203695.9,
       "cogs": -13786.07,
-      "gross_profit": 182060.3,
+      "gross_profit": 189909.83,
       "personnel": 0,
       "opex": -27960.94,
-      "ebitda": 154099.36,
+      "ebitda": 161948.89,
       "da": -2730.61,
-      "operating_profit": 151368.75,
-      "financial": -2219.15,
-      "ebt": 149149.6,
+      "operating_profit": 159218.28,
+      "financial": -2286.03,
+      "ebt": 156932.25,
       "sik_mila": 0,
       "sik_stpau": 0,
       "sik_santjoan": 0,
       "sik_hq": 0,
       "sik_untagged": 0,
       "sik_total": 0,
-      "store_mila": 57283.44,
-      "store_stpau": 80331.53,
-      "store_santjoan": 57038.23,
+      "store_mila": 59695.24,
+      "store_stpau": 83577.08,
+      "store_santjoan": 59216.39,
       "by_store": {
         "mila": {
-          "revenue": 57283.44,
+          "revenue": 59695.24,
           "cogs": -9929.92,
-          "gross_profit": 47353.52,
+          "gross_profit": 49765.32,
           "personnel": 0,
           "opex": -9152.85,
-          "ebitda": 38200.67
+          "ebitda": 40612.47
         },
         "stpau": {
-          "revenue": 80331.53,
+          "revenue": 83577.08,
           "cogs": -2185.97,
-          "gross_profit": 78145.56,
+          "gross_profit": 81391.11,
           "personnel": 0,
           "opex": -12501.91,
-          "ebitda": 65643.65
+          "ebitda": 68889.2
         },
         "santjoan": {
-          "revenue": 57038.23,
+          "revenue": 59216.39,
           "cogs": -1670.18,
-          "gross_profit": 55368.05,
+          "gross_profit": 57546.21,
           "personnel": 0,
           "opex": -5887.78,
-          "ebitda": 49480.27
+          "ebitda": 51658.43
         },
         "hq": {
           "revenue": 0,
@@ -2806,10 +2806,10 @@
           {
             "account": "62600001",
             "display_name": "Square Fees",
-            "consolidated": -1770.66,
-            "mila": -536.58,
-            "stpau": -595.23,
-            "santjoan": -564.27,
+            "consolidated": -1837.54,
+            "mila": -560.55,
+            "stpau": -619.31,
+            "santjoan": -590.8,
             "hq": 0
           }
         ],
@@ -2891,36 +2891,36 @@
           {
             "account": "70000000",
             "display_name": "B2B Sales",
-            "consolidated": 21089.15,
-            "mila": 1744.73,
-            "stpau": 19173.65,
+            "consolidated": 21937.46,
+            "mila": 1788.83,
+            "stpau": 19977.86,
             "santjoan": 170.77,
             "hq": 0
           },
           {
             "account": "70000001",
             "display_name": "Physical Store Sales",
-            "consolidated": 177790.72,
-            "mila": 57027.07,
-            "stpau": 62792.21,
-            "santjoan": 57971.44,
+            "consolidated": 184974.57,
+            "mila": 59474.5,
+            "stpau": 65296.79,
+            "santjoan": 60203.28,
             "hq": 0
           },
           {
             "account": "70000005",
             "display_name": "Square Discounts",
-            "consolidated": -4285.47,
-            "mila": -1547.16,
-            "stpau": -1634.33,
-            "santjoan": -1103.98,
+            "consolidated": -4482.12,
+            "mila": -1626.89,
+            "stpau": -1697.57,
+            "santjoan": -1157.66,
             "hq": 0
           },
           {
             "account": "70000002",
             "display_name": "E-commerce Sales",
-            "consolidated": 1251.97,
+            "consolidated": 1265.99,
             "mila": 47.54,
-            "stpau": 1204.43,
+            "stpau": 1218.45,
             "santjoan": 0,
             "hq": 0
           }
@@ -2998,9 +2998,9 @@
       "santjoan": 87746.49
     },
     "jul": {
-      "mila": 57283.44,
-      "stpau": 80331.53,
-      "santjoan": 57038.23
+      "mila": 59695.24,
+      "stpau": 83577.08,
+      "santjoan": 59216.39
     }
   },
   "channel": {
