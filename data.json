@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-29T04:04:14.678Z",
+  "generated_at": "2026-07-30T04:04:13.411Z",
   "period": {
     "display_month": "Jun 2026",
     "month": "2026-06",
@@ -23,7 +23,7 @@
       "current": 49.4,
       "prev": 43.9
     },
-    "revenue_partial": 260656.61
+    "revenue_partial": 268885.71
   },
   "pl": {
     "jan": {
@@ -1827,9 +1827,9 @@
       "operating_profit": 88447.81,
       "financial": -3291.98,
       "ebt": 85155.83,
-      "sik_mila": 351.54,
+      "sik_mila": 329.69,
       "sik_stpau": 453.33,
-      "sik_santjoan": 134.22,
+      "sik_santjoan": 156.07,
       "sik_hq": 61.05,
       "sik_untagged": 0,
       "sik_total": 1000.14,
@@ -1841,9 +1841,9 @@
           "revenue": 105745.26,
           "cogs": -20955.36,
           "gross_profit": 84789.9,
-          "personnel": -51986.77,
+          "personnel": -51145.02,
           "opex": -6466.13,
-          "ebitda": 26337
+          "ebitda": 27178.75
         },
         "stpau": {
           "revenue": 147634.77,
@@ -1857,9 +1857,9 @@
           "revenue": 105362.96,
           "cogs": -12785.81,
           "gross_profit": 92577.15,
-          "personnel": -16559.6,
+          "personnel": -17401.35,
           "opex": -10063.25,
-          "ebitda": 65954.3
+          "ebitda": 65112.55
         },
         "hq": {
           "revenue": 0,
@@ -2126,8 +2126,8 @@
           {
             "account": "64000002",
             "display_name": "Salaries - MILÁ",
-            "consolidated": -39903.37,
-            "mila": -39903.37,
+            "consolidated": -39240.79,
+            "mila": -39240.79,
             "stpau": 0,
             "santjoan": 0,
             "hq": 0
@@ -2144,10 +2144,10 @@
           {
             "account": "64000004",
             "display_name": "Salaries - Sant Joan",
-            "consolidated": -13278.66,
+            "consolidated": -13941.24,
             "mila": 0,
             "stpau": 0,
-            "santjoan": -13278.66,
+            "santjoan": -13941.24,
             "hq": 0
           },
           {
@@ -2162,8 +2162,8 @@
           {
             "account": "64200002",
             "display_name": "Social Security - MILÁ",
-            "consolidated": -12185.33,
-            "mila": -12185.33,
+            "consolidated": -11969.31,
+            "mila": -11969.31,
             "stpau": 0,
             "santjoan": 0,
             "hq": 0
@@ -2180,28 +2180,28 @@
           {
             "account": "64200004",
             "display_name": "Social Security - Sant Joan",
-            "consolidated": -4038.08,
+            "consolidated": -4254.1,
             "mila": -532.92,
             "stpau": 0,
-            "santjoan": -3505.16,
+            "santjoan": -3721.18,
             "hq": 0
           },
           {
             "account": "64900001",
             "display_name": "Social Costs for Employees - ALAN",
             "consolidated": -74.19,
-            "mila": 283.31,
+            "mila": 268.31,
             "stpau": 343,
-            "santjoan": 90,
+            "santjoan": 105,
             "hq": -790.5
           },
           {
             "account": "75500000",
             "display_name": "Salary in Kind",
             "consolidated": 1000.14,
-            "mila": 351.54,
+            "mila": 329.69,
             "stpau": 453.33,
-            "santjoan": 134.22,
+            "santjoan": 156.07,
             "hq": 61.05
           }
         ],
@@ -2269,9 +2269,9 @@
       "operating_profit": 3209.42,
       "financial": -2817.98,
       "ebt": 391.44,
-      "sik_mila": 375.34,
+      "sik_mila": 369.79,
       "sik_stpau": 474.27,
-      "sik_santjoan": 109.16,
+      "sik_santjoan": 114.71,
       "sik_hq": 83.25,
       "sik_untagged": 0,
       "sik_total": 1042.02,
@@ -2283,9 +2283,9 @@
           "revenue": 91121.73,
           "cogs": -35130.57,
           "gross_profit": 55991.16,
-          "personnel": -49711.8,
+          "personnel": -48692.76,
           "opex": -13328.11,
-          "ebitda": -7048.75
+          "ebitda": -6029.71
         },
         "stpau": {
           "revenue": 124793.07,
@@ -2299,9 +2299,9 @@
           "revenue": 87746.49,
           "cogs": -13065.49,
           "gross_profit": 74681,
-          "personnel": -14112.64,
+          "personnel": -15131.68,
           "opex": -7250.02,
-          "ebitda": 53318.34
+          "ebitda": 52299.3
         },
         "hq": {
           "revenue": 0,
@@ -2568,8 +2568,8 @@
           {
             "account": "64000002",
             "display_name": "Salaries - MILÁ",
-            "consolidated": -37721.89,
-            "mila": -37721.89,
+            "consolidated": -36937.89,
+            "mila": -36937.89,
             "stpau": 0,
             "santjoan": 0,
             "hq": 0
@@ -2586,10 +2586,10 @@
           {
             "account": "64000004",
             "display_name": "Salaries - Sant Joan",
-            "consolidated": -11389.41,
+            "consolidated": -12173.41,
             "mila": 0,
             "stpau": 0,
-            "santjoan": -11389.41,
+            "santjoan": -12173.41,
             "hq": 0
           },
           {
@@ -2604,8 +2604,8 @@
           {
             "account": "64200002",
             "display_name": "Social Security - MILÁ",
-            "consolidated": -12641.25,
-            "mila": -12641.25,
+            "consolidated": -12385.66,
+            "mila": -12385.66,
             "stpau": 0,
             "santjoan": 0,
             "hq": 0
@@ -2622,28 +2622,28 @@
           {
             "account": "64200004",
             "display_name": "Social Security - Sant Joan",
-            "consolidated": -2921.89,
+            "consolidated": -3177.48,
             "mila": 0,
             "stpau": 0,
-            "santjoan": -2921.89,
+            "santjoan": -3177.48,
             "hq": 0
           },
           {
             "account": "64900001",
             "display_name": "Social Costs for Employees - ALAN",
             "consolidated": -55.5,
-            "mila": 276,
+            "mila": 261,
             "stpau": 349,
-            "santjoan": 89.5,
+            "santjoan": 104.5,
             "hq": -770
           },
           {
             "account": "75500000",
             "display_name": "Salary in Kind",
             "consolidated": 1042.02,
-            "mila": 375.34,
+            "mila": 369.79,
             "stpau": 474.27,
-            "santjoan": 109.16,
+            "santjoan": 114.71,
             "hq": 83.25
           }
         ],
@@ -2697,53 +2697,53 @@
       }
     },
     "jul": {
-      "physical": 236671.62,
-      "b2b": 28357.79,
-      "ecommerce": 1484.16,
-      "discounts": 5856.96,
-      "revenue": 260656.61,
-      "cogs": -30066.08,
-      "gross_profit": 230590.53,
+      "physical": 243995.13,
+      "b2b": 29392.98,
+      "ecommerce": 1565.74,
+      "discounts": 6068.14,
+      "revenue": 268885.71,
+      "cogs": -31774.99,
+      "gross_profit": 237110.72,
       "personnel": 0,
-      "opex": -39465.9,
-      "ebitda": 191124.63,
+      "opex": -39530.27,
+      "ebitda": 197580.45,
       "da": -2730.61,
-      "operating_profit": 188394.02,
-      "financial": -2792.1,
-      "ebt": 185601.92,
+      "operating_profit": 194849.84,
+      "financial": -2859.6,
+      "ebt": 191990.24,
       "sik_mila": 0,
       "sik_stpau": 0,
       "sik_santjoan": 0,
       "sik_hq": 0,
       "sik_untagged": 0,
       "sik_total": 0,
-      "store_mila": 76132.92,
-      "store_stpau": 107066.17,
-      "store_santjoan": 76032.16,
+      "store_mila": 78824.29,
+      "store_stpau": 110266.91,
+      "store_santjoan": 78287.57,
       "by_store": {
         "mila": {
-          "revenue": 76132.92,
-          "cogs": -19118.44,
-          "gross_profit": 57014.48,
+          "revenue": 78824.29,
+          "cogs": -19693.43,
+          "gross_profit": 59130.86,
           "personnel": 0,
-          "opex": -13612.98,
-          "ebitda": 43401.5
+          "opex": -13623.68,
+          "ebitda": 45507.18
         },
         "stpau": {
-          "revenue": 107066.17,
-          "cogs": -9062.91,
-          "gross_profit": 98003.26,
+          "revenue": 110266.91,
+          "cogs": -9405.67,
+          "gross_profit": 100861.24,
           "personnel": 0,
           "opex": -13002.84,
-          "ebitda": 85000.42
+          "ebitda": 87858.4
         },
         "santjoan": {
-          "revenue": 76032.16,
-          "cogs": -2827.83,
-          "gross_profit": 73204.33,
+          "revenue": 78287.57,
+          "cogs": -3310.07,
+          "gross_profit": 74977.5,
           "personnel": 0,
-          "opex": -5931.68,
-          "ebitda": 67272.65
+          "opex": -5985.35,
+          "ebitda": 68992.15
         },
         "hq": {
           "revenue": 0,
@@ -2768,10 +2768,10 @@
           {
             "account": "60100000",
             "display_name": "Raw Materials",
-            "consolidated": -11981.29,
-            "mila": -6588.77,
-            "stpau": -4689.79,
-            "santjoan": -702.73,
+            "consolidated": -13652.6,
+            "mila": -7179.71,
+            "stpau": -5030.07,
+            "santjoan": -1133.9,
             "hq": 0
           },
           {
@@ -2786,10 +2786,10 @@
           {
             "account": "60200002",
             "display_name": "Small equipments",
-            "consolidated": -3606.45,
-            "mila": -1509.49,
-            "stpau": -1994.96,
-            "santjoan": -1045.1,
+            "consolidated": -3644.05,
+            "mila": -1493.54,
+            "stpau": -1997.44,
+            "santjoan": -1096.17,
             "hq": 0
           }
         ],
@@ -2806,10 +2806,10 @@
           {
             "account": "62600001",
             "display_name": "Square Fees",
-            "consolidated": -2337.12,
-            "mila": -716.56,
-            "stpau": -794.3,
-            "santjoan": -752.02,
+            "consolidated": -2404.62,
+            "mila": -739.17,
+            "stpau": -819.47,
+            "santjoan": -778.48,
             "hq": 0
           }
         ],
@@ -2817,10 +2817,10 @@
           {
             "account": "62100000",
             "display_name": "Rent physical spaces",
-            "consolidated": -10946.08,
+            "consolidated": -10983.14,
             "mila": -2316.16,
             "stpau": -5225,
-            "santjoan": -3404.92,
+            "santjoan": -3441.98,
             "hq": 0
           },
           {
@@ -2889,10 +2889,10 @@
           {
             "account": "62900002",
             "display_name": "Cleaning",
-            "consolidated": -1431.25,
-            "mila": -1431.25,
+            "consolidated": -1458.56,
+            "mila": -1441.95,
             "stpau": 0,
-            "santjoan": 0,
+            "santjoan": -16.61,
             "hq": 0
           },
           {
@@ -2909,36 +2909,36 @@
           {
             "account": "70000000",
             "display_name": "B2B Sales",
-            "consolidated": 28357.79,
-            "mila": 2259.77,
-            "stpau": 25865.13,
+            "consolidated": 29392.98,
+            "mila": 2592,
+            "stpau": 26568.09,
             "santjoan": 232.89,
             "hq": 0
           },
           {
             "account": "70000001",
             "display_name": "Physical Store Sales",
-            "consolidated": 236671.62,
-            "mila": 75989.25,
-            "stpau": 83426.02,
-            "santjoan": 77256.35,
+            "consolidated": 243995.13,
+            "mila": 78454.84,
+            "stpau": 85999.73,
+            "santjoan": 79540.56,
             "hq": 0
           },
           {
             "account": "70000005",
             "display_name": "Square Discounts",
-            "consolidated": -5856.96,
-            "mila": -2174.9,
-            "stpau": -2224.98,
-            "santjoan": -1457.08,
+            "consolidated": -6068.14,
+            "mila": -2281.35,
+            "stpau": -2300.91,
+            "santjoan": -1485.88,
             "hq": 0
           },
           {
             "account": "70000002",
             "display_name": "E-commerce Sales",
-            "consolidated": 1484.16,
+            "consolidated": 1565.74,
             "mila": 47.54,
-            "stpau": 1436.62,
+            "stpau": 1518.2,
             "santjoan": 0,
             "hq": 0
           }
@@ -3016,9 +3016,9 @@
       "santjoan": 87746.49
     },
     "jul": {
-      "mila": 76132.92,
-      "stpau": 107066.17,
-      "santjoan": 76032.16
+      "mila": 78824.29,
+      "stpau": 110266.91,
+      "santjoan": 78287.57
     }
   },
   "channel": {
