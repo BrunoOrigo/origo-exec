@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-08-01T04:04:35.547Z",
+  "generated_at": "2026-08-02T04:04:24.392Z",
   "period": {
     "display_month": "Jul 2026",
     "month": "2026-07",
@@ -12,7 +12,7 @@
       "mom_pct": -17.3
     },
     "ebitda": {
-      "current": 182802.77,
+      "current": 182752.55,
       "margin_pct": 71.9
     },
     "cogs_pct": {
@@ -23,7 +23,7 @@
       "current": 0,
       "prev": 49.4
     },
-    "revenue_partial": null
+    "revenue_partial": 10160.25
   },
   "pl": {
     "jan": {
@@ -2702,15 +2702,15 @@
       "ecommerce": 1652.06,
       "discounts": 6554.43,
       "revenue": 254304.96,
-      "cogs": -31786.87,
-      "gross_profit": 222518.09,
+      "cogs": -31837.09,
+      "gross_profit": 222467.87,
       "personnel": 0,
       "opex": -39715.32,
-      "ebitda": 182802.77,
+      "ebitda": 182752.55,
       "da": -2821.61,
-      "operating_profit": 179981.16,
+      "operating_profit": 179930.94,
       "financial": -2959.18,
-      "ebt": 177021.98,
+      "ebt": 176971.76,
       "sik_mila": 0,
       "sik_stpau": 0,
       "sik_santjoan": 0,
@@ -2731,11 +2731,11 @@
         },
         "stpau": {
           "revenue": 88962.3,
-          "cogs": -9412.91,
-          "gross_profit": 79549.39,
+          "cogs": -9772.05,
+          "gross_profit": 79190.25,
           "personnel": 0,
           "opex": -13020.81,
-          "ebitda": 66528.58
+          "ebitda": 66169.44
         },
         "santjoan": {
           "revenue": 82731.91,
@@ -2770,7 +2770,7 @@
             "display_name": "Raw Materials",
             "consolidated": -12775.88,
             "mila": -6293.27,
-            "stpau": -5037.31,
+            "stpau": -5346.23,
             "santjoan": -1136.38,
             "hq": 0
           },
@@ -2786,9 +2786,9 @@
           {
             "account": "60200002",
             "display_name": "Small equipments",
-            "consolidated": -3644.05,
+            "consolidated": -3694.27,
             "mila": -1493.54,
-            "stpau": -1997.44,
+            "stpau": -2047.66,
             "santjoan": -1096.17,
             "hq": 0
           }
@@ -2845,9 +2845,9 @@
             "account": "62600001",
             "display_name": "Square Fees",
             "consolidated": -2474.2,
-            "mila": -739.17,
-            "stpau": -819.47,
-            "santjoan": -778.48,
+            "mila": -785.11,
+            "stpau": -866.99,
+            "santjoan": -822.1,
             "hq": 0
           }
         ],
@@ -2991,6 +2991,134 @@
           }
         ]
       }
+    },
+    "aug": {
+      "physical": 9644.54,
+      "b2b": 807.24,
+      "ecommerce": 0,
+      "discounts": 291.53,
+      "revenue": 10160.25,
+      "cogs": 0,
+      "gross_profit": 10160.25,
+      "personnel": 0,
+      "opex": 0,
+      "ebitda": 10160.25,
+      "da": -2730.61,
+      "operating_profit": 7429.64,
+      "financial": 0,
+      "ebt": 7429.64,
+      "sik_mila": 0,
+      "sik_stpau": 0,
+      "sik_santjoan": 0,
+      "sik_hq": 0,
+      "sik_untagged": 0,
+      "sik_total": 0,
+      "store_mila": 2622.45,
+      "store_stpau": 4228.15,
+      "store_santjoan": 3309.65,
+      "by_store": {
+        "mila": {
+          "revenue": 2622.45,
+          "cogs": 0,
+          "gross_profit": 2622.45,
+          "personnel": 0,
+          "opex": 0,
+          "ebitda": 2622.45
+        },
+        "stpau": {
+          "revenue": 4228.15,
+          "cogs": 0,
+          "gross_profit": 4228.15,
+          "personnel": 0,
+          "opex": 0,
+          "ebitda": 4228.15
+        },
+        "santjoan": {
+          "revenue": 3309.65,
+          "cogs": 0,
+          "gross_profit": 3309.65,
+          "personnel": 0,
+          "opex": 0,
+          "ebitda": 3309.65
+        },
+        "hq": {
+          "revenue": 0,
+          "cogs": 0,
+          "gross_profit": 0,
+          "personnel": 0,
+          "opex": 0,
+          "ebitda": 0
+        }
+      },
+      "breakdown": {
+        "REVENUE": [
+          {
+            "account": "70000001",
+            "display_name": "Physical Store Sales",
+            "consolidated": 9644.54,
+            "mila": 2737.78,
+            "stpau": 3537.7,
+            "santjoan": 3369.06,
+            "hq": 0
+          },
+          {
+            "account": "70000005",
+            "display_name": "Square Discounts",
+            "consolidated": -291.53,
+            "mila": -115.33,
+            "stpau": -116.79,
+            "santjoan": -59.41,
+            "hq": 0
+          },
+          {
+            "account": "70000000",
+            "display_name": "B2B Sales",
+            "consolidated": 807.24,
+            "mila": 0,
+            "stpau": 807.24,
+            "santjoan": 0,
+            "hq": 0
+          }
+        ],
+        "DA": [
+          {
+            "account": "68100003",
+            "display_name": "Amortización informática y tecnología",
+            "consolidated": -8.23,
+            "mila": -0.75,
+            "stpau": -3.79,
+            "santjoan": -3.44,
+            "hq": -0.25
+          },
+          {
+            "account": "68100002",
+            "display_name": "ACTIVOS FRANÇOIS 2022",
+            "consolidated": -606.29,
+            "mila": 0,
+            "stpau": 0,
+            "santjoan": 0,
+            "hq": -606.29
+          },
+          {
+            "account": "68100001",
+            "display_name": "Amortización del inmovilizado material (2)",
+            "consolidated": -2.58,
+            "mila": 0,
+            "stpau": 0,
+            "santjoan": 0,
+            "hq": -2.58
+          },
+          {
+            "account": "68100000",
+            "display_name": "Amortización del inmovilizado material",
+            "consolidated": -2113.51,
+            "mila": -223.66,
+            "stpau": -1838.43,
+            "santjoan": -9.11,
+            "hq": -42.3
+          }
+        ]
+      }
     }
   },
   "stores": {
@@ -3028,6 +3156,11 @@
       "mila": 80958.69,
       "stpau": 88962.3,
       "santjoan": 82731.91
+    },
+    "aug": {
+      "mila": 2622.45,
+      "stpau": 4228.15,
+      "santjoan": 3309.65
     }
   },
   "channel": {
@@ -3070,14 +3203,6 @@
       "feb": 0,
       "mar": -202.29,
       "total_ytd": -202.29
-    },
-    {
-      "account": "62900011",
-      "name": "Factura de SellerX Commerce GmbH",
-      "jan": 0,
-      "feb": 0,
-      "mar": 0,
-      "total_ytd": 50.22
     },
     {
       "account": "62900005",
