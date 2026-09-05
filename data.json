@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-04T04:03:06.780Z",
+  "generated_at": "2026-09-05T04:03:03.695Z",
   "period": {
     "display_month": "Aug 2026",
     "month": "2026-08",
@@ -23,7 +23,7 @@
       "current": 55.3,
       "prev": 48.6
     },
-    "revenue_partial": 26456.33
+    "revenue_partial": 36058.15
   },
   "pl": {
     "jan": {
@@ -3851,53 +3851,53 @@
       }
     },
     "sep": {
-      "physical": 23478.05,
-      "b2b": 3247.99,
-      "ecommerce": 253.37,
-      "discounts": 523.08,
-      "revenue": 26456.33,
+      "physical": 32064.73,
+      "b2b": 4385.27,
+      "ecommerce": 280.15,
+      "discounts": 672,
+      "revenue": 36058.15,
       "cogs": -112.68,
-      "gross_profit": 26343.65,
+      "gross_profit": 35945.47,
       "personnel": 0,
       "opex": -5429.42,
-      "ebitda": 20914.23,
+      "ebitda": 30516.05,
       "da": -2700.82,
-      "operating_profit": 18213.41,
+      "operating_profit": 27815.23,
       "financial": 0,
-      "ebt": 18213.41,
+      "ebt": 27815.23,
       "sik_mila": 0,
       "sik_stpau": 0,
       "sik_santjoan": 0,
       "sik_hq": 0,
       "sik_untagged": 0,
       "sik_total": 0,
-      "store_mila": 7372.33,
-      "store_stpau": 10788.86,
-      "store_santjoan": 8041.77,
+      "store_mila": 9884.91,
+      "store_stpau": 14882.02,
+      "store_santjoan": 11011.07,
       "by_store": {
         "mila": {
-          "revenue": 7372.33,
+          "revenue": 9884.91,
           "cogs": -4.85,
-          "gross_profit": 7367.48,
+          "gross_profit": 9880.06,
           "personnel": 0,
           "opex": -74.83,
-          "ebitda": 7292.65
+          "ebitda": 9805.23
         },
         "stpau": {
-          "revenue": 10788.86,
+          "revenue": 14882.02,
           "cogs": -107.83,
-          "gross_profit": 10681.03,
+          "gross_profit": 14774.19,
           "personnel": 0,
           "opex": -5262.74,
-          "ebitda": 5418.29
+          "ebitda": 9511.45
         },
         "santjoan": {
-          "revenue": 8041.77,
+          "revenue": 11011.07,
           "cogs": 0,
-          "gross_profit": 8041.77,
+          "gross_profit": 11011.07,
           "personnel": 0,
           "opex": -81.98,
-          "ebitda": 7959.79
+          "ebitda": 10929.09
         },
         "hq": {
           "revenue": 0,
@@ -3962,36 +3962,36 @@
           {
             "account": "70000001",
             "display_name": "Physical Store Sales",
-            "consolidated": 23478.05,
-            "mila": 7521.81,
-            "stpau": 7784.24,
-            "santjoan": 8172,
+            "consolidated": 32064.73,
+            "mila": 10045.57,
+            "stpau": 10836.21,
+            "santjoan": 11182.95,
             "hq": 0
           },
           {
             "account": "70000005",
             "display_name": "Square Discounts",
-            "consolidated": -523.08,
-            "mila": -210.8,
-            "stpau": -182.05,
-            "santjoan": -130.23,
+            "consolidated": -672,
+            "mila": -273.3,
+            "stpau": -226.82,
+            "santjoan": -171.88,
             "hq": 0
           },
           {
             "account": "70000002",
             "display_name": "E-commerce Sales",
-            "consolidated": 253.37,
+            "consolidated": 280.15,
             "mila": 54.96,
-            "stpau": 198.41,
+            "stpau": 225.19,
             "santjoan": 0,
             "hq": 0
           },
           {
             "account": "70000000",
             "display_name": "B2B Sales",
-            "consolidated": 3247.99,
-            "mila": 61.32,
-            "stpau": 3186.67,
+            "consolidated": 4385.27,
+            "mila": 112.64,
+            "stpau": 4272.63,
             "santjoan": 0,
             "hq": 0
           }
@@ -4079,9 +4079,9 @@
       "santjoan": 85879.19
     },
     "sep": {
-      "mila": 7372.33,
-      "stpau": 10788.86,
-      "santjoan": 8041.77
+      "mila": 9884.91,
+      "stpau": 14882.02,
+      "santjoan": 11011.07
     }
   },
   "channel": {
