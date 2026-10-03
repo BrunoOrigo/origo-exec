@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-10-02T04:00:52.408Z",
+  "generated_at": "2026-10-03T04:00:52.544Z",
   "period": {
     "display_month": "Sep 2026",
     "month": "2026-09",
@@ -23,7 +23,7 @@
       "current": 2.1,
       "prev": 55.1
     },
-    "revenue_partial": 9916.07
+    "revenue_partial": 21033.52
   },
   "pl": {
     "jan": {
@@ -4275,53 +4275,53 @@
       }
     },
     "oct": {
-      "physical": 8727.85,
-      "b2b": 1211.02,
-      "ecommerce": 152.29,
-      "discounts": 175.09,
-      "revenue": 9916.07,
+      "physical": 18955.35,
+      "b2b": 2338.45,
+      "ecommerce": 179.07,
+      "discounts": 439.35,
+      "revenue": 21033.52,
       "cogs": -206.84,
-      "gross_profit": 9709.23,
+      "gross_profit": 20826.68,
       "personnel": 0,
       "opex": -3846.44,
-      "ebitda": 5862.79,
+      "ebitda": 16980.24,
       "da": -2700.82,
-      "operating_profit": 3161.97,
+      "operating_profit": 14279.42,
       "financial": 0,
-      "ebt": 3161.97,
+      "ebt": 14279.42,
       "sik_mila": 0,
       "sik_stpau": 0,
       "sik_santjoan": 0,
       "sik_hq": 0,
       "sik_untagged": 0,
       "sik_total": 0,
-      "store_mila": 2594.31,
-      "store_stpau": 3997.91,
-      "store_santjoan": 3205.4,
+      "store_mila": 5852.41,
+      "store_stpau": 8657.04,
+      "store_santjoan": 6712.59,
       "by_store": {
         "mila": {
-          "revenue": 2594.31,
+          "revenue": 5852.41,
           "cogs": 0,
-          "gross_profit": 2594.31,
+          "gross_profit": 5852.41,
           "personnel": 0,
           "opex": -225.19,
-          "ebitda": 2369.12
+          "ebitda": 5627.22
         },
         "stpau": {
-          "revenue": 3997.91,
+          "revenue": 8657.04,
           "cogs": 0,
-          "gross_profit": 3997.91,
+          "gross_profit": 8657.04,
           "personnel": 0,
           "opex": -186.69,
-          "ebitda": 3811.22
+          "ebitda": 8470.35
         },
         "santjoan": {
-          "revenue": 3205.4,
+          "revenue": 6712.59,
           "cogs": -206.84,
-          "gross_profit": 2998.56,
+          "gross_profit": 6505.75,
           "personnel": 0,
           "opex": -3434.56,
-          "ebitda": -436
+          "ebitda": 3071.19
         },
         "hq": {
           "revenue": 0,
@@ -4377,36 +4377,36 @@
           {
             "account": "70000000",
             "display_name": "B2B Sales",
-            "consolidated": 1211.02,
-            "mila": 0,
-            "stpau": 1211.02,
-            "santjoan": 0,
+            "consolidated": 2338.45,
+            "mila": 166.4,
+            "stpau": 2148.46,
+            "santjoan": 23.59,
             "hq": 0
           },
           {
             "account": "70000001",
             "display_name": "Physical Store Sales",
-            "consolidated": 8727.85,
-            "mila": 2687.05,
-            "stpau": 2789.32,
-            "santjoan": 3251.48,
+            "consolidated": 18955.35,
+            "mila": 5843.16,
+            "stpau": 6290.12,
+            "santjoan": 6822.07,
             "hq": 0
           },
           {
             "account": "70000005",
             "display_name": "Square Discounts",
-            "consolidated": -175.09,
-            "mila": -92.74,
-            "stpau": -36.27,
-            "santjoan": -46.08,
+            "consolidated": -439.35,
+            "mila": -220.9,
+            "stpau": -85.38,
+            "santjoan": -133.07,
             "hq": 0
           },
           {
             "account": "70000002",
             "display_name": "E-commerce Sales",
-            "consolidated": 152.29,
+            "consolidated": 179.07,
             "mila": 0,
-            "stpau": 152.29,
+            "stpau": 179.07,
             "santjoan": 0,
             "hq": 0
           }
@@ -4499,9 +4499,9 @@
       "santjoan": 100493.54
     },
     "oct": {
-      "mila": 2594.31,
-      "stpau": 3997.91,
-      "santjoan": 3205.4
+      "mila": 5852.41,
+      "stpau": 8657.04,
+      "santjoan": 6712.59
     }
   },
   "channel": {
